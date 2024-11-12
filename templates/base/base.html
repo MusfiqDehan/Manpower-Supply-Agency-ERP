@@ -1,0 +1,362 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}" />
+
+    <!-- =============================================== -->
+    <!-- Document Title -->
+    <!-- =============================================== -->
+    <title>
+      {% block page_name %}
+
+      {% endblock %}| Manpower Supply Agency
+    </title>
+
+    <script src="https://cdn.musfiqdehan.com/templates/jquery/jquery.min.js"></script>
+
+    <!-- =============================================== -->
+    <!-- Favicons -->
+    <!-- =============================================== -->
+
+    <meta name="theme-color" content="#ffffff" />
+
+    <style>
+      @media print {
+        @page {
+          size: A4; /* DIN A4 standard, Europe */
+          margin: 0;
+        }
+        .p-adjust {
+          margin-top: -80px !important;
+        }
+        .p-table {
+          margin-left: 127px !important;
+        }
+      
+        html,
+        body {
+          height: 100px;
+          font-size: 11px;
+          overflow: visible;
+        }
+        .heading_top {
+          margin-top: -20px !important;
+        }
+      
+        .company_name {
+          font-size: 40px;
+        }
+      
+        .address_top {
+          margin-top: -5px !important;
+          font-size: 30px !important;
+        }
+      
+        .invoice_text {
+          font-size: 40px !important;
+        }
+      
+        .date_div {
+          margin-top: 10px !important;
+          padding: 20px !important;
+        }
+      
+        h3 {
+          font-size: 30px !important;
+        }
+      
+        .date_div_text {
+          font-size: 20px !important;
+        }
+      
+        td {
+          font-size: 20px !important;
+        }
+      
+        .grand_total {
+          font-size: 20px !important;
+          font-weight: bolder;
+        }
+      
+        #custom_class_for_print_skip {
+          display: none !important;
+        }
+      
+        .top-nav-print-stop {
+          display: none !important;
+        }
+        .download-invoice {
+          display: none !important;
+        }
+        .side-nav-print {
+          display: none !important;
+        }
+        .print-invoice {
+          display: none !important;
+        }
+        .browser-item {
+          display: none !important;
+        }
+        .payment_method_section {
+          display: none !important;
+        }
+      
+        h6 {
+          font-size: 18px !important;
+        }
+        p {
+          font-size: 16px;
+        }
+        th {
+          font-size: 14px;
+        }
+        td {
+          font-size: 14px;
+        }
+        .custom-button-group {
+          background-color: #fff; /* Replace with your desired background color */
+        }
+      }
+    </style>
+    <!-- style for beforesend loading form end -->
+    <style>
+      .animationLoading {
+        background: #fff;
+        border: 1px solid;
+        border-color: #e5e6e9;
+        border-radius: 3px;
+        display: block;
+        height: 324px;
+        width: 494px;
+        padding: 12px;
+      }
+      @keyframes animate {
+        from {
+          transition: none;
+        }
+        to {
+          background-color: #f6f7f8;
+          transition: all 0.3s ease-out;
+        }
+      }
+      #one,
+      #two,
+      #three,
+      #four,
+      #five,
+      #six,
+      #seven,
+      #eight,
+      #nine,
+      #ten {
+        position: relative;
+        background-color: #ccc;
+        height: 6px;
+        animation-name: animate;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+      }
+      
+      #one {
+        left: 0;
+        height: 40px;
+        width: 40px;
+      }
+      
+      #two {
+        left: 50px;
+        top: -33px;
+        width: 25%;
+      }
+      
+      #Three {
+        left: 50px;
+        /*top:-20px;*/
+        width: 15%;
+      }
+      
+      #four {
+        left: 0px;
+        /*top:30px;*/
+        width: 80%;
+      }
+      
+      #five {
+        left: 0px;
+        /* top:45px;*/
+        width: 60%;
+      }
+      
+      #six {
+        left: 0px;
+        /* top:60px;*/
+        width: 60%;
+      }
+      #seven {
+        left: 0px;
+        /*top:80px;*/
+        width: 75%;
+      }
+      
+      #eight {
+        left: 0px;
+        /*top:100px;*/
+        width: 90%;
+      }
+      #nine {
+        left: 0px;
+        /* top:120px;*/
+        width: 70%;
+      }
+      #ten {
+        left: 0px;
+        /*top:140px;*/
+        width: 80%;
+      }
+    </style>
+    <!-- style for beforesend loading form end -->
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/choices/choices.min.css" rel="stylesheet" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/dhtmlx-gantt/dhtmlxgantt.css" rel="stylesheet" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/simplebar/simplebar.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/css/theme-old.min.css" type="text/css" rel="stylesheet" id="style-default" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/dropzone/dropzone.min.css" />
+
+    <!-- ====================== Start for Calendar ========================= -->
+    <!-- For Calendar -->
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+    <!-- Bootstrap 5.5.2 JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- FullCalendar 5.5.1 JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/5.5.1/main.min.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/simplebar/simplebar.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/config.js"></script>
+
+    <script>
+      var phoenixIsRTL = JSON.parse(localStorage.getItem('phoenixIsRTL'))
+      if (phoenixIsRTL) {
+        var linkDefault = document.getElementById('style-default')
+        var userLinkDefault = document.getElementById('user-style-default')
+        linkDefault.setAttribute('disabled', true)
+        userLinkDefault.setAttribute('disabled', true)
+        document.querySelector('html').setAttribute('dir', 'rtl')
+      } else {
+        var linkRTL = document.getElementById('style-rtl')
+        var userLinkRTL = document.getElementById('user-style-rtl')
+        linkRTL.setAttribute('disabled', true)
+        userLinkRTL.setAttribute('disabled', true)
+      }
+    </script>
+
+    <!-- New Add For Attendace Dashboard -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.20.0.min.js"></script>
+
+    <script>
+      var phoenixIsRTL = window.config.config.phoenixIsRTL
+      if (phoenixIsRTL) {
+        var linkDefault = document.getElementById('style-default')
+        var userLinkDefault = document.getElementById('user-style-default')
+        linkDefault.setAttribute('disabled', true)
+        userLinkDefault.setAttribute('disabled', true)
+        document.querySelector('html').setAttribute('dir', 'rtl')
+      } else {
+        var linkRTL = document.getElementById('style-rtl')
+        var userLinkRTL = document.getElementById('user-style-rtl')
+        linkRTL.setAttribute('disabled', true)
+        userLinkRTL.setAttribute('disabled', true)
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- =============================================== -->
+    <!-- Main Content -->
+    <!-- =============================================== -->
+
+    {% block main %}
+      <main class="main" id="top">
+        <div class="container-fluid px-0" data-layout="container">
+          <!-- - Side nav -->
+          {% include 'base/side-nav.html' %}
+          <!-- - End side nav -->
+
+          <!-- Top nav -->
+          {% include 'base/top-nav.html' %}
+          <!-- End top nav -->
+
+          {% block content %}
+            <!-- - main content -->
+
+            <!-- Main Content -->
+          {% endblock %}
+
+          <!-- Modals -->
+        </div>
+      </main>
+    {% endblock %}
+
+    <!-- End of Main Content -->
+
+    <!-- JavaScripts -->
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/popper/popper.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/anchorjs/anchor.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/is/is.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/fontawesome/all.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/lodash/lodash.min.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/listjs/list.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/feather-icons/feather.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/dayjs/dayjs.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/tinymce/tinymce.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/choices/choices.min.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/dhtmlx-gantt/dhtmlxgantt.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/phoenix.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/projectmanagement-dashboard.js"></script>
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/acconunt_analytics.js"></script>
+
+    <!-- Product Image dropdown Scripts -->
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/dropzone/dropzone.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/tinymce/tinymce.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+
+    <!-- New Add For Graph -->
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/vendors/echarts/echarts.min.js"></script>
+
+    <!-- Graph file for each Dashboard -->
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/crm-dashboard.js"></script>
+
+    {% block script %}
+
+    {% endblock %}
+  </body>
+</html>

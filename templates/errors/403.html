@@ -1,0 +1,29 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <style>
+    .content {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh; /* Full viewport height */
+    }
+    
+    .error-contents {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+  </style>
+
+  <div class="content">
+    {% include 'errors/403-contents.html' %}
+    {% include 'base/footer.html' %}
+  </div>
+{% endblock %}

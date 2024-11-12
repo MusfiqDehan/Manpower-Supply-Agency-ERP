@@ -1,0 +1,510 @@
+<style>
+  @media screen and (min-width: 992px) {
+    #sidebarFixed {
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-vertical navbar-expand-lg side-nav-print" id="sidebarFixed" style="display: inline-block">
+  <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+    <!-- scrollbar removed -->
+    <div class="navbar-vertical-content">
+      <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+        <!-- Home Dashboard -->
+        <li class="nav-item">
+          <!-- parent pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ dashboard_nav_link_status }} dropdown-indicator label-1" href="#home" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="home">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><span data-feather="phone"><i class="fa fa-home"></i></span></span>
+                <span class="nav-link-text">Home</span>
+              </div>
+            </a>
+
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent show" data-bs-parent="#navbarVerticalCollapse" id="home">
+                <li class="collapsed-nav-item-title d-none">Home</li>
+                <li class="nav-item">
+                  <a class="nav-link {{ dashboard_nav_link_status }}" href="{% url 'dashboard_app:dashboard' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Dashboard</span>
+                    </div>
+                  </a>
+                  <!-- more inner pages -->
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <!-- All Apps -->
+        <li class="nav-item">
+          <!-- label -->
+          <p class="navbar-vertical-label">All Apps</p>
+          <hr class="navbar-vertical-line" />
+
+          <!-- Agent Management -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ agent_nav_link_status }} {{ agent_details_nav_link_status }} dropdown-indicator label-1" href="#Logistics" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="Logistics">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><span data-feather="phone"><i class="fa fa-bank"></i></span></span>
+                <span class="nav-link-text">Agent Management</span>
+              </div>
+            </a>
+
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Logistics">
+                <li class="collapsed-nav-item-title d-none">Agent Management</li>
+                <!-- Next inner pages -->
+                <li class="nav-item">
+                  <a class="nav-link {{ agent_nav_link_status }}" href="{% url 'agent_management_app:agent_view' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Agent</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Middleman Managementt -->
+          {% comment %} <div class="nav-item-wrapper">
+            <a class="nav-link dropdown-indicator label-1" href="#middleman" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="middleman">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                  </svg>
+                </span>
+                <span class="nav-link-text">Middleman Management</span>
+              </div>
+            </a>
+
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="middleman">
+                <li class="collapsed-nav-item-title d-none">Middle Management</li>
+                <!-- Next inner pages -->
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'middleman_app:middleman_retrieve' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Middleman</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div> {% endcomment %}
+
+          <!-- Passenger Management -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ ongoing_passenger_nav_link_status }} {{ successful_passenger_nav_link_status }} {{ rejected_passenger_nav_link_status }} {{ passenger_details_nav_link_status }} dropdown-indicator label-1 collapsed" href="#e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-commerce">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+
+                <span class="nav-link-icon"><i class="fa-solid fa-users"></i></span>
+
+                <span class="nav-link-text">Passenger Management</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav parent collapse" data-bs-parent="#navbarVerticalCollapse" id="e-commerce" style="">
+                <li class="collapsed-nav-item-title d-none">Passenger Management</li>
+
+                <!-- Passenger -->
+                <li class="nav-item">
+                  <a class="nav-link {{ ongoing_passenger_nav_link_status }} dropdown-indicator collapsed" href="{% url 'passenger_app:passenger' %}" aria-expanded="false" aria-controls="e-commerce">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Passenger (ongoing)</span>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Successful Passengers -->
+                <li class="nav-item">
+                  <a class="nav-link {{ successful_passenger_nav_link_status }} dropdown-indicator collapsed" href="{% url 'passenger_app:fly_passengers' %}" aria-expanded="false" aria-controls="e-commerce">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Successful Passenger</span>
+                    </div>
+                  </a>
+                </li>
+
+                <!-- Rejected Passengers -->
+                <li class="nav-item">
+                  <a class="nav-link {{ rejected_passenger_nav_link_status }} dropdown-indicator collapsed" href="{% url 'passenger_app:cancel_passengers' %}" aria-expanded="false" aria-controls="e-commerce">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Rejected Passenger</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Passport Managementt -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ passport_nav_link_status }} dropdown-indicator label-1" href="#Client" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="CRM">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><i class="fas fa-passport"></i></span>
+
+                <span class="nav-link-text">Passport Management</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Client">
+                <li class="collapsed-nav-item-title d-none">Passport Management</li>
+
+                <li class="nav-item">
+                  <a class="nav-link {{ passport_nav_link_status }}" href="{% url 'passenger_app:all_passport' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">All Passport</span>
+                    </div>
+                  </a>
+                  <!-- more inner pages -->
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Visa Managementt -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ visa_nav_link_status }} dropdown-indicator label-1" href="#Visa" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="CRM">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><span data-feather="phone"><i class="fa-brands fa-cc-visa"></i></span></span>
+
+                <span class="nav-link-text">Visa Management</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Visa">
+                <li class="collapsed-nav-item-title d-none">Visa Management</li>
+
+                <li class="nav-item">
+                  <a class="nav-link {{ visa_nav_link_status }}" href="{% url 'visa_management_app:visa-manage' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Visa Manage</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Refund Managementt -->
+          {% comment %} <div class="nav-item-wrapper">
+            <a class="nav-link dropdown-indicator label-1" href="#Refund" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="CRM">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers">
+                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                    <polyline points="2 17 12 22 22 17"></polyline>
+                    <polyline points="2 12 12 17 22 12"></polyline>
+                  </svg>
+                </span>
+
+                <span class="nav-link-text">Refund Management</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Refund">
+                <li class="collapsed-nav-item-title d-none">Refund Management</li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'refund_management_app:refund-manage' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Refund Money</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div> {% endcomment %}
+
+          <!-- Company Cost Management -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ company_cost_nav_link_status }} {{ company_cost_category_nav_link_status }} dropdown-indicator label-1 collapsed" href="#CompanyCost" role="button" data-bs-toggle="collapse">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><span data-feather="phone"><i class="fas fa-money-check-alt"></i></span></span>
+
+                <span class="nav-link-text">Company Cost Management</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav parent collapse" id="CompanyCost">
+                {% comment %} <li class="nav-item">
+                  <a class="nav-link {{ company_cost_category_nav_link_status }} dropdown-indicator collapsed" href="{% url 'company_cost_app:company_cost_category' %}">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Cost Category</span>
+                    </div>
+                  </a>
+                </li> {% endcomment %}
+
+                <li class="nav-item">
+                  <a class="nav-link {{ company_cost_nav_link_status }} dropdown-indicator collapsed" href="{% url 'company_cost_app:company_cost' %}">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Cost List</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- Documentation Page -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ company_document_nav_link_status }}  {{ company_document_category_nav_link_status }} dropdown-indicator label-1" href="#Documentation" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="Documentation">
+              <div class="d-flex align-items-center">
+                <div class="dropdown-indicator-icon">
+                  <span class="fas fa-caret-right"></span>
+                </div>
+                <span class="nav-link-icon"><span data-feather="phone"><i class="fas fa-file-alt"></i></span></span>
+                <span class="nav-link-text">Company Documents</span>
+              </div>
+            </a>
+            <div class="parent-wrapper label-1">
+              <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Documentation">
+                <li class="collapsed-nav-item-title d-none">Company Documents</li>
+
+                <!-- Company Documents -->
+                <li class="nav-item">
+                  <a class="nav-link {{ company_document_category_nav_link_status }}" href="{% url 'company_documentation_app:company_document_category' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">Document Categories</span>
+                    </div>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link {{ company_document_nav_link_status }}" href="{% url 'company_documentation_app:index' %}" data-bs-toggle="" aria-expanded="false">
+                    <div class="d-flex align-items-center">
+                      <span class="nav-link-text">All Documents</span>
+                    </div>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </li>
+
+        <!-- Passenger Report Management -->
+        <li class="nav-item">
+          <!-- label -->
+          <p class="navbar-vertical-label">Passenger Report</p>
+          <hr class="navbar-vertical-line" />
+
+          <!-- Received pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ passport_status }} label-1" href="{% url 'passenger_app:passport_received' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-passport"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Passport Received</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Police Clearance pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ police_clearance_status }} label-1" href="{% url 'passenger_app:police_clearance' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-regular fa-circle-check"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Police Clearance</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Medical Certificate pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ medical_certificate_status }} label-1" href="{% url 'passenger_app:medical_certificate' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-notes-medical"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Medical Certificate</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Mofa Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ mofa_status }} label-1" href="{% url 'passenger_app:mofa_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fas fa-building"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Mofa Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- finger_appointment pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ finger_appointment_status }} label-1" href="{% url 'passenger_app:finger_appointment' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fas fa-fingerprint"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Finger Appointment</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Visa Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ visa_status }} label-1" href="{% url 'passenger_app:visa_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-brands fa-cc-visa"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Visa Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Training Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ training_status }} label-1" href="{% url 'passenger_app:training_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-user-nurse"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Training Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Finger Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ finger_status }} label-1" href="{% url 'passenger_app:finger_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-fingerprint"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Finger Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Manpower Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ manpower_status }} label-1" href="{% url 'passenger_app:manpower_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-briefcase"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Manpower Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Ticket Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ ticket_status }} label-1" href="{% url 'passenger_app:ticket_status' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fa-solid fa-ticket"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Ticket Status</span></span>
+              </div>
+            </a>
+          </div>
+
+          <!-- Fly Status pages -->
+          <div class="nav-item-wrapper">
+            <a class="nav-link {{ fly_status }} label-1" href="{% url 'passenger_app:fly_success' %}" role="button" data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center">
+                <span class="nav-link-icon"><i class="fas fa-plane-departure"></i></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Fly Successful</span></span>
+              </div>
+            </a>
+          </div>
+        </li>
+
+        <!-- Administration -->
+        <li class="nav-item">
+          {% if request.user.is_superuser %}
+            <p class="navbar-vertical-label">Administration</p>
+            <hr class="navbar-vertical-line" />
+
+            <!-- parent pages-administration -->
+            <div class="nav-item-wrapper">
+              <a class="nav-link {{ user_nav_link_status }}  {{ group_nav_link_status }} dropdown-indicator label-1" href="#Admin" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="Admin">
+                <div class="d-flex align-items-center">
+                  <div class="dropdown-indicator-icon">
+                    <span class="fas fa-caret-right"></span>
+                  </div>
+                  <span class="nav-link-icon"><span data-feather="phone"><i class="far fa-address-card"></i></span></span>
+                  <span class="nav-link-text">Administration</span>
+                </div>
+              </a>
+
+              <div class="parent-wrapper label-1">
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="Admin">
+                  <li class="collapsed-nav-item-title d-none">Administration</li>
+
+                  <!-- Users Management -->
+                  <li class="nav-item">
+                    <a class="nav-link {{ user_nav_link_status }} dropdown-indicator collapsed" href="#Users" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-Users">
+                      <div class="d-flex align-items-center">
+                        <div class="dropdown-indicator-icon">
+                          <span class="fas fa-caret-right"></span>
+                        </div>
+                        <span class="nav-link-text">User Management</span>
+                      </div>
+                    </a>
+
+                    <div class="parent-wrapper">
+                      <ul class="nav parent collapse" data-bs-parent="#e-Users" id="Users" style="">
+                        <!-- Users -->
+                        <li class="nav-item">
+                          <a class="nav-link {{ user_nav_link_status }}" href="{% url 'administration_app:all_users' %}" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                              <span class="nav-link-text">Manage Users</span>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+
+                  <!-- Groups Management -->
+                  <li class="nav-item">
+                    <a class="nav-link {{ group_nav_link_status }} dropdown-indicator collapsed" href="#Administration" data-bs-toggle="collapse" aria-expanded="false" aria-controls="e-Administration">
+                      <div class="d-flex align-items-center">
+                        <div class="dropdown-indicator-icon">
+                          <span class="fas fa-caret-right"></span>
+                        </div>
+                        <span class="nav-link-text">Group Management</span>
+                      </div>
+                    </a>
+
+                    <div class="parent-wrapper">
+                      <ul class="nav parent collapse" data-bs-parent="#e-Administration" id="Administration" style="">
+                        <!-- Group Permissions -->
+                        <li class="nav-item">
+                          <a class="nav-link {{ group_nav_link_status }}" href="{% url 'administration_app:custom_group' %}" data-bs-toggle="" aria-expanded="false">
+                            <div class="d-flex align-items-center">
+                              <span class="nav-link-text">Manage Groups</span>
+                            </div>
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          {% endif %}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="navbar-vertical-footer">
+    <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 white-space-nowrap d-flex align-items-center">
+      <span class="uil uil-arrow-from-right fs-0"></span>
+      <span class="uil uil-arrow-from-right fs-0"><i class="fas fa-long-arrow-alt-right"></i></span>
+      <span class="navbar-vertical-footer-text ms-2">Collapsed View</span>
+    </button>
+  </div>
+</nav>

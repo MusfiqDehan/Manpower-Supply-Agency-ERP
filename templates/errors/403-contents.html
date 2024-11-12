@@ -1,0 +1,14 @@
+<div class="error-contents p-5 justify-content-center align-items-center text-center align-middle">
+  <h1>403 Forbidden</h1>
+  <div class="lock">
+    <i class="fas fa-user-lock fa-4x"></i>
+  </div>
+  <div class="message">
+    <h1>Access to this page is restricted</h1>
+    <p>Please check with the site admin if you believe this is a mistake.</p>
+  </div>
+  <div>
+    <a href="{% url 'dashboard_app:dashboard' %}" class="btn btn-primary">Go Home</a>
+    <button onclick="window.history.back()" class="btn btn-primary">Go Back</button>
+  </div>
+</div>
