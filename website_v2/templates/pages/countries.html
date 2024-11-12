@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block header_image %}
+  {% include 'components/header_image.html' %}
+{% endblock %}
+
+{% block page_content %}
+  <!-- Countries We Offer Start -->
+  <div class="container-fluid country overflow-hidden py-5">
+    <div class="container">
+      <div class="section-title text-center wow fadeInUp" data-wow-delay="0.1s" style="margin-bottom: 70px;">
+        <div class="sub-style">
+          <h5 class="sub-title text-primary px-3">COUNTRIES WE OFFER</h5>
+        </div>
+        <h1 class="display-5 mb-4">Sending Human Resources To The Following Countries</h1>
+      </div>
+      <div class="row g-4 text-center">
+        <div class="col-lg-6 col-xl-3 mb-5 mb-xl-0 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="country-item">
+            <div class="rounded overflow-hidden">
+              <img src="{% static 'website_v2/img/countries/place-saudi-arabia.webp' %}" class="place-img img-fluid w-100 rounded" alt="Image" />
+            </div>
+            <div class="country-flag">
+              <img src="{% static 'website_v2/img/countries/flag-saudi-arabia.webp' %}" class="flag-img img-fluid rounded-circle" alt="Image" />
+            </div>
+            <div class="country-name">
+              <a class="text-white fs-4">Saudi Arabia</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 mb-5 mb-xl-0 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="country-item">
+            <div class="rounded overflow-hidden">
+              <img src="{% static 'website_v2/img/countries/place-malaysia.webp' %}" class="place-img img-fluid w-100 rounded" alt="Image" />
+            </div>
+            <div class="country-flag">
+              <img src="{% static 'website_v2/img/countries/flag-malaysia.webp' %}" class="flag-img img-fluid rounded-circle" alt="Image" />
+            </div>
+            <div class="country-name">
+              <a class="text-white fs-4">Malaysia</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 mb-5 mb-xl-0 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="country-item">
+            <div class="rounded overflow-hidden">
+              <img src="{% static 'website_v2/img/countries/place-kuwait.webp' %}" class="place-img img-fluid w-100 rounded" alt="Image" />
+            </div>
+            <div class="country-flag">
+              <img src="{% static 'website_v2/img/countries/flag-kuwait.webp' %}" class="flag-img img-fluid rounded-circle" alt="Image" />
+            </div>
+            <div class="country-name">
+              <a class="text-white fs-4">Kuwait</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 col-xl-3 mb-5 mb-xl-0 wow fadeInUp" data-wow-delay="0.7s">
+          <div class="country-item">
+            <div class="rounded overflow-hidden">
+              <img src="{% static 'website_v2/img/countries/place-qatar-2.webp' %}" class="place-img img-fluid w-100 rounded" alt="Image" />
+            </div>
+            <div class="country-flag">
+              <img src="{% static 'website_v2/img/countries/flag-qatar.webp' %}" class="flag-img img-fluid rounded-circle" alt="Image" />
+            </div>
+            <div class="country-name">
+              <a class="text-white fs-4">Qatar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Countries We Offer End -->
+
+  <!-- Categories Start -->
+  <div class="container-fluid service overflow-hidden pt-5">
+    <div class="container py-5">
+      <div class="section-title text-center mb-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="sub-style">
+          <h5 class="sub-title text-primary px-3">Visa Categories</h5>
+        </div>
+        <h1 class="display-5 mb-4">Offering Visa of Different Categories For Smooth Travel</h1>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.1s">
+          <div class="service-item">
+            <div class="service-inner">
+              <div class="service-img">
+                <img src="{% static 'website_v2/img/bd-workers-6.webp' %}" class="img-fluid w-100 rounded" alt="Image" />
+              </div>
+              <div class="service-title">
+                <div class="service-title-name">
+                  <div class="bg-primary text-center rounded p-3 mx-5 mb-4">
+                    <a class="h4 text-white mb-0">Job Visa</a>
+                  </div>
+                </div>
+                <div class="service-content pb-4">
+                  <a><h4 class="text-white mb-4 py-3">Job Visa</h4></a>
+                  <div class="px-4">
+                    <p class="mb-4">We will help you to get your visa and will help in all the processes along the way.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
+          <div class="service-item">
+            <div class="service-inner">
+              <div class="service-img">
+                <img src="{% static 'website_v2/img/service-1.webp' %}" class="img-fluid w-100 rounded" alt="Image" />
+              </div>
+              <div class="service-title">
+                <div class="service-title-name">
+                  <div class="bg-primary text-center rounded p-3 mx-5 mb-4">
+                    <a class="h4 text-white mb-0">Business Visa</a>
+                  </div>
+                </div>
+                <div class="service-content pb-4">
+                  <a><h4 class="text-white mb-4 py-3">Business Visa</h4></a>
+                  <div class="px-4">
+                    <p class="mb-4">We will help you to get your visa and will help in all the processes along the way.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.5s">
+          <div class="service-item">
+            <div class="service-inner">
+              <div class="service-img">
+                <img src="{% static 'website_v2/img/bd-workers-7.webp' %}" class="img-fluid w-100 rounded" alt="Image" />
+              </div>
+              <div class="service-title">
+                <div class="service-title-name">
+                  <div class="bg-primary text-center rounded p-3 mx-5 mb-4">
+                    <a class="h4 text-white mb-0">Tourist Visa</a>
+                  </div>
+                </div>
+                <div class="service-content pb-4">
+                  <a><h4 class="text-white mb-4 py-3">Tourist Visa</h4></a>
+                  <div class="px-4">
+                    <p class="mb-4">We will help you to get your visa and will help in all the processes along the way.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Categories End -->
+{% endblock %}

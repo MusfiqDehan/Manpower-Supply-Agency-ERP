@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block header_image %}
+  {% include 'components/header_image.html' %}
+{% endblock %}
+
+{% block page_content %}
+  <!-- About Start -->
+  <div class="container-fluid about-section py-5">
+    <div class="container py-5">
+      <div class="row g-5">
+        <div class="col-xl-5 wow fadeInLeft" data-wow-delay="0.1s">
+          <div class="rounded-3">
+            <img src="{% static 'website_v2/img/bd-workers-3.webp' %}" class="img-fluid w-100 mb-2" alt="Image" />
+            <img src="{% static 'website_v2/img/bd-workers-6.webp' %}" class="img-fluid w-100" alt="Image" />
+            <img src="{% static 'website_v2/img/bd-workers-5.webp' %}" class="img-fluid w-100 mt-2" alt="Image" />
+          </div>
+        </div>
+        <div class="col-xl-7 wow fadeInRight" data-wow-delay="0.3s">
+          <h5 class="sub-title pe-3">About the company</h5>
+          <h1 class="display-5 mb-4">Leading Manpower Export Company</h1>
+          <p class="mb-4">
+            <strong>Manpower Supply Agency International Limited</strong> is a leading manpower export company based in Bangladesh, dedicated to transforming the lives of skilled and semi-skilled laborers by providing them with international employment opportunities. We specialize in sending employees to Middle Eastern countries such as Saudi Arabia, Dubai, Qatar, Kuwait, Malaysia, Vietnam, and more. With a commitment to enhancing the global workforce, we offer comprehensive services that cover everything from training to visa processing, ensuring a seamless transition for workers seeking opportunities abroad.
+          </p>
+          <div class="row gy-4 align-items-center">
+            <div class="bg-light rounded p-4 mb-4">
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex">
+                    <div class="pe-4">
+                      <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-arrows-to-circle text-white fa-2x"></i>
+                      </div>
+                    </div>
+                    <div class="">
+                      <a href="#" class="h4 d-inline-block mb-3">Our Goal</a>
+                      <p class="mb-0">Our primary goal is to bridge the gap between the labor market in Bangladesh and the demand for skilled workers in various countries, thereby contributing to the economic growth of Bangladesh through substantial remittance earnings.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-light rounded p-4 mb-4">
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex">
+                    <div class="pe-4">
+                      <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-chart-simple text-white fa-2x"></i>
+                      </div>
+                    </div>
+                    <div class="">
+                      <a href="#" class="h4 d-inline-block mb-3">Our Mission</a>
+                      <p class="mb-0">To empower individuals by providing them with the skills, training, and opportunities needed to secure meaningful employment overseas, thus improving their quality of life and supporting the development of their home country.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-light rounded p-4 mb-4">
+              <div class="row">
+                <div class="col-12">
+                  <div class="d-flex">
+                    <div class="pe-4">
+                      <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+                        <i class="fas fa-bullseye text-white fa-2x"></i>
+                      </div>
+                    </div>
+                    <div class="">
+                      <a href="#" class="h4 d-inline-block mb-3">Our Vision</a>
+                      <p class="mb-0">To be the most trusted and reliable partner for global manpower solutions, recognized for our commitment to excellence, integrity, and the well-being of the workers we serve.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% comment %} {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- About End -->
+{% endblock %}

@@ -1,0 +1,56 @@
+{% load static %}
+
+<!-- Carousel Start -->
+<div class="carousel-header">
+  <div id="carouselId" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#carouselId" data-bs-slide-to="1"></li>
+      <li data-bs-target="#carouselId" data-bs-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+        <img src="https://cdn.musfiqdehan.com/msa-v2/website_v2/img/carousel-1.webp" class="img-fluid" alt="Image" />
+        <div class="carousel-caption">
+          <div class="text-center p-4" style="max-width: 900px;">
+            <h4 class="text-white text-uppercase fw-bold mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.1s">Hassle-Free Visa and Travel Arrangements</h4>
+            <h1 class="display-1 text-capitalize text-white mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.3s">Expert Visa and Travel Services</h1>
+            <p class="text-white mb-4 mb-md-5 fs-5 wow fadeInUp" data-wow-delay="0.5s">We handle all aspects of visa and passport processing, including pre-departure documentation and flight bookings, ensuring a smooth transition for workers to their new destinations.</p>
+            <a class="btn btn-primary border-secondary rounded-pill text-white py-3 px-5 wow fadeInUp" data-wow-delay="0.7s" href="{% url 'website_v2:contact' %}">Contact Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'website_v2/img/bd-workers-2.webp' %}" class="img-fluid" alt="Image" />
+        <div class="carousel-caption">
+          <div class="text-center p-4" style="max-width: 900px;">
+            <h5 class="text-white text-uppercase fw-bold mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.1s">Your Path to Global Employment Success</h5>
+            <h1 class="display-1 text-capitalize text-white mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.3s">Diverse Job Opportunities</h1>
+            <p class="text-white mb-4 mb-md-5 fs-5 wow fadeInUp" data-wow-delay="0.5s">From specialized training programs to job placement and pre-departure assistance, we provide end-to-end support to ensure a seamless overseas employment journey for workers.</p>
+            <a class="btn btn-primary border-secondary rounded-pill text-white py-3 px-5 wow fadeInUp" data-wow-delay="0.7s" href="{% url 'website_v2:about' %}">About Us</a>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="https://cdn.musfiqdehan.com/msa-v2/website_v2/img/carousel-2.webp" class="img-fluid" alt="Image" />
+        <div class="carousel-caption">
+          <div class="text-center p-4" style="max-width: 900px;">
+            <h5 class="text-white text-uppercase fw-bold mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.1s">Connecting You with Global Job Opportunities</h5>
+            <h1 class="display-1 text-capitalize text-white mb-3 mb-md-4 wow fadeInUp" data-wow-delay="0.3s">Wide Range of Jobs Abroad</h1>
+            <p class="text-white mb-4 mb-md-5 fs-5 wow fadeInUp" data-wow-delay="0.5s">Collaborating with global companies, we offer job placements in construction, electrical and agriculture etc, providing diverse employment opportunities to workers.</p>
+            <a class="btn btn-primary border-secondary rounded-pill text-white py-3 px-5 wow fadeInUp" data-wow-delay="0.7s" href="{% url 'website_v2:contact' %}">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-secondary wow fadeInLeft" data-wow-delay="0.2s" aria-hidden="false"></span>
+      <span class="visually-hidden-focusable">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-secondary wow fadeInRight" data-wow-delay="0.2s" aria-hidden="false"></span>
+      <span class="visually-hidden-focusable">Next</span>
+    </button>
+  </div>
+</div>
+<!-- Carousel End -->
