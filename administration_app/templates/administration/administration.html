@@ -1,0 +1,47 @@
+{% extends 'base/base.html' %} 
+
+
+{% block content %}
+  <div class="content">
+    <div class="pb-6">
+      <div class="row align-items-center justify-content-center g-3 mb-1 text-cente">
+        <div class="col-12 col-md-auto">
+          <h2 class="mb-0 text-center">Administration || Dashboard</h2>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Nev -->
+    {% comment %} <div class="row g-3 justify-content-between mb-4">
+      <div class="col-auto">
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-primary MachineAddButton" id="MachineAddID" data-url="">
+            <i class="fa-solid fa-plus"></i>
+            Add
+          </button>
+          <button class="btn btn-phoenix-secondary text-900"><span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <div class="d-flex">
+          <div class="search-box me-2 d-none d-xl-block">
+            <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+              <input class="form-control search-input search" type="search" placeholder="Search by name" aria-label="Search" />
+              <span class="fas fa-search search-box-icon"></span>
+            </form>
+          </div>
+
+          <button class="btn px-3 btn-phoenix-secondary me-2 d-xl-none"><span class="fa-solid fa-search"></span></button>
+
+          <button class="btn px-3 btn-phoenix-primary" type="button" data-bs-toggle="modal" data-bs-target="#filterModal" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-filter" data-fa-transform="down-3"></span></button>
+        </div>
+      </div>
+    </div> {% endcomment %}
+
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+
+    <!-- script -->
+  </div>
+{% endblock %}
