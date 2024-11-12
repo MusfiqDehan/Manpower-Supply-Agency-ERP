@@ -1,0 +1,36 @@
+<form method="post" action="{% url 'administration_app:user_login' %}" class="login_form_class">
+  {% csrf_token %}
+
+  <div class="mb-3 text-start">
+    <label class="form-label" for="id_login">Email address</label>
+    <div class="form-icon-container">
+      <input
+        class="form-control form-icon-input"
+        type="text"
+        name="username"
+        placeholder="Email"
+        autocomplete="username"
+        maxlength="150"
+        required
+        id="id_login"
+      /><span class="fas fa-user text-900 fs--1 form-icon"></span>
+    </div>
+  </div>
+
+  <div class="mb-4 text-start">
+    <label class="form-label" for="id_password">Password</label>
+    <div class="form-icon-container">
+      <input
+        class="form-control form-icon-input"
+        type="password"
+        name="password"
+        placeholder="Password"
+        autocomplete="current-password"
+        required
+        id="id_password"
+      /><span class="fas fa-key text-900 fs--1 form-icon"></span>
+    </div>
+  </div>
+
+  <button id="loading" type="button" class="btn btn-primary w-100 mb-3">Sign In</button>
+</form>

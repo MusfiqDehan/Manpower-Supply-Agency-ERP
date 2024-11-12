@@ -1,0 +1,129 @@
+{% comment %}
+<h1>Hello Organization Page!{{ user }}</h1>
+{% endcomment %}
+
+<div class="auth-form-box">
+  <div class="text-center mb-4">
+    <a class="d-flex flex-center text-decoration-none mb-4" href="">
+      <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+        <img src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/icons/musfiqdehan_icon_logo.png" alt="Md. Musfiqur Rahaman" width="58" />
+      </div>
+    </a>
+    <h4 class="text-1000">Organization/Company Form</h4>
+    <p class="text-700">Type your Organization Details</p>
+  </div>
+
+  <div id="organization_error_id"></div>
+
+  <form method="post" action="{% url 'administration_app:registration_organization' %}" class="mt-3 organization_form_class">
+    {% csrf_token %}
+    <input class="form-control mb-3" id="email" name="user_email" value="{{ user }}" hidden />
+
+    <div class="row g-3 mb-3">
+      <!-- Name -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control" type="text" name="name" id="name" placeholder="Organization Name" required />
+          <label for="name">Name</label>
+        </div>
+      </div>
+
+      <!-- Toal Employee -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-floating">
+          <input class="form-control" type="number" name="num_employees" id="num_employees" placeholder="number Of Employees" required />
+          <label for="name">Toal Employee</label>
+        </div>
+      </div>
+
+      <!-- Toal Brnach -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-floating">
+          <input class="form-control" type="number" name="num_branches" id="num_branches" placeholder="Number of Branches" required />
+          <label for="name">Toal Brnach</label>
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <select class="form-control" value="" name="category" id="category_id">
+            <option value="Tech">Tech</option>
+            <option value="Finance">Finance</option>
+            <option value="Healthcare">Healthcare</option>
+            <option value="Other">Other</option>
+          </select>
+          <label for="category_id">Category Type</label>
+        </div>
+      </div>
+
+      <!-- Website -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control" type="text" name="website" id="website_id" placeholder="website Link/ Name" required /><label for="website_id">Website</label>
+        </div>
+      </div>
+
+      <!-- Organization Address -->
+      <div class="col-12 gy-4">
+        <div class="form-floating">
+          <textarea class="form-control" name="address" id="id_address" type="text" placeholder="Organization Address" style="height: 100px" required></textarea><label for="id_address">Address</label>
+        </div>
+      </div>
+    </div>
+
+    <div id="organization_button_id">
+      <button id="loading" class="btn btn-primary w-100" type="submit">Submit</button>
+    </div>
+  </form>
+</div>
+
+<!-- Include CSRF token as a JavaScript variable -->
+<script>
+  const csrfToken = '{{ csrf_token }}'
+</script>
+
+<!-- Organization Script (Main) -->
+<script>
+  // Organization Script
+  $(function () {
+    /* Save Form */
+    var saveForm = function () {
+      var form = $(this)
+      $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+        },
+  
+        success: function (data) {
+          /*
+              if (data.superuser_redirect_url) {
+                // $("#registration_verification_form").html(data.verification_form);
+                window.location.replace("/hrm/hrm-index/");
+              }
+              */
+  
+          if (data['superuser_redirect_url']) {
+            window.location.replace(data['superuser_redirect_url'])
+          } else if (data['normal_user_redirect_url']) {
+            window.location.replace(data['normal_user_redirect_url'])
+          } else if (data.organization_submit_error) {
+            $('#organization_error_id').html(data.organization_submit_error)
+            $('#organization_button_id').html('<button id="loading" class="btn btn-primary w-100" type="submit">Submit</button>')
+          } else {
+            console.log('Failed')
+          }
+        }
+      })
+      return false
+    }
+  
+    //login with ajax
+    $('.organization_form_class').on('submit', saveForm)
+  })
+</script>

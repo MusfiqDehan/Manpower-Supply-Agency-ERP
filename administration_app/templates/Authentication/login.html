@@ -1,0 +1,164 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- =============================================== -->
+    <!-- Document Title -->
+    <!-- =============================================== -->
+    <title>Manpower Supply Agency | Login</title>
+
+    <link rel="shortcut icon" href="{% static 'favicons/favicon.ico' %}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- =============================================== -->
+    <!-- Favicons -->
+    <!-- =============================================== -->
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/choices/choices.min.css" rel="stylesheet" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/dhtmlx-gantt/dhtmlxgantt.css" rel="stylesheet" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/flatpickr/flatpickr.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+
+    <!-- 
+
+      <link rel="preconnect" rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>                                                                             -->
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/simplebar/simplebar.min.css" rel="stylesheet" />
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/dropzone/dropzone.min.css" />
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/dashboard/vendors/simplebar/simplebar.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/dashboard/assets/js/config.js"></script>
+
+    <script>
+      var phoenixIsRTL = JSON.parse(localStorage.getItem('phoenixIsRTL'))
+      if (phoenixIsRTL) {
+        var linkDefault = document.getElementById('style-default')
+        var userLinkDefault = document.getElementById('user-style-default')
+        linkDefault.setAttribute('disabled', true)
+        userLinkDefault.setAttribute('disabled', true)
+        document.querySelector('html').setAttribute('dir', 'rtl')
+      } else {
+        var linkRTL = document.getElementById('style-rtl')
+        var userLinkRTL = document.getElementById('user-style-rtl')
+        linkRTL.setAttribute('disabled', true)
+        userLinkRTL.setAttribute('disabled', true)
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- =============================================== -->
+    <!-- Main Content -->
+    <!-- =============================================== -->
+    <main class="main" id="top">
+      <div class="container-fluid px-0" data-layout="container">
+        <div class="container">
+          <div class="row flex-center min-vh-100 py-5">
+            <div class="col-sm-10 col-md-8 col-lg-5 col-xl-5 col-xxl-3">
+              <a class="d-flex flex-center text-decoration-none mb-1">
+                <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+                  {% comment %} <img src="" alt="Manpower Supply Agency" width="150" height="100" /> {% endcomment %}
+                  <h2>MSAgency</h2>
+                </div>
+              </a>
+
+              <div class="text-center mb-3">
+                <h3 class="text-1000">Sign In</h3>
+                <p class="text-700">Get access to your account</p>
+              </div>
+
+              <!-- Error Message -->
+              <div id="user_error_id"></div>
+              <div id="server_error"></div>
+
+              <form method="post" action="{% url 'administration_app:user_login' %}" class="login_form_class">
+                {% csrf_token %} {% if next_value %}
+                  <input type="text" value="{{ next_value }}" name="post_next_value" hidden />
+                {% endif %}
+                <div class="mb-3 text-start">
+                  <label class="form-label" for="id_login">Email address</label>
+                  <div class="form-icon-container">
+                    <input class="form-control form-icon-input" type="text" name="username" placeholder="Email" autocomplete="username" maxlength="150" required id="id_login" /><span class="fas fa-user text-900 fs--1 form-icon"></span>
+                  </div>
+                </div>
+
+                {% include 'Authentication/password_field.html' %}
+                {% comment %} {% include 'users/user_password_fields.html' %} {% endcomment %}
+
+                <div id="user_error_button_id">
+                  <button id="loading" type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- =============================================== -->
+    <!-- End of Main Content -->
+    <!-- =============================================== -->
+
+    <!-- =============================================== -->
+    <!-- JavaScripts -->
+    <!-- =============================================== -->
+
+    <script>
+      $(function () {
+        /* Save Form */
+        var saveForm = function () {
+          var form = $(this)
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#loading').prop('disabled', true)
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                if (data['redirect_url']) {
+                  window.location.replace(data['redirect_url'])
+                } else {
+                  window.location.replace('/hrm/hrm-index/')
+                }
+              } else if (data.login_error) {
+                $('#user_error_id').html(data.login_error)
+                $('#user_error_button_id').html('<button id="loading" type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>')
+              } else {
+                console.log('Failed')
+              }
+            },
+            error: function (error) {
+              console.log('-------------------i am in error-------------')
+              $('#server_error').html('<div class="alert  alert-dismissible fade show border border-warning" role="alert" > <strong>Server Error!!!</strong> Kindly Contact with the Support.<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button> </div>')
+              $('#user_error_button_id').html('<button id="loading" type="submit" class="btn btn-primary w-100 mb-3">Sign In</button>')
+            }
+          })
+          return false
+        }
+      
+        //login with ajax
+        $('.login_form_class').on('submit', saveForm)
+      })
+    </script>
+  </body>
+</html>
