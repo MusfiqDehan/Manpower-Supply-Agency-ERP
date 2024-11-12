@@ -1,0 +1,208 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <!-- Main Content -->
+    <div class="pb-9">
+      <h2 class="mb-4">Visa || Management</h2>
+      <div id="dealsTable">
+        <div class="row g-3 justify-content-between mb-2">
+          <div class="col-auto">
+            <div class="d-md-flex justify-content-between">
+              <div id="visa-create">
+                <button type="button" class="btn visaAddButton btn-primary" data-url="{% url 'visa_management_app:visa_create' %}">
+                  <i class="fa fa-add"></i>
+                  Add Visa
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- search by name -->
+          <div class="col-auto">
+            <div class="d-flex">
+              <div class="search-box me-2">
+                <form class="position-relative search_visa_form" action="#" data-bs-toggle="search" data-bs-display="static" id="search-form">
+                  <input class="form-control search-input search" type="search" id="visa_search_input" placeholder="Search by ID, name,phone number" />
+                  <span class="fas fa-search search-box-icon"></span>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- card -->
+        <div class="col-xl-12 col-xxl-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table id="visa-table" class="table fs--1 mb-0 leads-table border-bottom">
+                  <thead>
+                    <tr>
+                      <!-- visa information fields -->
+                      <!-- visa id -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Visa ID</th>
+
+                      <!-- VISA RATE -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 10%">Sponsor ID</th>
+
+                      <!-- VISA RATE -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 10%">Number of Visa</th>
+
+                      <!-- Full Name Name -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 15%">Visa File</th>
+
+                      <!-- Gender -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 15%">Collected Data</th>
+
+                      <!-- phone number -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 15%">Office</th>
+
+                      <!-- phone number -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 15%">Reference</th>
+
+                      <!-- phone number -->
+                      <th class="align-middle white-space-nowrap text-center text-uppercase border-end" scope="col" style="width: 5%">Status</th>
+
+                      <!-- action -->
+                      <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 15%">
+                        <div class="d-inline-flex flex-center">
+                          <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+                          <span>Action</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="list" id="deal-tables-body">
+                    {% include 'visa/visa_list.html' %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- pegination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="VisaModal" tabindex="-1" aria-labelledby="visaLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- search script -->
+    <script>
+      $(function () {
+        $('#search-form').on('submit', (e) => {
+          e.preventDefault()
+        })
+        var searchform = function () {
+          var form = $(this)
+          var search_value = $('#visa_search_input').val()
+          console.log(search_value, 'search_value')
+          $.ajax({
+            url: form.attr('action'),
+            data: { search_value: search_value },
+            dataType: 'json',
+      
+            success: function (data) {
+              console.log('i am in success')
+              $('#deal-tables-body').html(data.search_list)
+            }
+          })
+        }
+        $('.search_visa_form').on('input', searchform)
+      })
+    </script>
+
+    <!-- visa Information CRUD operation -->
+    <script>
+      $(function () {
+        /* load form */
+        var loadForm = function () {
+          var edit = document.getElementById('VisaModal')
+          var url
+          url = $(this).attr('data-url')
+      
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#VisaModal').modal('show')
+              $('#VisaModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+            },
+      
+            success: function (data) {
+              $('#VisaModal .modal-content').html(data.html_form)
+      
+              //$(edit).modal('show')
+              console.log('Success !')
+            }
+          })
+        }
+      
+        /* Save Form */
+        var saveForm = function () {
+          var edit = document.getElementById('VisaModal')
+          var form = $(this)
+      
+          var formData = new FormData(form[0])
+      
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            data: formData,
+      
+            processData: false,
+            contentType: false,
+      
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#visa-table tbody').html(data.html_visa_list)
+                $(edit).modal('hide')
+              } else {
+                $('#VisaModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+      
+        // add car to the   List
+        $('#visa-create').on('click', '.visaAddButton', loadForm)
+        $('#VisaModal').on('submit', '.visaAddForm', saveForm)
+      
+        // Update Trainng List
+        $('#visa-table').on('click', '.visaEditButton', loadForm)
+        $('#VisaModal').on('submit', '.visaEditForm', saveForm)
+      
+        // Delete Training List
+        $('#visa-table').on('click', '.visaDeleteButton', loadForm)
+        $('#VisaModal').on('submit', '.visaDeleteForm', saveForm)
+      })
+    </script>
+
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+
+    <!-- prettier ignore -->
+  </div>
+{% endblock %}

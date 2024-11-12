@@ -1,0 +1,52 @@
+{% for data in visa_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold" href=" ">{{ data.visa_id }}</a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-center text-1000 border-end">{{ data.sponsor_id }}</td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-center text-1000 border-end">{{ data.number_of_visa }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-center text-1000 border-end">
+      {% if data.file %}
+        <a href="{{ data.file.url }}" target="_blank">File Link</a>
+      {% else %}
+        NO File
+      {% endif %}
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-center text-1000 border-end">{{ data.collected_data }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-center text-1000 border-end">{{ data.office }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+      {% if data.reference %}
+        {{ data.reference }}
+      {% else %}
+        NO Reference
+      {% endif %}
+    </td>
+
+    <td class="name text-center align-middle white-space-nowrap fw-semi-bold text-1000 border-end">
+      {% if data.status %}
+        Active
+      {% else %}
+        Deactivated
+      {% endif %}
+    </td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          <div>
+            <button class="btn visaEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'visa_management_app:visa_edit' data.pk %}"><span class="fas fa-edit"></span></button>
+          </div>
+
+          <div>
+            <button class="btn visaDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'visa_management_app:visa_delete' data.pk %}"><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

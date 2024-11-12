@@ -1,0 +1,101 @@
+<form method="post" action="{% url 'visa_management_app:visa_edit' visa.pk %}" class="visaEditForm" enctype="multipart/form-data">
+    {% csrf_token %}
+  
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Visa Create/Add Form</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+  
+    <div class="modal-body">
+      <div class="row g-3 mb-6">
+        <!-- agent id field -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-submit">
+            <label for="submitgrid">Visa ID</label>
+            <input class="form-control" name="visa_id" type="text" value="{{ visa.visa_id }}" />
+          </div>
+        </div>
+  
+      
+  
+        <!-- FULL Name field -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-submit">
+            <label for="submitgrid">Sponsor Id</label>
+            <input class="form-control" name="sponsor_id" type="text" placeholder="Sponsor ID"  value="{{ visa.sponsor_id }}"/>
+          </div>
+        </div>
+  
+        <!-- field -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-submit">
+            <label for="submitgrid">Number of Visa</label>
+            <input class="form-control" name="number_of_visa" type="number" placeholder="number_of_visa" required value="{{ visa.number_of_visa }}"/>
+          </div>
+        </div>
+  
+        <!-- field -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-submit">
+            <label for="submitgrid">Collected Data</label>
+            <input class="form-control" name="collected_data" type="date" placeholder="" value="{{ visa.collected_data|date:'Y-m-d' }}"/>
+          </div>
+        </div>
+  
+        <!-- field -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Office Details</label>
+            <textarea class="form-control" id="floatingProjectOverview" name="office" placeholder="Detail of Office.." style="height: 80px">{{ visa.office}}</textarea>
+          </div>
+        </div>
+  
+        <!-- file field -->
+        <!-- <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Upload File</label>
+            <input class="form-control" name="file" type="file" placeholder="PNG/JPG File" />
+          </div>
+        </div> -->
+
+
+        
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if visa.file %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label">Current File: <a href="{{ visa.file.url }}" target="_blank">{{ visa.file|truncatechars:40 }}</a> </span>
+            <input class="form-control" name="file" type="file" placeholder="PNG/JPG File" />
+          {% else %}
+            <label for="submitgrid">Upload file</label>
+            <input class="form-control" name="file" type="file" placeholder="PNG/JPG File" />
+          {% endif %}
+        </div>
+      </div>
+  
+        <!-- address field -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Any Note</label>
+            <textarea class="form-control" id="floatingProjectOverview" name="details" placeholder="Any Note" style="height: 80px">{{ visa.details }}</textarea>
+          </div>
+        </div>
+  
+        <!-- field -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Reference</label>
+            <input class="form-control" name="reference" type="text" placeholder="Reference" value="{{ visa.reference }}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="modal-footer">
+      <!-- submit & close -->
+      <div class="form-submit">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+      </div>
+    </div>
+  </form>
+  

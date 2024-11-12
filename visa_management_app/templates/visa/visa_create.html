@@ -1,0 +1,97 @@
+<form method="post" action="{% url 'visa_management_app:visa_create' %}" class="visaAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Visa Create/Add Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- agent id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Visa ID</label>
+          <input class="form-control" name="visa_id" type="text" placeholder="Identity No" />
+        </div>
+      </div>
+
+      <!-- Agent -->
+      {% comment %} <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Agent</label>
+          <select id="agent_middle_man_id" class="form-select" name="agent_middle_man" required>
+            <option value="">Select Agent</option>
+            {% for data in agent_list %}
+              <option value="{{ data.id }}">{{ data.full_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div> {% endcomment %}
+
+      <!-- FULL Name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Sponsor Id</label>
+          <input class="form-control" name="sponsor_id" type="text" placeholder="Sponsor ID" required />
+        </div>
+      </div>
+
+      <!-- field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Number of Visa</label>
+          <input class="form-control" name="number_of_visa" type="number" placeholder="number_of_visa" required />
+        </div>
+      </div>
+
+      <!-- field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Collected Data</label>
+          <input class="form-control" name="collected_data" type="date" placeholder="" />
+        </div>
+      </div>
+
+      <!-- field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Office Details</label>
+          <textarea class="form-control" id="floatingProjectOverview" name="office" placeholder="Detail of Office.." style="height: 80px"></textarea>
+        </div>
+      </div>
+
+      <!-- file field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Upload File</label>
+          <input class="form-control" name="file" type="file" placeholder="PNG/JPG File" />
+        </div>
+      </div>
+
+      <!-- address field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Any Note</label>
+          <textarea class="form-control" id="floatingProjectOverview" name="details" placeholder="Any Note" style="height: 80px"></textarea>
+        </div>
+      </div>
+
+      <!-- field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Referance</label>
+          <input class="form-control" name="reference" type="text" placeholder="Reference" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
