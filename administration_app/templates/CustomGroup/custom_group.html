@@ -1,0 +1,309 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <!-- ==============For Super Admin Permissions ================ -->
+    {% if request.user.is_superuser %}
+      <div class="pb-9">
+        <h2 class="mb-4">Custom Group || Management</h2>
+        <div id="dealsTable" data-list="">
+          <div class="row g-3 justify-content-between mb-4">
+            <!-- create products button start -->
+            <div class="col-auto">
+              <div class="d-md-flex justify-content-between">
+                <div>
+                  <button id="role_create_button" type="button" class="btn categoryCreationButton btn-primary" data-url="{% url 'administration_app:create_custom_group' %}">
+                    <i class="fa fa-add"></i>
+                    Create Group
+                  </button>
+                </div>
+              </div>
+            </div>
+            <!-- create products button end -->
+
+            <!-- Search Box start -->
+            <div class="col-auto">
+              <div class="d-flex">
+                <div class="search-box me-2">
+                  <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                    <input class="form-control search-input search" type="search" placeholder="Search by Name,Sub Category,Date" aria-label="Search" />
+                    <span class="fas fa-search search-box-icon"></span>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <!-- Search Box end -->
+          </div>
+
+          <!-- List of all Permissions strat -->
+          <div class="row gy-5">
+            <div class="col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+              <div class="card">
+                <div class="card-body">
+                  <!-- Table body start -->
+                  <div id="lealsTable" data-list="">
+                    <!-- Table start -->
+                    <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                      <table class="table fs--1 mb-0 leads-table">
+                        <thead>
+                          <tr>
+                            <th class="sort white-space-nowrap align-middle text-uppercase ps-0 border-end" scope="col" data-sort="name">Role Name</th>
+
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">Description</th>
+
+                            <th class="sort align-middle text-end text-uppercase" scope="col" data-sort="status">ACTION</th>
+                          </tr>
+                        </thead>
+
+                        <tbody class="list" id="role-table-body">
+                          {% include 'CustomGroup/custom_group_list.html' %}
+                        </tbody>
+                      </table>
+                    </div>
+                    <!-- Table End -->
+                  </div>
+                  <!-- Table body End -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- List of all Permissions end -->
+        </div>
+      </div>
+      {% include 'base/footer.html' %}
+
+      <!-- Ajax modal for dynamic content -->
+      <div class="modal fade" id="RoleModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+
+      <script>
+        $(function () {
+          /* load form */
+          var loadForm = function () {
+            var RoleModal_element = document.getElementById('RoleModal')
+            var url
+            url = $(this).attr('data-url')
+        
+            $.ajax({
+              url: url,
+              type: 'get',
+              dataType: 'json',
+        
+              beforeSend: function () {
+                $(RoleModal_element).modal('show')
+              },
+        
+              success: function (data) {
+                $('#RoleModal .modal-content').html(data.html_form)
+              }
+            })
+          }
+        
+          /* Save Form */
+          var saveForm = function () {
+            var RoleModal_element = document.getElementById('RoleModal')
+            var form = $(this)
+        
+            $.ajax({
+              url: form.attr('action'),
+              data: form.serialize(),
+              type: form.attr('method'),
+              dataType: 'json',
+        
+              beforeSend: function () {
+                $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+              },
+        
+              success: function (data) {
+                if (data.is_form_valid) {
+                  $('#role-table-body').html(data.html_updated_permissions_list)
+                  $(RoleModal_element).modal('hide')
+                } else {
+                  $('#RoleModal .modal-content').html(data.html_form)
+                }
+              }
+            })
+            return false
+          }
+        
+          // Create Product and Save
+          $('#role_create_button').on('click', loadForm)
+          $('#RoleModal').on('submit', '.RoleCreationForm', saveForm)
+        
+          // Edit Permission
+          $('#role-table-body').on('click', '.RoleEditButton', loadForm)
+          $('#RoleModal').on('submit', '.RoleEditionForm', saveForm)
+        
+          // Delete Permission
+          $('#role-table-body').on('click', '.RoleDeleteButton', loadForm)
+          $('#RoleModal').on('submit', '.RoleDeletionForm', saveForm)
+        })
+      </script>
+    {% else %}
+      <!-- prettier ignore -->
+      {% for i in user.Group_Users.first.permissions.all %}
+        <!-- prettier ignore -->
+        {% if i.codename == 'view_customgroup' %}
+          <div class="pb-9">
+            <h2 class="mb-4">Custom Group || Management</h2>
+            <div id="dealsTable" data-list="">
+              <div class="row g-3 justify-content-between mb-4">
+                <!-- create products button start -->
+                <div class="col-auto">
+                  <div class="d-md-flex justify-content-between">
+                    <!-- Button -->
+                    <!-- prettier ignore -->
+                    {% for i in user.Group_Users.first.permissions.all %}
+                      <!-- prettier ignore -->
+                      {% if i.codename == 'add_customgroup' %}
+                        <div>
+                          <button id="role_create_button" type="button" class="btn categoryCreationButton btn-primary" data-url="{% url 'administration_app:create_custom_group' %}">
+                            <i class="fa fa-add"></i>
+                            Create Group
+                          </button>
+                        </div>
+
+                        <!-- prettier ignore -->
+                      {% endif %}
+                      <!-- prettier ignore -->
+                    {% endfor %}
+                  </div>
+                </div>
+                <!-- create products button end -->
+
+                <!-- Search Box start -->
+                <div class="col-auto">
+                  <div class="d-flex">
+                    <div class="search-box me-2">
+                      <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                        <input class="form-control search-input search" type="search" placeholder="Search by Name,Sub Category,Date" aria-label="Search" />
+                        <span class="fas fa-search search-box-icon"></span>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+                <!-- Search Box end -->
+              </div>
+
+              <!-- List of all Permissions strat -->
+              <div class="row gy-5">
+                <div class="col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+                  <div class="card">
+                    <div class="card-body">
+                      <!-- Table body start -->
+                      <div id="lealsTable" data-list="">
+                        <!-- Table start -->
+                        <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                          <table class="table fs--1 mb-0 leads-table">
+                            <thead>
+                              <tr>
+                                <th class="sort white-space-nowrap align-middle text-uppercase ps-0 border-end" scope="col" data-sort="name">Role Name</th>
+
+                                <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">Description</th>
+
+                                <th class="sort align-middle text-end text-uppercase" scope="col" data-sort="status">ACTION</th>
+                              </tr>
+                            </thead>
+
+                            <tbody class="list" id="role-table-body">
+                              {% include 'CustomGroup/custom_group_list.html' %}
+                            </tbody>
+                          </table>
+                        </div>
+                        <!-- Table End -->
+                      </div>
+                      <!-- Table body End -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- List of all Permissions end -->
+            </div>
+          </div>
+          {% include 'base/footer.html' %}
+
+          <!-- Ajax modal for dynamic content -->
+          <div class="modal fade" id="RoleModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content"></div>
+            </div>
+          </div>
+
+          <script>
+            $(function () {
+              /* load form */
+              var loadForm = function () {
+                var RoleModal_element = document.getElementById('RoleModal')
+                var url
+                url = $(this).attr('data-url')
+            
+                $.ajax({
+                  url: url,
+                  type: 'get',
+                  dataType: 'json',
+            
+                  beforeSend: function () {
+                    $(RoleModal_element).modal('show')
+                  },
+            
+                  success: function (data) {
+                    $('#RoleModal .modal-content').html(data.html_form)
+                  }
+                })
+              }
+            
+              /* Save Form */
+              var saveForm = function () {
+                var RoleModal_element = document.getElementById('RoleModal')
+                var form = $(this)
+            
+                $.ajax({
+                  url: form.attr('action'),
+                  data: form.serialize(),
+                  type: form.attr('method'),
+                  dataType: 'json',
+            
+                  beforeSend: function () {
+                    $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+                  },
+            
+                  success: function (data) {
+                    if (data.is_form_valid) {
+                      $('#role-table-body').html(data.html_updated_permissions_list)
+                      $(RoleModal_element).modal('hide')
+                    } else {
+                      $('#RoleModal .modal-content').html(data.html_form)
+                    }
+                  }
+                })
+                return false
+              }
+            
+              // Create Product and Save
+              $('#role_create_button').on('click', loadForm)
+              $('#RoleModal').on('submit', '.RoleCreationForm', saveForm)
+            
+              // Edit Permission
+              $('#role-table-body').on('click', '.RoleEditButton', loadForm)
+              $('#RoleModal').on('submit', '.RoleEditionForm', saveForm)
+            
+              // Delete Permission
+              $('#role-table-body').on('click', '.RoleDeleteButton', loadForm)
+              $('#RoleModal').on('submit', '.RoleDeletionForm', saveForm)
+            })
+          </script>
+
+          <!-- prettier ignore -->
+        {% endif %}
+        <!-- prettier ignore -->
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endblock %}

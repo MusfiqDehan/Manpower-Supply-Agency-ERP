@@ -1,0 +1,22 @@
+{% for data in group_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="fs--1 align-middle border-end">
+      <a class="fs-0 fw-bold" href="{% url 'administration_app:customgroup_details' data.id %}">
+        {{ data.name }}
+        <span class="badge bg-success">View to Manage Permissions</span>
+      </a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap ps-4 border-end">{{ data.description }}</td>
+
+    <td class="status align-middle white-space-nowrap text-end pe-0 ps-4">
+      <!-- Edit -->
+
+      <button class="RoleEditButton badge badge-phoenix me-2" type="button" data-url="{% url 'administration_app:edit_custom_group' data.id %}" style="width: 30px; height: 30px; background-color: #ff9900"><span style="font-size: 12px" class="fas fa-edit"></span></button>
+
+      <!-- Delete -->
+
+      {% comment %} <button class="RoleDeleteButton badge badge-phoenix me-2 inOutAttendanceButton" type="button" data-url="{% url 'administration_app:delete_custom_group' data.id %}" style="width: 30px; height: 30px; background-color: #fd5c63"><i style="font-size: 12px" class="fa-sharp fa-solid fa-trash" style="color: #fff"></i></button> {% endcomment %}
+    </td>
+  </tr>
+{% endfor %}

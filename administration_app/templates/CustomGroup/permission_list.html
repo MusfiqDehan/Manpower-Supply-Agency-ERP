@@ -1,0 +1,7 @@
+{% for permission in group.permissions.all %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="email align-middle text-center white-space-nowrap pe-5 fw-semi-bold border-end">{{ permission.permission_app }}</td>
+    <td class="email align-middle text-center white-space-nowrap pe-5 fw-semi-bold border-end">{{ permission.codename }}</td>
+    <td class="email align-middle text-center white-space-nowrap pe-5 fw-semi-bold border px-1">{{ permission.name }}</td>
+  </tr>
+{% endfor %}

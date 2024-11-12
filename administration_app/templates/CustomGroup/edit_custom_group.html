@@ -1,0 +1,40 @@
+<form method="POST" action="{% url 'administration_app:edit_custom_group' role.id %}" class="RoleEditionForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title">Group Edition Form</h5>
+    <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 align-items-center">
+      <div class="col-sm-12 col-md-12">
+        <div class="form-floating">
+          <input class="form-control" type="text" name="name" id="name" placeholder="Name" value="{{role.name}}" required />
+          <label for="name">Group Name</label>
+        </div>
+      </div>
+
+      <div class="col-sm-12 col-md-12">
+        <div class="form-floating">
+          <textarea
+            class="form-control"
+            name="description"
+            id="Description"
+            placeholder="Leave a comment here"
+            style="height: 100px"
+            required
+          ></textarea
+          ><label for="Description">{{role.description}}</label>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="form-submit">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

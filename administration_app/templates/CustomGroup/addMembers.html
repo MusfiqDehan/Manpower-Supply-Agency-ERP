@@ -1,0 +1,35 @@
+<form method="POST" action="{% url 'administration_app:add_group_members' group.id %}" class="groupMemberAdditionForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Add Members to The Group</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    {% if users %}
+      <!-- prettier ignore -->
+      {% for user in users %}
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label class="col-form-label">
+              <input type="checkbox" name="users" value="{{ user.id }}" />
+              {{ user.first_name }} {{ user.last_name }}
+            </label>
+          </div>
+        </div>
+      {% endfor %}
+
+      <!-- prettier ignore -->
+    {% else %}
+      <h6 class="modal-title" id="staticBackdropLabel">No Users Are Available!</h6>
+    {% endif %}
+  </div>
+
+  <div class="modal-footer">
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

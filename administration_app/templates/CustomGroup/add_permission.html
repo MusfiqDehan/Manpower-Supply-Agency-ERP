@@ -1,0 +1,64 @@
+
+
+<form method="POST" action="{% url 'administration_app:add_permissions' group.id %}" class="groupPermissionsAdditionForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="staticBackdropLabel">Add Permission to Group</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="scrollbar" style="max-height: 670px">
+      <div class="row g-3 align-items-center">
+        <div class="col-auto">
+          <label class="col-form-label"><input type="checkbox" id="select-all-checkbox" />Select All Permissions</label>
+        </div>
+      </div>
+
+      {% for permission in permissions %}
+        <div class="row g-3 align-items-center">
+          <div class="col-auto">
+            <label class="col-form-label">
+              <input type="checkbox" name="permissions" value="{{ permission.id }}" class="permission-checkbox" />
+              {{ permission.content_type }} {{ permission.name }}
+            </label>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+<!-- Select All Permission script -->
+<script>
+  // Function to handle "Select All" checkbox
+  document.getElementById('select-all-checkbox').addEventListener('change', function () {
+    var checkboxes = document.getElementsByClassName('permission-checkbox')
+    for (var i = 0; i < checkboxes.length; i++) {
+      checkboxes[i].checked = this.checked
+    }
+  })
+  
+  // Function to handle individual permission checkboxes
+  var permissionCheckboxes = document.getElementsByClassName('permission-checkbox')
+  for (var i = 0; i < permissionCheckboxes.length; i++) {
+    permissionCheckboxes[i].addEventListener('change', function () {
+      var allChecked = true
+      for (var j = 0; j < permissionCheckboxes.length; j++) {
+        if (!permissionCheckboxes[j].checked) {
+          allChecked = false
+          break
+        }
+      }
+      document.getElementById('select-all-checkbox').checked = allChecked
+    })
+  }
+</script>

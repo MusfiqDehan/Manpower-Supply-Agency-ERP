@@ -1,0 +1,29 @@
+<form action="{% url 'administration_app:add_group_permissions' group.id %}" method="post" class="add_permission_form">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title" id="customizePermissionsModalLabel">Manage Permissions</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <div class="list-group container">
+      {% for perm in permissions %}
+        <div class="row g-3 mb-3">
+          <h4>{{ perm.name }}</h4>
+
+          {% for data in perm.permissions.all %}
+            <div class="col-lg-3">
+              <input type="checkbox" value="{{ data.id }}" for="view" name="permission_id" id="" {% if data in selected_permissions %}checked{% endif %} />
+              <label for="view">{{ data.name }}</label>
+            </div>
+          {% endfor %}
+        </div>
+        <hr>
+      {% endfor %}
+      {% comment %} {% endcomment %}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button id="loading" type="submit" class="btn btn-primary">Save Permissions</button>
+  </div>
+</form>

@@ -1,0 +1,20 @@
+{% for data in group.group_users.all %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center border-end">
+      <a class="d-flex align-items-center" href=""><p class="fs-0 fw-bold px-2">{{ data.first_name }} {{ data.last_name }}</p></a>
+    </td>
+    <td class="email align-middle white-space-nowrap pe-5 fw-semi-bold border-end">{{ data.email }}</td>
+
+    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000 border-end">{{ data.is_active }}</td>
+
+    <td class="city align-middle white-space-nowrap text-1000 ps-7 border-end">{{ data.is_staff }}</td>
+
+    <td class="last-seen align-middle white-space-nowrap text-700 border-end">{{ data.date_joined }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <!-- Remove user -->
+
+      <button class="RemoveMemberButton badge badge-phoenix me-2 inOutAttendanceButton" type="button" data-url="{% url 'administration_app:remove_user_from_group' group.id data.id %}" style="width: 30px; height: 30px; background-color: #fd5c63"><i style="font-size: 12px" class="fa-sharp fa-solid fa-trash" style="color: #fff"></i></button>
+    </td>
+  </tr>
+{% endfor %}

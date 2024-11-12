@@ -1,0 +1,323 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <style>
+    .nav-tabs .nav-link {
+      color: black;
+    }
+    
+    .nav-tabs .nav-link.active {
+      border-bottom: 3px solid blue;
+      color: #004dff;
+    }
+  </style>
+  <div class="content">
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs" id="groupManagementTabs" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active fs-1" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="true">Users</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link fs-1" id="permissions-tab" data-bs-toggle="tab" data-bs-target="#permissions" type="button" role="tab" aria-controls="permissions" aria-selected="false">Permissions</button>
+      </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content mt-4" id="groupManagementTabContent">
+      <!-- Users Tab Pane -->
+      <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+        <div class="pb-9">
+          <h2 class="mb-4">{{ group.name }} || Group Management</h2>
+          <div>
+            <button class="btn btn-primary mb-3" id="add_members" data-url="{% url 'administration_app:add_group_members' group.id %}">Add Users</button>
+          </div>
+
+          <div id="dealsTable" data-list="">
+            <!-- Your existing Users table content here -->
+            <!-- Users Table -->
+            <div class="col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="text-1100 text-center mb-4">Group Users Management Table</h3>
+                  <!-- Users Table content -->
+                  <div id="lealsTable" data-list="">
+                    <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                      <table id="employee-table" class="table fs--1 mb-0 leads-table">
+                        <thead>
+                          <tr>
+                            <th class="sort white-space-nowrap align-middle text-uppercase border-end" scope="col" data-sort="name">User Name</th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">Email</th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">IS ACTIVE</th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">IS STAFF</th>
+                            <th class="sort align-middle ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">JOIN DATE</th>
+                            <th class="sort align-middle text-end text-uppercase" scope="col" data-sort="status">ACTION</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list" id="member_table_body">
+                          {% include 'CustomGroup/members_list.html' %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Permissions Tab Pane -->
+      <div class="tab-pane fade" id="permissions" role="tabpanel" aria-labelledby="permissions-tab">
+        <div class="pb-9">
+          <h2 class="mb-4">{{ group.name }} || Group Management</h2>
+          <div id="permissionCreate">
+            <button type="button" class="btn btn-primary mb-3 add_permission_button" data-bs-toggle="modal" data-url="{% url 'administration_app:add_group_permissions' group.id %}">Update Permissions</button>
+          </div>
+          <!-- Existing permissions table here -->
+          <div id="dealsTable" data-list="">
+            <!-- Your existing Permissions table content here -->
+            <!-- Permissions Table -->
+            <div class="col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+              <div class="card">
+                <div class="card-body">
+                  <h3 class="text-1100 text-center mb-4">Group Permissions Management Table</h3>
+                  <!-- Permissions Table content -->
+                  <div id="lealsTable" data-list="">
+                    <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                      <table id="employee-table" class="table fs--1 mb-0 leads-table">
+                        <thead>
+                          <tr>
+                            <th class="sort white-space-nowrap text-center align-middle text-uppercase ps-0 border-end" scope="col" data-sort="name">Permission App</th>
+                            <th class="sort align-middle text-center ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">Permission Code_Name</th>
+                            <th class="sort align-middle text-center ps-4 pe-5 text-uppercase border-end" scope="col" data-sort="date">Permission Name</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list" id="permission_table_body">
+                          {% include 'CustomGroup/permission_list.html' %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+  </div>
+
+  <!-- Add Users -->
+  <!-- Ajax modal for dynamic content -->
+  <div class="modal fade" id="DynamicModal" tabindex="-1" aria-labelledby="DynamicModal" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content"></div>
+    </div>
+  </div>
+
+  <script>
+    $(function () {
+      /* load form for modal form open */
+    
+      var loadForm = function () {
+        var DynamicModal_element = document.getElementById('DynamicModal')
+        var url
+        url = $(this).attr('data-url')
+    
+        $.ajax({
+          url: url,
+          type: 'get',
+          dataType: 'json',
+    
+          beforeSend: function () {
+            $(DynamicModal_element).modal('show')
+          },
+    
+          success: function (data) {
+            $('#DynamicModal .modal-content').html(data.html_form)
+          }
+        })
+      }
+    
+      /* Save Form for modal form data save */
+      var saveForm = function () {
+        var DynamicModal_element = document.getElementById('DynamicModal')
+        var form = $(this)
+    
+        $.ajax({
+          url: form.attr('action'),
+          data: form.serialize(),
+          type: form.attr('method'),
+          dataType: 'json',
+    
+          beforeSend: function () {
+            $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+          },
+    
+          success: function (data) {
+            if (data.form_is_valid) {
+              $('#member_table_body').html(data.html_updated_members_list)
+              $(DynamicModal_element).modal('hide')
+            } else {
+              $('#DynamicModal .modal-content').html(data.html_form)
+            }
+          }
+        })
+        return false
+      }
+    
+      /* Save Form for modal Permision form data save */
+      var savePermissionForm = function () {
+        var DynamicModal_element = document.getElementById('DynamicModal')
+        var form = $(this)
+    
+        $.ajax({
+          url: form.attr('action'),
+          data: form.serialize(),
+          type: form.attr('method'),
+          dataType: 'json',
+    
+          beforeSend: function () {
+            $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+          },
+    
+          success: function (data) {
+            if (data.form_is_valid) {
+              $('#permission_table_body').html(data.html_updated_permissions_list)
+              $(DynamicModal_element).modal('hide')
+            } else {
+              $('#DynamicModal .modal-content').html(data.html_form)
+            }
+          }
+        })
+        return false
+      }
+    
+      /* Save Function for admin remove */
+      var saveAdminForm = function () {
+        var DynamicModal_element = document.getElementById('DynamicModal')
+        var form = $(this)
+    
+        $.ajax({
+          url: form.attr('action'),
+          data: form.serialize(),
+          type: form.attr('method'),
+          dataType: 'json',
+    
+          beforeSend: function () {
+            $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+          },
+    
+          success: function (data) {
+            if (data.form_is_valid) {
+              $('#admin_table_body').html(data.html_updated_admin_list)
+              $(DynamicModal_element).modal('hide')
+            } else {
+              $('#DynamicModal .modal-content').html(data.html_form)
+            }
+          }
+        })
+        return false
+      }
+    
+      // Group Member Addition
+      $('#add_members').on('click', loadForm)
+      $('#DynamicModal').on('submit', '.groupMemberAdditionForm', saveForm)
+    
+      // Group Permission Addition
+      $('#add_permissions').on('click', loadForm)
+      $('#DynamicModal').on('submit', '.groupPermissionsAdditionForm', savePermissionForm)
+    
+      //Group Admin Addition
+      $('#add_admins').on('click', loadForm)
+      $('#DynamicModal').on('submit', '.groupAdminsAdditionForm', saveAdminForm)
+    
+      // remove  Member from group
+      $('#member_table_body').on('click', '.RemoveMemberButton', loadForm)
+      $('#DynamicModal').on('submit', '.MemberDeletionForm', saveForm)
+    
+      // Remove Permision from Group
+      $('#permission_table_body').on('click', '.RemovePermissionButton', loadForm)
+      $('#DynamicModal').on('submit', '.PermissionRemoveForm', savePermissionForm)
+    
+      // Remove Admin from Group
+      $('#admin_table_body').on('click', '.RemoveAdminButton', loadForm)
+      $('#DynamicModal').on('submit', '.AdminDeletionForm', saveAdminForm)
+    })
+  </script>
+  {% comment %} {% endcomment %}
+
+  <!-- Customize Permissions Modal -->
+  <div class="modal fade" id="customizePermissionsModal" tabindex="-1" aria-labelledby="customizePermissionsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        {% comment %}form{% endcomment %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Permissions Update AJAX -->
+  <script>
+    $(document).ready(function () {
+      // Function to load form data
+      var loadForm = function (event) {
+        event.preventDefault()
+        var modal = $('#customizePermissionsModal')
+        var button = $(this)
+    
+        $.ajax({
+          url: button.attr('href') || button.attr('data-url'),
+          type: 'get',
+          dataType: 'json',
+          beforeSend: function () {
+            modal.modal('show')
+          },
+          success: function (data) {
+            modal.find('.modal-content').html(data.add_permissions_form)
+          }
+        })
+      }
+    
+      // Save form data
+      var saveForm = function () {
+        var modal = document.getElementById('customizePermissionsModal')
+        var form = $(this)
+    
+        $.ajax({
+          url: form.attr('action'),
+          type: form.attr('method'),
+          dataType: 'json',
+          data: form.serialize(),
+    
+          beforeSend: function (xhr) {
+            $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          },
+    
+          success: function (data) {
+            if (data.valid) {
+              $('#permission_table_body').html(data.permission_list)
+              $(modal).modal('hide')
+            } else {
+              $(modal).find('.modal-content').html(data.add_permissions_form)
+            }
+          }
+        })
+        return false
+      }
+    
+      // Bind loadForm function to buttons
+      $('#permissionCreate').on('click', '.add_permission_button', loadForm)
+    
+      // Bind saveForm function to forms
+      $('#customizePermissionsModal').on('submit', '.add_permission_form', saveForm)
+    })
+  </script>
+{% endblock %}
