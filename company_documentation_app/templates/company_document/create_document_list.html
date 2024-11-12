@@ -1,0 +1,48 @@
+{% for data in company_document_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold" href="">{{ data.document_number }}</a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.document_category }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.document_name }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.expiration_date }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+      <a class="common-name-link" href="{{ data.document_file.url }}" target="_blank">{{ data.document_file }}</a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.status }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          <!-- Edit -->
+          <div>
+            <button class="btn middlemanEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'company_documentation_app:document_edit' data.pk %}"><span class="fas fa-edit"></span></button>
+          </div>
+
+          <!-- Deleted -->
+          <div>
+            <button class="btn middlemanDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'company_documentation_app:document_delete' data.pk %}"><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}
+
+<!-- file Field short name script -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var nameLinks = document.querySelectorAll('.common-name-link') // Select all anchor tags with the common class
+  
+    nameLinks.forEach(function (link) {
+      var originalFileName = link.textContent // Get the original file name
+      var displayedFileName = originalFileName.substring(0, 20) // Get the first 20 characters
+      link.textContent = displayedFileName // Update the content of each anchor tag
+    })
+  })
+</script>

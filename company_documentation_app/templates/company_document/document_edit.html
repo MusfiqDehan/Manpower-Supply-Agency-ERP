@@ -1,0 +1,85 @@
+<form method="post" action="{% url 'company_documentation_app:document_edit' form.instance.pk %}" class="middlemanEditForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Document Info</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- document_type field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Category</label>
+          <select id="select_gender" class="form-select" name="document_type">
+            <option value="{{ selected_obj.document_category }}" selected>{{ selected_obj.document_category }}</option>
+            {% for category in company_document_category_list %}
+              <option value="{{ category.pk }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- document_name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Name</label>
+          <input class="form-control" name="document_name" type="text" placeholder="document_name" value="{{ selected_obj.document_name }}" />
+        </div>
+      </div>
+
+      <!-- national_id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document ID</label>
+          <input class="form-control" name="document_number" type="text" placeholder="National ID" value="{{ selected_obj.document_number }}" />
+        </div>
+      </div>
+
+      <!-- expiration_date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expiration Date</label>
+          <input id="" class="form-control" name="expiration_date" type="date" value="{{ selected_obj.expiration_date|date:'Y-m-d' }}" />
+        </div>
+      </div>
+
+      <!-- file field -->
+      <!--     <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Upload File</label>
+          <input class="form-control" name="document_file" type="file" placeholder="PDF/PNG/JPG File" />
+        </div>
+      </div>     -->
+
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if selected_obj.document_file %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label">Current File: <a href="{{ selected_obj.document_file.url }}" target="_blank">{{ selected_obj.document_file|truncatechars:40 }}</a></span>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% else %}
+            <label for="submitgrid">Upload file (*pdf)</label>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- note field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <input class="form-control" name="description" type="text" placeholder="Description" value="{{ selected_obj.description }}" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,97 @@
+{% if company_document_category_list %}
+  {% for data in company_document_category_list %}
+    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+
+      <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+        <a class="fw-semi-bold" href=" ">{{ data.name}}</a>
+      </td>
+
+      <td class="align-middle white-space-nowrap text-end pe-0 ps-11 ">
+        <div class="font-sans-serif btn-reveal-trigger position-static">
+          <div style="display: flex" class="end-0">
+            <!-- view will be added later -->
+                <div>
+                  <button class="btn documentCategoryEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0"
+                          data-url="{% url 'company_documentation_app:company_document_category_edit' data.id %} "
+                          data-id="{{ data.document_category.id }}">
+                    <span class="fas fa-edit"></span>
+                </button>
+                </div>
+
+                <div>
+                  <button class="btn documentCategoryDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0"
+                           data-url="{% url 'company_documentation_app:company_document_category_delete' data.id %} "
+                           >
+                    <span class="fas fa-trash"></span>
+                </button>
+                </div>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr>
+    <td colspan="7" class="text-center" style="color: red;">No Document Available</td>
+  </tr>
+{% endif %}
+<script>
+  $(function(){
+    var loadForm=function(){
+
+      $.ajax({
+        url:$(this).attr('data-url'),
+        type:'get',
+        dataType:'json',
+
+        success:function(data){
+          $('#CompanyDocumentCategoryModal .modal-content').html(data.html_form)
+          $('#CompanyDocumentCategoryModal').modal('show')
+          console.log('loadform')
+        }
+
+      })
+    }
+    var saveForm=function(){
+
+        var form=$(this)
+        var formdata=new FormData(form[0])
+        $.ajax({
+          url:form.attr('action'),
+          type:form.attr('method'),
+          data:formdata,
+
+          contentType:false,
+          processData:false,
+          dataType:'json',
+
+          beforeSend:function(){
+
+          },
+          success:function(data){
+            console.log('saveform')
+            if(data.form_is_valid){
+            $('#document_category_table tbody').html(data.company_document_category)
+            $('#CompanyDocumentCategoryModal').modal('hide')
+            }else{
+              $('#CompanyDocumentCategoryModal .modal-content').html(data.html_form)
+              $('#CompanyDocumentCategoryModal').modal('show')
+            }
+          }
+        })
+        return false
+    }
+    //create
+    $('#addDocumentCategoryButton').on('click',loadForm)
+    $('#CompanyDocumentCategoryModal').on('submit','.companyDocumentCategoryCreateForm',saveForm)
+
+    //edit
+    $('.documentCategoryEditButton').on('click',loadForm)
+    $('#CompanyDocumentCategoryModal').on('submit','.companyDocumentCategoryEditForm',saveForm)
+
+    //delete
+    $('.documentCategoryDeleteButton').on('click',loadForm)
+    $('#CompanyDocumentCategoryModal').on('submit','.companyDocumentCategoryDeleteForm',saveForm)
+  })
+</script>

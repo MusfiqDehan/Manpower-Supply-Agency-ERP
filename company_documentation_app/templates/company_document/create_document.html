@@ -1,0 +1,73 @@
+<form method="post" action="{% url 'company_documentation_app:document_create' %}" class="midlemanAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Document Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- document_type field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Category</label>
+          <select id="select_document_category" class="form-select" name="document_category" required>
+            <option value="" hidden>Select Category</option>
+            {% for category in company_document_category_list %}
+              <option value="{{ category.pk }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- document_name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+          <input class="form-control" name="document_name" type="text" placeholder="document_name" required />
+        </div>
+      </div>
+
+      <!-- national_id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document ID</label>
+          <input class="form-control" name="document_number" type="text" placeholder="National ID" />
+        </div>
+      </div>
+
+      <!-- expiration_date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expiration Date</label>
+          <input id="" class="form-control" name="expiration_date" type="date" placeholder="expiration_date" />
+        </div>
+      </div>
+
+      <!-- file field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Upload File</label>
+          <input class="form-control" name="document_file" type="file" placeholder="PDF/PNG/JPG File" required />
+        </div>
+      </div>
+
+      <!-- note field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <input class="form-control" name="description" type="text" placeholder="Description" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
