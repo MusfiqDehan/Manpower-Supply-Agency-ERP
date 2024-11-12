@@ -1,0 +1,415 @@
+<!-- registration.html -->
+
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- =============================================== -->
+    <!-- Document Title -->
+    <!-- =============================================== -->
+    <title>Md. Musfiqur Rahaman</title>
+
+    <!-- =============================================== -->
+    <!-- Favicons -->
+    <!-- =============================================== -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/favicon-16x16.png" />
+    {% comment %}
+    <link rel="shortcut icon" type="image/x-icon" href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/favicon.ico" />
+    {% endcomment %}
+    <link rel="manifest" href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/manifest.json" />
+    <meta name="msapplication-TileImage" content="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/favicons/mstile-150x150.png" />
+
+    <meta name="theme-color" content="#ffffff" />
+
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/simplebar/simplebar.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/js/config.js"></script>
+
+    <!-- =============================================== -->
+    <!-- Stylesheets -->
+    <!-- =============================================== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/line.css" />
+
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/simplebar/simplebar.min.css" rel="stylesheet" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/css/theme-rtl.min.css" type="text/css" rel="stylesheet" id="style-rtl" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/css/theme.min.css" type="text/css" rel="stylesheet" id="style-default" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/css/user-rtl.min.css" type="text/css" rel="stylesheet" id="user-style-rtl" />
+    <link href="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/css/user.min.css" type="text/css" rel="stylesheet" id="user-style-default" />
+
+    <script>
+      var phoenixIsRTL = window.config.config.phoenixIsRTL
+      if (phoenixIsRTL) {
+        var linkDefault = document.getElementById('style-default')
+        var userLinkDefault = document.getElementById('user-style-default')
+        linkDefault.setAttribute('disabled', true)
+        userLinkDefault.setAttribute('disabled', true)
+        document.querySelector('html').setAttribute('dir', 'rtl')
+      } else {
+        var linkRTL = document.getElementById('style-rtl')
+        var userLinkRTL = document.getElementById('user-style-rtl')
+        linkRTL.setAttribute('disabled', true)
+        userLinkRTL.setAttribute('disabled', true)
+      }
+    </script>
+
+    <style></style>
+  </head>
+
+  <body>
+    <!-- =============================================== -->
+    <!-- Main Content -->
+    <!-- =============================================== -->
+    <main class="main" id="top">
+      <div class="container-fluid bg-300 dark__bg-1200">
+        <div class="bg-holder bg-auth-card-overlay" style="background-image: url(https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/bg/37.png)"></div>
+        <!-- /.bg-holder -->
+        <div class="row flex-center position-relative min-vh-100 g-0 py-5">
+          <div class="col-11 col-sm-10 col-xl-8">
+            <div class="card border border-200 auth-card">
+              <div class="card-body pe-md-0">
+                <div class="row align-items-center gx-0 gy-7">
+                  <div class="col-auto bg-100 dark__bg-1100 rounded-3 position-relative overflow-hidden auth-title-box">
+                    <div class="bg-holder" style="background-image: url(https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/bg/38.png)"></div>
+                    <!-- /.bg-holder -->
+                    <div class="position-relative px-4 px-lg-7 pt-7 pb-7 pb-sm-5 text-center text-md-start pb-lg-7 card-sign-up">
+                      <h3 class="mb-3 text-black fs-1">Md. Musfiqur Rahaman Authentication</h3>
+                      <p class="text-700">Give yourself some hassle-free development process with the uniqueness of Md. Musfiqur Rahaman!</p>
+                      <ul class="list-unstyled mb-0 w-max-content w-md-auto mx-auto">
+                        <li class="d-flex align-items-center">
+                          <span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Fast</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Simple</span>
+                        </li>
+                        <li class="d-flex align-items-center">
+                          <span class="uil uil-check-circle text-success me-2"></span><span class="text-700 fw-semi-bold">Responsive</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="position-relative z-index--1 mb-6 d-none d-md-block text-center mt-md-15">
+                      <img class="auth-title-box-img d-dark-none" src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/spot-illustrations/auth.png" alt="" /><img class="auth-title-box-img d-light-none" src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/spot-illustrations/auth-dark.png" alt="" />
+                    </div>
+                  </div>
+                  <div id="registration_verification_form" class="col mx-auto">
+                    <div class="auth-form-box">
+                      <div class="text-center mb-7">
+                        <a class="d-flex flex-center text-decoration-none mb-4" href="https://cdn.musfiqdehan.com/templates/mypx/auth/index.html">
+                          <div class="d-flex align-items-center fw-bolder fs-5 d-inline-block">
+                            <img src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/img/icons/musfiqdehan_icon_logo.png" alt="" width="58" />
+                          </div>
+                        </a>
+                        <h3 class="text-1000">Sign Up</h3>
+                        <p class="text-700">Create your account today</p>
+                      </div>
+                      <div class="position-relative mt-4">
+                        <hr class="bg-200" />
+                        <div class="divider-content-center bg-white">or use email</div>
+                      </div>
+                      <!-- Registration Form -->
+                      <div id="user_registration_error_id"></div>
+                      <div id="password_do_not_match_error"></div>
+
+                      <p id="error" style="color: red"></p>
+                      <div id="show_all_error" style="display: none">
+                        <ul>
+                          <li id="min_length" style="color: red">password should be atleast 8 character</li>
+                          <li id="uppercase" style="color: red">password should have atleast 1 uppercase letter</li>
+                          <li id="lowercase" style="color: red">password should have atleast 1 lowercase letter</li>
+                          <li id="special" style="color: red">password should have atleast 1 special Character</li>
+                          <li id="number" style="color: red">password should have at least 1 number</li>
+                        </ul>
+                      </div>
+
+                      <form method="post" action="{% url 'administration_app:registration' %}" class="login_form_class">
+                        {% csrf_token %}
+
+                        <div class="mb-3 text-start">
+                          <label class="form-label" for="name">Name</label>
+                          <input class="form-control" id="name" type="text" name="first_name" placeholder="Name" required />
+                        </div>
+                        <div class="mb-3 text-start">
+                          <label class="form-label" for="email">Email address</label>
+                          <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" required />
+                          <span id="email-validation-msg" style="color: red"></span>
+                          <span id="email-exists-msg" style="color: red"></span>
+                        </div>
+
+                        <!-- password -->
+                        <div class="row g-3 mb-3">
+                          <div class="col-xl-6">
+                            <label class="form-label" for="password">Password</label><input class="form-control form-icon-input" id="password" type="password" name="password1" placeholder="Password" />
+                          </div>
+
+                          <div class="col-xl-6">
+                            <label class="form-label" for="confirmPassword">Confirm Password</label><input class="form-control form-icon-input" id="confirmPassword" type="password" name="password2" placeholder="Confirm Password" />
+                          </div>
+                        </div>
+
+                        <div class="form-check mb-3">
+                          <input class="form-check-input" id="termsService" type="checkbox" /><label class="form-label fs--1 text-none" for="termsService">I accept the <a href="#!">terms</a>and <a href="#!">privacy policy</a></label>
+                        </div>
+
+                        <div id="user_registration_button_id">
+                          <button id="loading" type="submit" class="btn btn-primary w-100 mb-3">Sign up</button>
+                        </div>
+
+                        <div class="text-center">
+                          <a class="fs--1 fw-bold" href="{% url 'administration_app:email_login' %}">Sign in to an existing account</a>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!-- =============================================== -->
+    <!-- End of Main Content -->
+    <!-- =============================================== -->
+
+    <!-- =============================================== -->
+    <!-- JavaScripts -->
+    <!-- =============================================== -->
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/popper/popper.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/bootstrap/bootstrap.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/anchorjs/anchor.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/is/is.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/fontawesome/all.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/lodash/lodash.min.js"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/list.js/list.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/feather-icons/feather.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/vendors/dayjs/dayjs.min.js"></script>
+    <script src="https://cdn.musfiqdehan.com/templates/mypx/auth/assets/js/phoenix.js"></script>
+
+    <!-- Registration Email Verificaiton And validation For already Exit or Not -->
+    <script>
+      // Add an event listener to the email input field
+      document.getElementById('email').addEventListener('blur', function () {
+        const email = this.value
+        const emailValidationMsg = document.getElementById('email-validation-msg')
+      
+        const emailExistsMsg = document.getElementById('email-exists-msg')
+      
+        // Check if the entered email is valid
+        if (!this.validity.valid) {
+          emailValidationMsg.textContent = 'Please enter a valid email address.'
+          emailExistsMsg.textContent = ''
+        } else {
+          emailValidationMsg.textContent = '' // Clear the validation message
+      
+          // Send an AJAX request to check if the email exists
+          $.ajax({
+            url: '/erp-administration/check-email-existence/',
+            data: { email: email },
+            dataType: 'json',
+            success: function (data) {
+              if (data.user_exists) {
+                emailExistsMsg.textContent = 'This email is already registered.'
+                emailExistsMsg.style.color = 'red'
+              } else {
+                emailExistsMsg.textContent = 'Email is available.'
+                emailExistsMsg.style.color = 'green'
+              }
+            }
+          })
+        }
+      })
+    </script>
+
+    <!-- Registration Password form validation script -->
+    <script>
+      const signupButton = document.getElementById('loading')
+      signupButton.disabled = true // Disable the button by default
+      
+      const passwordInput = document.getElementById('password')
+      const password1 = document.getElementById('password') // Move this line outside of the DOMContentLoaded event listener
+      const password2 = document.getElementById('confirmPassword') // Move this line outside of the DOMContentLoaded event listener
+      
+      passwordInput.addEventListener('input', validationPassword)
+      
+      function validationPassword() {
+        const password = passwordInput.value
+      
+        const message = document.getElementById('show_all_error')
+        message.style.display = 'block'
+        const uppercase = document.getElementById('uppercase')
+        const min_length = document.getElementById('min_length')
+        const special = document.getElementById('special')
+        const number = document.getElementById('number')
+      
+        const minLength = 8
+        const hasUpperCase = /[A-Z]/.test(password)
+        const hasLowerCase = /[a-z]/.test(password)
+        const HasNumber = /\d/.test(password)
+        const hasSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/.test(password)
+      
+        if (hasUpperCase) {
+          uppercase.style.color = 'green'
+        }
+        if (!hasUpperCase) {
+          uppercase.style.color = 'red'
+        }
+        if (hasLowerCase) {
+          lowercase.style.color = 'green'
+        }
+        if (!hasLowerCase) {
+          lowercase.style.color = 'red'
+        }
+        if (hasSpecialChar) {
+          special.style.color = 'green'
+        }
+        if (!hasSpecialChar) {
+          special.style.color = 'red'
+        }
+        if (HasNumber) {
+          number.style.color = 'green'
+        }
+        if (!HasNumber) {
+          number.style.color = 'red'
+        }
+        if (password.length >= 8) {
+          min_length.style.color = 'green'
+        }
+        if (password.length < 8) {
+          min_length.style.color = 'red'
+        }
+      
+        // Check all validation conditions
+        const isValidPassword = hasUpperCase && hasLowerCase && HasNumber && hasSpecialChar && password.length >= minLength // Check if passwords Match.
+      
+        if (isValidPassword) {
+          // Add an input event listener to the password fields
+          password1.addEventListener('input', checkPasswordMatch)
+          password2.addEventListener('input', checkPasswordMatch)
+      
+          function checkPasswordMatch() {
+            // Check if passwords match
+            if (password1.value !== password2.value) {
+              signupButton.disabled = true
+            } else {
+              signupButton.removeAttribute('disabled')
+              const error_hidden = document.getElementById('show_all_error')
+              error_hidden.style.display = 'none'
+            }
+          }
+      
+          // signupButton.removeAttribute("disabled");
+        } else {
+          signupButton.disabled = true
+        }
+      }
+      
+      document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('.login_form_class')
+        const errorDiv = document.querySelector('#password_do_not_match_error')
+      
+        // Add an input event listener to the password fields
+        password1.addEventListener('input', checkPasswordMatch)
+        password2.addEventListener('input', checkPasswordMatch)
+      
+        function checkPasswordMatch() {
+          // Check if passwords match
+          if (password1.value !== password2.value) {
+            displayError('Passwords do not match.')
+          } else {
+            clearError()
+          }
+        }
+      
+        function displayError(message) {
+          errorDiv.textContent = message
+          errorDiv.style.color = 'red' // Optionally, you can apply styling
+        }
+      
+        function clearError() {
+          errorDiv.textContent = '' // Clear the error message
+        }
+      })
+    </script>
+
+    <!-- Registration Script (Main) -->
+    <script>
+      // Time counter script
+      function startTimerTwo(duration, timerElementId) {
+        var timer = duration,
+          minutes,
+          seconds
+        var timerElement = document.getElementById(timerElementId)
+      
+        var intervalId = setInterval(function () {
+          minutes = parseInt(timer / 60, 10)
+          seconds = parseInt(timer % 60, 10)
+      
+          minutes = minutes < 10 ? '0' + minutes : minutes
+          seconds = seconds < 10 ? '0' + seconds : seconds
+      
+          timerElement.textContent = minutes + ':' + seconds
+      
+          if (--timer < 0) {
+            clearInterval(intervalId)
+            const myButton = document.getElementById('resend-code-button')
+            // Enable the button
+            myButton.disabled = false
+            // Timer has reached zero, you can perform additional actions here
+          }
+        }, 1000)
+      }
+      
+      // Registration Script
+      $(function () {
+        /* Save Form */
+        var saveForm = function () {
+          var form = $(this)
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#registration_verification_form').html(data.verification_form)
+      
+                // Update Button for Disable
+                const myButton = document.getElementById('resend-code-button')
+                // Disable the button
+                myButton.disabled = true
+                // function call from here
+                startTimerTwo(20, 'timer_registration')
+              } else if (data.registration_error) {
+                $('#user_registration_error_id').html(data.registration_error)
+                $('#user_registration_button_id').html('<button id="loading" type="submit" class="btn btn-primary w-100 mb-3">Registration</button>')
+              } else {
+                console.log('Failed')
+              }
+            }
+          })
+          return false
+        }
+      
+        //login with ajax
+        $('.login_form_class').on('submit', saveForm)
+      })
+    </script>
+
+    <!-- // -->
+  </body>
+</html>
