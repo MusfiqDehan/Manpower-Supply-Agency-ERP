@@ -1,0 +1,26 @@
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8080
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+
+  celery-worker:
+    build: .
+    command: celery -A manpower_supply_agency_erp worker --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+
+  celery-beat:
+    build: .
+    command: celery -A manpower_supply_agency_erp beat --loglevel=info
+    volumes:
+      - .:/app
+    env_file:
+      - .env
