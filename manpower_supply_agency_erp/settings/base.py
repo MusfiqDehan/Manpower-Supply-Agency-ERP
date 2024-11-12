@@ -28,8 +28,6 @@ INSTALLED_APPS = [
     "agent_management_app",
     # Passenger App
     "passenger_app",
-    # Refund Management
-    "refund_management_app",
     # Visa Management
     "visa_management_app",
     # Website Version-2 App

@@ -67,4 +67,3 @@ EMAIL_PORT = os.getenv("EMAIL_PORT", default=None)
 EMAIL_USE_TLS = os.getenv("EMAIL_USE_TLS", default=None)
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default=None)
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD", default=None)
-django.core.mail.backends.smtp.EmailBackend

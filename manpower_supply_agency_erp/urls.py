@@ -25,7 +25,7 @@ urlpatterns = [
     path("agent/", include("agent_management_app.urls")),
     # Passenger and Passport Management
     path("passenger/", include("passenger_app.urls")),
-    path("refund/", include("refund_management_app.urls")),
+    # Visa Management
     path("visa/", include("visa_management_app.urls")),
     # Company Documents Management
     path("company-documents/", include("company_documentation_app.urls")),
