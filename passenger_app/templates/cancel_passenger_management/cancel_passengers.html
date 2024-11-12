@@ -1,0 +1,193 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="pb-9">
+      <h2 class="mb-4">Cancel/Rejected Passengers || Management</h2>
+      <div id="dealsTable">
+        <!-- Header -->
+        <div class="row g-3 justify-content-between mb-4">
+          <!-- Export button -->
+          <div class="col-auto">
+            <div class="d-md-flex justify-content-between">
+              <div>
+                <button class="btn btn-primary me-4"><span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- search by passport number and name -->
+          <div class="col-auto">
+            <div class="d-flex">
+              <div class="search-box me-2">
+                <form class="position-relative search_passenger" action="{% url 'passenger_app:passenger_search' %}" data-bs-toggle="search" data-bs-display="static">
+                  <input class="form-control search-input search" type="search" id="search_passenger_input" placeholder="Search by Name,Passport No.,Phone No." />
+                  <span class="fas fa-search search-box-icon"></span>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- fly passengers table -->
+        <div class="col-xl-12 col-xxl-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table id="passenger-table" class="table fs--1 mb-0 leads-table border-bottom">
+                  <thead>
+                    <tr>
+                      <!-- passport -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Passport</th>
+                      <!-- Full Name Name -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Full Name</th>
+
+                      <!-- Gender -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Gender</th>
+
+                      <!-- agency -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Agent Name</th>
+
+                      <!-- phone number -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Phone Number</th>
+
+                      <!-- phone number -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Status</th>
+
+                      <!-- action -->
+                      <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 15%">
+                        <div class="d-inline-flex flex-center">
+                          <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+                          <span>Action</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <!-- Table list include -->
+                  <tbody class="list" id="deal-tables-body">
+                    {% include 'cancel_passenger_management/cancel_passengers_list.html' %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- pegination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="PassengerModal" tabindex="-1" aria-labelledby="PassengerLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    {% include 'base/footer.html' %}
+
+    <!-- Scearch Script -->
+    <script>
+      $(function () {
+        var searchform = function () {
+          console.log('i am in search pass')
+          var form = $(this)
+          var search_value = $('#search_passenger_input').val()
+          console.log('search value', search_value)
+          $.ajax({
+            url: form.attr('action'),
+            dataType: 'json',
+            data: { search_value: search_value },
+      
+            success: function (data) {
+              console.log('i am in success passenger')
+              $('#deal-tables-body').html(data.passenger_search_list)
+            }
+          })
+        }
+      
+        $('.search_passenger').on('input', searchform)
+      })
+    </script>
+
+    <!-- Passenger Script -->
+    <script>
+      $(function () {
+        /* load form */
+        var loadForm = function () {
+          var edit = document.getElementById('PassengerModal')
+          var url
+          url = $(this).attr('data-url')
+      
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#PassengerModal').modal('show')
+              $('#PassengerModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+            },
+      
+            success: function (data) {
+              $('#PassengerModal .modal-content').html(data.html_form)
+              console.log('Success !')
+            }
+          })
+        }
+      
+        /* Save Form */
+        var saveForm = function () {
+          var edit = document.getElementById('PassengerModal')
+          var form = $(this)
+      
+          var formData = new FormData(form[0])
+      
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            data: formData,
+      
+            processData: false,
+            contentType: false,
+      
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#passenger-table tbody').html(data.html_passenger_list)
+                $(edit).modal('hide')
+              } else {
+                $('#PassengerModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+      
+        // add car to the   List
+        $('#passenger-create').on('click', '.passengerAddButton', loadForm)
+        $('#PassengerModal').on('submit', '.passengerAddForm', saveForm)
+      
+        // Update Trainng List
+        $('#passenger-table').on('click', '.passengerEditButton', loadForm)
+        $('#PassengerModal').on('submit', '.passportinfoEditForm', saveForm)
+      
+        // Delete Training List
+        $('#passenger-table').on('click', '.passengerDeleteButton', loadForm)
+        $('#PassengerModal').on('submit', '.passengerDeleteForm', saveForm)
+      })
+    </script>
+  </div>
+{% endblock %}

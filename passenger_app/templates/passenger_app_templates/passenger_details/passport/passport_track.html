@@ -1,0 +1,338 @@
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+  body {
+    font-family: 'Open Sans', serif;
+  }
+  .container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .card-tracking {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.1rem;
+    margin-top: -80px;
+    padding: 10px;
+  }
+  .card-header:first-child {
+    border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0;
+  }
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<!-- Header -->
+<div class="row d-flex flex-row justify-content-between align-items-center m-3">
+  <!-- / passport number change and add expair date/ -->
+  <div class="col-md-5" id="hedaer-div">
+    <div style="color: black;">
+      <strong>Passport Tracking Number : {{ passenger_passport.passport_number }}</strong>
+    </div>
+  </div>
+
+  <!-- prettier ignore -->
+  <div class="col-md-7 d-flex justify-content-end">
+    {% for i in user.Group_Users.first.permissions.all %}
+      <!-- prettier ignore -->
+      {% if i.codename == 'change_passenger' %}
+        <div class="col-auto me-1" id="passport-edit">
+          <button type="button" class="btn btn-outline-warning passportEditButton" style="" data-url="{% url 'passenger_app:passport_edit' passenger.id %} ">
+            <i class="fa fa-edit"></i>
+            Edit Passport Info
+          </button>
+        </div>
+        <!-- prettier ignore -->
+      {% endif %}
+      <!-- prettier ignore -->
+    {% endfor %}
+
+  </div>
+</div>
+
+
+<!-- Body -->
+<div class="card-body p-3">
+  <!-- <h6 class="p-2"></h6> -->
+{% comment %}
+<div class="card m-2" id="passport-info-div">
+  {% include 'passenger_app_templates/passenger_details/passport/passport_info_div.html' %}
+</div>
+{% endcomment %}
+
+
+  <div class="card m-2 p-2">
+    <div class="track d-flex justify-content-center align-items-center" id="tracking-steps">
+      {% include 'passenger_app_templates/passenger_details/passport/tracking_steps.html' %}
+    </div>
+  </div>
+</div>
+{% comment %}
+<div id="steps-script">
+  {% include 'passenger_app_templates/passenger_details/passport/steps_script.html' %}
+</div>
+{% endcomment %}
+
+
+<!-- Ajax modal for dynamic content -->
+<div class="modal fade" id="TrackModal" tabindex="-1" aria-labelledby="TrackLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<!-- Ajax modal for dynamic content -->
+<div class="modal fade" id="PassportEditModal" tabindex="-1" aria-labelledby="PassportEditLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content"></div>
+  </div>
+</div>
+
+<!-- Track -->
+<script>
+  $(function () {
+    /* load form */
+    var loadForm = function () {
+      var edit = document.getElementById('TrackModal')
+      var url
+      url = $(this).attr('data-url')
+  
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+  
+        beforeSend: function () {
+          
+          $('#TrackModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+          $('#TrackModal').modal('show')
+        },
+  
+        success: function (data) {
+          $('#TrackModal .modal-content').html(data.html_form)
+          console.log('Success !')
+        }
+      })
+    }
+  
+    /* Save Form */
+    var saveForm = function () {
+      var edit = document.getElementById('TrackModal')
+      var form = $(this)
+  
+      /* functions for the scripts of tracking active status */
+      /* police clearence */
+      function police_clearence() {
+        const policeActiveStep = document.querySelector('.step.police-active')
+        console.log('script call')
+        if (policeActiveStep) {
+          const prevStep = policeActiveStep.previousElementSibling
+          if (prevStep) {
+            prevStep.classList.add('police-active-prev')
+          }
+        }
+      }
+  
+      /* Medical Certificate */
+      function medical_certificate() {
+        const policeActiveStep = document.querySelector('.step.medical-active')
+        if (policeActiveStep) {
+          const prevStep = policeActiveStep.previousElementSibling
+          if (prevStep) {
+            prevStep.classList.add('medical-active-prev')
+          }
+        }
+      }
+  
+      /* Mofa Status */
+      function mofa_status() {
+        var mofaActiveElement = document.querySelector('.training-step.mofa-active')
+        var passStepElement = document.querySelector('.track .step.pass-step')
+  
+        // Check if the elements are found before attempting to modify the class
+        if (mofaActiveElement && passStepElement) {
+          // Check if the .mofa-active class is present
+          var isMofaActive = mofaActiveElement.classList.contains('mofa-active')
+  
+          // Toggle the class to apply the style
+          passStepElement.classList.toggle('border-green', isMofaActive)
+        }
+      }
+  
+      /* Visa Status */
+      function visa_status() {
+        var visaActiveElement = document.querySelector('.track .visa-step.visa-active')
+        var trainingStepElement = document.querySelector('.track .training-step')
+  
+        if (visaActiveElement && trainingStepElement) {
+          var isVisaActive = visaActiveElement.classList.contains('visa-active')
+  
+          trainingStepElement.classList.toggle('visa-active-before', isVisaActive)
+        }
+      }
+  
+      /* Training Status */
+      function training_status() {
+        var trainingActiveElement = document.querySelector('.track .mofa-step.training-active')
+        var mofaStepElement = document.querySelector('.track .mofa-step')
+  
+        if (trainingActiveElement && mofaStepElement) {
+          var isTrainingActive = trainingActiveElement.classList.contains('training-active')
+  
+          mofaStepElement.classList.toggle('training-active-before', isTrainingActive)
+        }
+      }
+  
+      /* Finger Status */
+      function finger_status() {
+        var fingerActiveElement = document.querySelector('.track .step.finger-active')
+        var mofaStepExtraElement = document.querySelector('.track .mofa-step.training-extra-step')
+  
+        if (fingerActiveElement && mofaStepExtraElement) {
+          var isFingerActive = fingerActiveElement.classList.contains('finger-active')
+  
+          mofaStepExtraElement.classList.toggle('finger-active', isFingerActive)
+        }
+      }
+  
+      /* Manpower Status */
+      function manpower_status() {
+        const policeActiveStep = document.querySelector('.step.manpower-active')
+        if (policeActiveStep) {
+          const prevStep = policeActiveStep.previousElementSibling
+          if (prevStep) {
+            prevStep.classList.add('manpower-active-prev')
+          }
+        }
+      }
+  
+      /* Ticket Status */
+      function ticket_status() {
+        const policeActiveStep = document.querySelector('.step.ticket-active')
+        if (policeActiveStep) {
+          const prevStep = policeActiveStep.previousElementSibling
+          if (prevStep) {
+            prevStep.classList.add('ticket-active-prev')
+          }
+        }
+      }
+  
+      $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#loading').html(
+            '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+          )
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#tracking-steps').html(data.html_tracking_steps)
+            $('#steps-script').html(data.html_steps_script)
+  
+            /* call the scripts for tracking active status */
+            police_clearence()
+            medical_certificate()
+            mofa_status()
+            visa_status()
+            training_status()
+            finger_status()
+            manpower_status()
+            ticket_status()
+  
+            $(edit).modal('hide')
+          } else {
+            $('#TrackModal .modal-content').html(data.html_form)
+          }
+        }
+      })
+      return false
+    }
+  
+    // edit tracking steps
+    $('#track-update').on('click', '.trackEditButton', loadForm)
+    $('#TrackModal').on('submit', '.trackForm', saveForm)
+  })
+</script>
+
+<!-- passport edit -->
+<script>
+  $(function () {
+    /* load form */
+    var loadForm = function () {
+      var edit = document.getElementById('PassportEditModal')
+      var url
+      url = $(this).attr('data-url')
+  
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#PassportEditModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+          $('#PassportEditModal').modal('show')
+        },
+  
+        success: function (data) {
+          $('#PassportEditModal .modal-content').html(data.html_form)
+          console.log('Success !')
+        }
+      })
+    }
+  
+    /* Save Form */
+    var saveForm = function () {
+      var edit = document.getElementById('PassportEditModal')
+      var form = $(this)
+  
+      $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#loading').html(
+            '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+          )
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#hedaer-div').html(data.html_header)
+  
+            $('#passport-info-div').html(data.html_passport_info)
+  
+            $(edit).modal('hide')
+          } else {
+            $('#PassportEditModal .modal-content').html(data.html_form)
+          }
+        }
+      })
+      return false
+    }
+  
+    // edit tracking steps
+    $('#passport-edit').on('click', '.passportEditButton', loadForm)
+    $('#PassportEditModal').on('submit', '.passportEditForm', saveForm)
+  })
+</script>

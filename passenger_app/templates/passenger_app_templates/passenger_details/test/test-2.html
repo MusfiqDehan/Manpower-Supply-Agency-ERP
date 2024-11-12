@@ -1,0 +1,478 @@
+ {% extends 'base/base.html' %} {% block content %}
+
+<div class="pb-9">
+               
+                 <div class="row">
+                    <div class="col-12">
+                        <div class="row align-items-center justify-content-between g-3 mb-3">
+                            <div class="col-12 col-md-auto">
+                                <h2 class="mb-0">Passenger Details</h2>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex">
+                                    <div class="flex-1 d-md-none"><button class="btn px-3 btn-phoenix-secondary text-700 me-2" data-phoenix-toggle="offcanvas" data-phoenix-target="#productFilterColumn"><span class="fa-solid fa-bars"></span></button></div><button class="btn btn-primary me-2"><span class="fa-solid fa-envelope me-2"></span><span>Send an email</span></button>
+                                    <button
+                                        class="btn btn-phoenix-secondary px-3 px-sm-5 me-2"><span class="fa-solid fa-thumbtack me-sm-2"></span><span class="d-none d-sm-inline">Shortlist</span></button><button class="btn px-3 btn-phoenix-secondary" type="button" data-bs-toggle="dropdown" data-boundary="window"
+                                            aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-ellipsis"></span></button>
+                                        <ul class="dropdown-menu dropdown-menu-end p-0" style="z-index: 9999;">
+                                            <li><a class="dropdown-item" href="#!">View profile</a></li>
+                                            <li><a class="dropdown-item" href="#!">Report</a></li>
+                                            <li><a class="dropdown-item" href="#!">Manage notifications</a></li>
+                                            <li><a class="dropdown-item text-danger" href="#!">Delete Lead</a></li>
+                                        </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-0 g-md-4 g-xl-6">
+                    <div class="col-md-5 col-lg-5 col-xl-4">
+                        <div class="sticky-leads-sidebar">
+                            <div class="lead-details-offcanvas bg-soft scrollbar phoenix-offcanvas phoenix-offcanvas-fixed" id="productFilterColumn">
+                                <div class="d-flex justify-content-between align-items-center mb-2 d-md-none">
+                                    <h3 class="mb-0">Lead Details</h3><button class="btn p-0" data-phoenix-dismiss="offcanvas"><span class="uil uil-times fs-1"></span></button>
+                                </div>
+                                <!---card 1-->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="row align-items-center g-3 text-center text-xxl-start">
+                                            <div class="col-12 col-xxl-auto">
+                                                <div class="avatar avatar-5xl"><img class="rounded-circle" src="/media/cloudsss1.png" alt="" /></div>
+                                            </div>
+                                            <div class="col-12 col-sm-auto flex-1">
+                                                <h3 class="fw-bolder mb-2">{{ passenger.full_name }}</h3>
+                                                <p class="mb-0">{{ passenger.gender }}</p><a class="fw-bold" href="#!">Blue Beetles12</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                               
+                               
+                            </div>
+                            <div class="phoenix-offcanvas-backdrop d-lg-none top-0" data-phoenix-backdrop="data-phoenix-backdrop"></div>
+                        </div>
+                    </div>
+                      <div class="col-md-5 col-lg-5 col-xl-3">
+                         <!--  ------------- Navigation var Header ------------ -->
+                            <ul class="nav nav-underline deal-details scrollbar flex-nowrap w-100 pb-1 mb-6" id="myTab" role="tablist" style="overflow-y: hidden">
+
+                                <!-- Account  -->
+                            <li class="nav-item text-nowrap me-2" role="presentation">
+                                <a
+                                class="nav-link active"
+                                id="account-tab"
+                                data-bs-toggle="tab"
+                                href="#tab-account"
+                                role="tab"
+                                aria-controls="tab-account"
+                                aria-selected="false"
+                                tabindex="-1"
+                                >
+                                <i class="fa-solid fa-building-columns"></i> Account</a
+                                >
+                            </li>
+
+                            <!-- documents -->
+                            <li class="nav-item text-nowrap me-2" role="presentation">
+                                <a
+                                class="nav-link "
+                                id="activity-tab"
+                                data-bs-toggle="tab"
+                                href="#tab-activity"
+                                role="tab"
+                                aria-controls="tab-activity"
+                                aria-selected="false"
+                                tabindex="-1"
+                                >
+                                <i class="fa fa-file-text"></i> Documents</a
+                                >
+                            </li>
+
+                            </ul>
+                    </div>
+
+                </div>
+                 <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xl-3">
+                         <!----card 2-->
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center mb-5">
+                                            <h3>About Passenger</h3><button class="btn btn-link px-3" type="button">Edit</button>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-envelope-alt">  </span>
+                                                <h5 class="text-1000 mb-0">Email</h5>
+                                            </div><a href="mailto:shatinon@jeemail.com:">ansolo5@jeemail.com</a>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-phone"> </span>
+                                                <h5 class="text-1000 mb-0">Phone</h5>
+                                            </div><a href="tel:+1234567890">+1234567890 </a>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-globe"></span>
+                                                <h5 class="text-1000 mb-0">Website</h5>
+                                            </div><a href="#!">www.bb.ru.com </a>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-building"></span>
+                                                <h5 class="text-1000 mb-0">Industry</h5>
+                                            </div>
+                                            <p class="mb-0 text-800">Large Enterprise</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-postcard"></span>
+                                                <h5 class="text-1000 mb-0">Number of employees</h5>
+                                            </div>
+                                            <p class="mb-0 text-800">126</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-dollar-alt"></span>
+                                                <h5 class="text-1000 mb-0">Annual Revenue</h5>
+                                            </div>
+                                            <p class="mb-0 text-800">$12000 </p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-clock"></span>
+                                                <h5 class="text-1000 mb-0">Last contacted</h5>
+                                            </div>
+                                            <p class="mb-0 text-800">12 November 2021, 10:54 AM</p>
+                                        </div>
+                                        <div class="mb-4">
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-file-check-alt"></span>
+                                                <h5 class="text-1000 mb-0">Lead source</h5>
+                                            </div>
+                                            <p class="mb-0 text-800">Advertisement</p>
+                                        </div>
+                                        <div>
+                                            <div class="d-flex align-items-center mb-1"><span class="me-2 uil uil-check-circle"></span>
+                                                <h5 class="text-1000 mb-0">Lead status</h5>
+                                            </div><span class="badge badge-phoenix badge-phoenix-primary">New Lead</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                    </div>
+
+                    <div class="col-md-5 col-lg-5 col-xl-9">
+                          <!-- ----------- Navigation var Header Content -------------- -->
+        <div class="tab-content" id="myTabContent">
+
+              <!-- ---------- ACCOUNT DETAILS ACTIVITY Information ------------------------------------------- -->
+          <div class="tab-pane fade active show" id="tab-account" role="tabpanel" aria-labelledby="account-tab">
+            <!--Header-->
+            <div class="row align-items-center justify-content-between g-3 mb-4" style="margin-top: -140px; margin-left: 130px;">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">ACCOUNT Details</h2>
+              </div>
+              
+              <!----button-->
+
+              <div class="col-12 col-md-auto">
+                 <div class="row align-items-center g-0 justify-content-start mb-3">
+                                        <div class="col-12 col-sm-auto d-flex">
+                                       
+                                      
+                                             <div id="account-all-button" >
+                                              
+                                             {% if account_opening_value  %}
+                                                      <div class="d-flex" >
+                                                      <div id="payment-button">
+                                                          <button type="button" class="btn paymentButton btn-warning" style="margin-right: 15px;"
+                                                      data-url="{% url 'passenger_app:payment' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Payment 
+                                                      </button>
+
+                                                      </div>
+
+
+                                                      <div id="receive-button">
+                                                          <button  type="button" class="btn receieveButton btn-success" 
+                                                      data-url="{% url 'passenger_app:receive' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Receive
+                                                      </button>
+
+                                                      </div>
+
+
+                                                      </div>
+
+                                                          
+                                                      {% else %}
+                                                      <div id="account-create">
+                                                          <button type="button" class="btn accountCreateButton btn-primary" 
+                                                      data-url="{% url 'passenger_app:account_create' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Add Account
+                                                      </button>
+
+                                                      </div>
+
+                                                      {% endif  %}
+                                             
+                                                </div>
+                                              
+                                            <div class="search-box w-100 mb-2 mb-sm-0" style="max-width:30rem; margin-left: 520px;">
+                                                <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search" type="search" placeholder="Search tasks" aria-label="Search" />
+                                                    <span class="fas fa-search search-box-icon"></span>
+                                                </form>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                
+              </div>
+
+            </div>
+            <div class="border-top border-dashed border-300 pt-3 pb-4">
+                <!----body--> 
+                 <div class="d-flex flex-between-center">
+                                             <div class="col-xxl-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                    <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                                                        <table id="account-table" class="table fs--1 mb-0 leads-table border-bottom">
+                                                        <thead>
+                                                          <tr>
+                                                                <!--opening balance-->
+                                                                <th id="opening-bal-date" class="align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end "  scope="col" colspan="3" >
+                                                                
+                                                                  {% include 'passenger_app_templates/passenger_details/opening_balance_date.html' %}
+                                                                </th> 
+
+                                                                <!--balance amount-->
+                                                                <th id="opening-balance" class="align-middle white-space-nowrap pe-4 text-center  border-end "  scope="col" colspan="2">
+                                                               
+                                                                  {% include 'passenger_app_templates/passenger_details/opening_balance.html' %}
+                                                                </th> 
+                                                                </tr>
+                                                            <tr>
+                                                            
+                                                            <!--car details  fields-->
+                                                            
+                                                            <!--Date-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 10%">Date
+                                                            </th>
+
+                                                            <!--Debit-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 5%">Debit
+                                                            </th>
+                                                            <!--Credit-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 5%">Credit
+                                                            </th>
+
+                                                            <!--Balance-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 5%">Balance
+                                                            </th>
+
+                                                            
+                                                           
+                                                           
+                                                            <!--action-->
+                                                            <th class="sort align-middle ps-4 pe-5 text-uppercase " scope="col"  style="width: 10%">
+                                                            <div class="d-inline-flex flex-center">
+                                                                <div class="d-flex align-items-center px-1 py-1  rounded me-2">
+                                                                <i class='fas fa-tools'></i>
+                                                                </div>
+                                                                <span>Action</span>
+                                                            </div>
+                                                            </th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="list" id="deal-tables-body">
+
+                                                        {% include 'passenger_app_templates/passenger_details/account_list.html' %}
+                                                            
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                        <!--pegination--->
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            
+                                           
+                  </div>
+
+            </div>
+          </div>
+
+          <!-- ---------- document section ------------------------------------------- -->
+          <div class="tab-pane fade " id="tab-activity" role="tabpanel" aria-labelledby="activity-tab">
+           <!--Header-->
+            <div class="row align-items-center justify-content-between g-3 mb-4" style="margin-top: -140px; margin-left: 130px;">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">ACCOUNT Details</h2>
+              </div>
+              
+              <!----button-->
+
+              <div class="col-12 col-md-auto">
+                 <div class="row align-items-center g-0 justify-content-start mb-3">
+                                        <div class="col-12 col-sm-auto d-flex">
+                                       
+                                      
+                                             <div id="account-all-button" >
+                                              
+                                             {% if account_opening_value  %}
+                                                      <div class="d-flex" >
+                                                      <div id="payment-button">
+                                                          <button type="button" class="btn paymentButton btn-warning" style="margin-right: 15px;"
+                                                      data-url="{% url 'passenger_app:payment' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Payment 
+                                                      </button>
+
+                                                      </div>
+
+
+                                                      <div id="receive-button">
+                                                          <button  type="button" class="btn receieveButton btn-success" 
+                                                      data-url="{% url 'passenger_app:receive' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Receive
+                                                      </button>
+
+                                                      </div>
+
+
+                                                      </div>
+
+                                                          
+                                                      {% else %}
+                                                      <div id="account-create">
+                                                          <button type="button" class="btn accountCreateButton btn-primary" 
+                                                      data-url="{% url 'passenger_app:account_create' passenger.id %} "><i class="fa fa-add"></i>
+                                                          Add Account
+                                                      </button>
+
+                                                      </div>
+
+                                                      {% endif  %}
+                                             
+                                                </div>
+                                              
+                                            <div class="search-box w-100 mb-2 mb-sm-0" style="max-width:30rem; margin-left: 520px;">
+                                                <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input search" type="search" placeholder="Search tasks" aria-label="Search" />
+                                                    <span class="fas fa-search search-box-icon"></span>
+                                                </form>
+                                            </div>
+                                        </div>
+                                      
+                                    </div>
+                
+              </div>
+
+            </div>
+            <div class="border-top border-dashed border-300 pt-3 pb-4">
+                <!----body--> 
+                 <div class="d-flex flex-between-center">
+                                             <div class="col-xxl-12">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                    <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                                                        <table id="passenger-document-table" class="table fs--1 mb-0 leads-table border-bottom">
+                                                        <thead>
+                                                            <tr>
+                                                            
+                                                            <!--car details  fields-->
+                                                            
+                                                            <!--Document Name-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 10%">Document Name
+                                                            </th>
+
+                                                            <!--Document Type-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 5%">Type
+                                                            </th>
+
+                                                            <!--Creation Date-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 10%">Creation Date
+                                                            </th>
+                                                            <!--Expairy Date-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 10%">Expairy Date
+                                                            </th>
+
+                                                            
+                                                            <!--Document Description-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 15%">Description
+                                                            </th>
+
+                                                            <!--document-->
+                                                            <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                                                            scope="col" style="width: 10%">File
+                                                            </th>
+
+                                                            <!--action-->
+                                                            <th class="sort align-middle ps-4 pe-5 text-uppercase " scope="col"  style="width: 10%">
+                                                            <div class="d-inline-flex flex-center">
+                                                                <div class="d-flex align-items-center px-1 py-1  rounded me-2">
+                                                                <i class='fas fa-tools'></i>
+                                                                </div>
+                                                                <span>Action</span>
+                                                            </div>
+                                                            </th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody class="list" id="deal-tables-body">
+
+                                                          {% include 'passenger_app_templates/passenger_details/document_list.html' %}
+
+                                                        
+                                                            
+                                                        </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                        <!--pegination--->
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            
+                                           
+                                        </div>
+
+            </div>
+
+          </div>
+
+        
+
+        
+         
+        </div>
+
+
+      </div>
+
+
+                    </div>
+                  
+                  
+                </div>
+
+
+<div>
+                     
+                        
+                     
+
+
+
+           
+      
+       
+{% endblock %}

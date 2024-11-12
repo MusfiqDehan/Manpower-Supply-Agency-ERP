@@ -1,0 +1,222 @@
+<form method="post" action="{% url 'passenger_app:passenger_document_add'  passenger_id  %}" class="documentAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input type="text" name="passenger" value="{{ passenger_id }}" hidden />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Document</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+
+      <!--Document Name field-->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+
+          <select id="select_document_name" class="form-select" name="document_name" required>
+            <option value="" hidden>Select Document Name</option>
+            {% for choice in DOCUMENT_NAME_CHOICES %}
+               {% if choice.0 not in documents_submitted %}
+                 <option value="{{choice.0}}">{{choice.1}}</option>
+               {% endif %}
+            {% endfor %}
+            <!-- <option value="passport_received">passport received</option>
+            <option value="police_clearance">police clearance</option>
+            <option value="medical_certificate">medical certificate</option>
+            <option value="mofa_status">mofa status</option>
+            <option value="finger_appointment">finger appointment</option>
+            <option value="visa_status">visa status</option>
+            <option value="training_status">training status</option>
+            <option value="finger_status">finger status</option>
+            <option value="manpower_status">manpower status</option>
+            <option value="ticket_status">ticket status</option>
+            <option value="others">Others</option> -->
+          </select>
+        </div>
+      </div>
+      <!--flight date-->
+      <div class="col-sm-12 col-md-12 flight_date" hidden>
+        <div class="form-submit">
+          <label for="submitgrid">Flight Date</label>
+          <input id="flight_date" class="form-control" name="flight_date" type="date" placeholder="Flight Date"/>
+        </div>
+      </div>
+
+      
+      <!-- visa -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit visa_select" style="display:none">
+          <label for="submitgrid">Visa</label>
+
+          <select id="visa_selected" class="form-select" name="visa" >
+            <option value="" hidden >Select Visa</option>
+            {% for visa in visa_list %}
+              <option value="{{ visa.pk  }}">{{ visa.visa_id }}  ({{ visa.number_of_visa }})</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!--Document Type field-->
+      <div class="col-sm-6 col-md-6 select_document_type">
+        <div class="form-submit">
+          <label for="submitgrid">Document Type</label>
+
+          <select id="select_document_type" class="form-select" name="document_type" >
+            <option value="" hidden>Select Document Type</option>
+            <option value="pdf">PDF</option>
+            <option value="image">IMAGE</option>
+            <option value="word">WORD</option>
+          </select>
+        </div>
+      </div>
+
+        <!-- Creation Date field -->
+
+        <div class="col-sm-6 col-md-6 creation_date">
+          <div class="form-submit">
+            <label for="submitgrid">Creation Date</label>
+            <input id="creation_date" class="form-control" name="collected_data" type="date" placeholder="Creation Date"  />
+            <p id="date_error" style="color: brown;"></p>
+          </div>
+        </div>
+  
+        <!-- Total Days -->
+        <div class="col-sm-6 col-md-6 expiry_days">
+          <div class="form-submit">
+            <label for="submitgrid">Expire in Days</label>
+            <input id="expiry_days" class="form-control" name="expiry_days" type="number" placeholder="number of days" onKeyup="ExpireDatecount()" />
+          </div>
+        </div>
+  
+        <!-- Expiry Date field -->
+        <div class="col-sm-6 col-md-6 expiry_date">
+          <div class="form-submit">
+            <label for="submitgrid">Expiry Date</label>
+            <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" />
+          </div>
+        </div>
+
+      <!--Collected data field-->
+      <!-- <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Collected data date</label>
+          <input class="form-control" name="collected_data" type="date" placeholder="Collected data date" required/>
+        </div>
+      </div> -->
+
+      <!--Expiry Date field-->
+      <!-- <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expiry Date</label>
+          <input class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" />
+        </div>
+      </div> -->
+
+      <!--expiry days -->
+      <!-- <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expire time period(in days)</label>
+          <input class="form-control" name="expiry_days" type="number" placeholder="Expire time period(in days)" required/>
+        </div>
+      </div> -->
+
+      <!--Description  field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="description" class="form-control" rows="3" placeholder="Description"></textarea>
+        </div>
+      </div>
+      <input id="document_type" class="form-control" name="document_type" type="text" value="pdf" hidden />
+      <!-- Document File field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Document File</label>
+          <input class="form-control" name="document_file" type="file" placeholder="Document File" />
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!--submit & close-->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+
+<script>
+  function ExpireDatecount() {
+    let creation_date = document.getElementById('creation_date').value
+    let expire_days = parseInt(document.getElementById('expiry_days').value) // Parse to integer
+  
+    let date_error = document.getElementById('date_error')
+    let expire_day_error = document.getElementById('expiry_days')
+  
+    if (creation_date) {
+      // Create a new Date object using the creation_date
+      let creationDateObj = new Date(creation_date)
+  
+      // Add the expire_days to the creation_date
+      creationDateObj.setDate(creationDateObj.getDate() + expire_days)
+  
+      // Format the new_expaire_date as a string (e.g., "yyyy-mm-dd")
+      let year = creationDateObj.getFullYear()
+      let month = (creationDateObj.getMonth() + 1).toString().padStart(2, '0') // Months are zero-indexed
+      let day = creationDateObj.getDate().toString().padStart(2, '0')
+  
+      let new_expiry_date = `${year}-${month}-${day}`
+  
+      // Update the Expiry Date input field
+      document.getElementById('expiry_date').value = new_expiry_date
+  
+      date_error.innerHTML = ''
+    } else {
+      date_error.innerHTML = 'Please add creation date first.'
+      expire_day_error.value = null
+    }
+  }
+</script>
+
+<script>
+  $('#select_document_name').on('change',()=>{
+    var document_type=$('#select_document_name').val()
+    if (document_type =='flight'){
+       console.log(document_type,'document_type')
+       $('.flight_date').attr('hidden',false)
+       $('.creation_date').attr('hidden',true)
+       $('.expiry_days').attr('hidden',true)
+       $('.expiry_date').attr('hidden',true)
+       $('.select_document_type').attr('hidden',true)
+
+    }else{
+       $('.flight_date').attr('hidden',true)
+       $('.creation_date').attr('hidden',false)
+       $('.expiry_days').attr('hidden',false)
+       $('.expiry_date').attr('hidden',false)
+       $('.select_document_type').attr('hidden',false)
+    }
+  })
+</script>
+
+<script>
+  $(function(){
+    $('#select_document_name').on('change',function(){
+      if($(this).val() == 'visa_status'){
+        $('.visa_select').css({'display':'block' })
+        console.log('visa status ')
+      }else{
+        $('.visa_select').css({'display':'none' })
+        $('#visa_selected').prop('selectedIndex',-1)
+      }
+    })
+  })
+</script>

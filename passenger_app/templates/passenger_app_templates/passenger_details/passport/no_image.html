@@ -1,0 +1,11 @@
+<form method="post" action="{% url 'passenger_app:passport_image_add' passenger_id %}" class="passimageAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <label for="fileInput" style="margin-left: -155px; color: #ff2b00;">No Scanned Image Attached {{ passenger_passport.passport_scanned_image }}</label>
+  <input class="form-control" name="passport_scanned_image" style="margin-left: -200px;" type="file" id="fileInput" accept="image/*" placeholder="passport_scanned_image" value="{{ passenger_passport.passport_scanned_image }} " />
+
+  <!-- submit & close -->
+  <div class="form-submit">
+    <button type="submit" id="image-loading" class="btn btn-primary" style="margin-left: -70px; margin-top: 20px;">Upload</button>
+  </div>
+</form>

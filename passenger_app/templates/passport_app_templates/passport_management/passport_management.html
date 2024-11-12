@@ -1,0 +1,173 @@
+{% extends 'base/base.html' %} {% block content %}
+  <!-- prettier ignore -->
+  {% for i in user.Group_Users.first.permissions.all %}
+    <!-- prettier ignore -->
+    {% if i.codename == 'view_passenger' %}
+      <div class="pb-9">
+        <h2 class="mb-4">Passport || Management</h2>
+        <div id="dealsTable">
+          <div class="row g-3 justify-content-between mb-4">
+            <div class="col-auto">
+              <div class="d-md-flex justify-content-between">
+                <!-- -add passport button comment for now -->
+                <!--   <div id="passport-info-add">
+              <button type="button" class="btn passinfoAddButton btn-primary" 
+              data-url="{% url 'passport_app:passport_info_create' %} "><i class="fa fa-add"></i>
+                Add Passport Information
+              </button>
+            </div>   -->
+              </div>
+            </div>
+
+            <!-- search by passport number and name -->
+
+            <div class="col-auto">
+              <div class="d-flex">
+                <div class="search-box me-2">
+                  <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+                    <input class="form-control search-input search" type="search" placeholder="Search by Passport NO or Name " aria-label="Search" />
+                    <span class="fas fa-search search-box-icon"></span>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- passport card -->
+          <div class="col-xl-12 col-xxl-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                  <table id="passport-information-table" class="table fs--1 mb-0 leads-table border-bottom">
+                    <thead>
+                      <tr>
+                        <!-- passport information fields -->
+
+                        <!-- Passport number name -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 25%">Passport NO</th>
+
+                        <!-- Full Name Name -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Passenger Full Name</th>
+
+                        <!-- Expairy date -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Pass Expairy Date</th>
+
+                        <!-- Scan Copy -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Scan Copy</th>
+
+                        <!-- Description -->
+                        <!--   <th class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase  border-end"
+                      scope="col" style="width: 15%">Description
+                      </th>   -->
+
+                        <!-- action -->
+                        <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 15%">
+                          <div class="d-inline-flex flex-center">
+                            <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+                            <span>Action</span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="list" id="deal-tables-body">
+                      {% include 'passport_app_templates\passport_management\passport_list.html' %}
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- pegination--- -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ajax modal for dynamic content -->
+      <div class="modal fade" id="PassportModal" tabindex="-1" aria-labelledby="PassportLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content"></div>
+        </div>
+      </div>
+
+      <script>
+        $(function () {
+          /* load form */
+          var loadForm = function () {
+            var edit = document.getElementById('PassportModal')
+            var url
+            url = $(this).attr('data-url')
+        
+            $.ajax({
+              url: url,
+              type: 'get',
+              dataType: 'json',
+        
+              beforeSend: function () {
+                $('#PassportModal').modal('show')
+                $('#PassportModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+              },
+        
+              success: function (data) {
+                $('#PassportModal .modal-content').html(data.html_form)
+                console.log('Success !')
+              }
+            })
+          }
+        
+          /* Save Form */
+          var saveForm = function () {
+            var edit = document.getElementById('PassportModal')
+            var form = $(this)
+        
+            var formData = new FormData(form[0])
+        
+            $.ajax({
+              url: form.attr('action'),
+              data: form.serialize(),
+              type: form.attr('method'),
+              dataType: 'json',
+        
+              data: formData,
+        
+              processData: false,
+              contentType: false,
+        
+              beforeSend: function (xhr) {
+                xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+                $('#loading').html(
+                  '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                )
+              },
+        
+              success: function (data) {
+                if (data.form_is_valid) {
+                  $('#passport-information-table tbody').html(data.html_passport_list)
+                  $(edit).modal('hide')
+                } else {
+                  $('#PassportModal .modal-content').html(data.html_form)
+                }
+              }
+            })
+            return false
+          }
+        
+          // add car to the   List
+          $('#passport-info-add').on('click', '.passinfoAddButton', loadForm)
+          $('#PassportModal').on('submit', '.passportinfoAddForm', saveForm)
+        
+          // Update Trainng List
+          $('#passport-information-table').on('click', '.passinfoEditButton', loadForm)
+          $('#PassportModal').on('submit', '.passportinfoEditForm', saveForm)
+        
+          // Delete Training List
+          $('#passport-information-table').on('click', '.passportinfoDeleteButton', loadForm)
+          $('#PassportModal').on('submit', '.passportinfoDeleteForm', saveForm)
+        })
+      </script>
+
+      <!-- prettier ignore -->
+    {% endif %}
+    <!-- prettier ignore -->
+  {% endfor %}
+{% endblock %}

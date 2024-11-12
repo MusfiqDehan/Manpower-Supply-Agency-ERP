@@ -1,0 +1,98 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="row g-1 justify-content-between mb-4">
+      <div class="col-auto">
+        <div class="d-md-flex justify-content-between">
+          <div id="agent-create">
+            <h2 class="mb-2">Fly Success Passenger List</h2>
+          </div>
+        </div>
+      </div>
+
+      <!-- search by agent name -->
+
+      <div class="col-auto">
+        <div class="d-flex">
+          <div class="search-box me-2">
+            <form class="position-relative search_passport_form" action="{% url 'passenger_app:search_passport' %}" data-bs-toggle="search" data-bs-display="static" id="search-form">
+              <input class="form-control search-input search" type="search" id="passport_search_input" placeholder="Search by Passport Number" />
+              <span class="fas fa-search search-box-icon"></span>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- agent card -->
+    <div class="col-xl-12 col-xxl-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+            <table id="agent-table" class="table fs--1 mb-0 leads-table border-bottom">
+              <thead>
+                <tr>
+                  <!-- agent information fields -->
+                  <!-- agent id -->
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Passport Number.</th>
+
+                  <!-- Full Name Name -->
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Passenger Name</th>
+
+                  <!-- Gender -->
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Fly Status</th>
+
+                  <!-- phone number -->
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Phone Number</th>
+
+                  <!-- phone number -->
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Email</th>
+
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">AGENT</th>
+
+                  <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase" scope="col" style="width: 5%">Action</th>
+                </tr>
+              </thead>
+
+              <tbody class="list" id="deal-tables-body">
+                {% include 'passport_report/fly_success_list.html' %}
+              </tbody>
+            </table>
+          </div>
+
+          <!-- pegination -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Search script -->
+    <script>
+      $(function () {
+        $('#search-form').on('submit', (e) => {
+          e.preventDefault()
+        })
+        var searchform = function () {
+          var form = $(this)
+          var search_value = $('#passport_search_input').val()
+          $.ajax({
+            url: form.attr('action'),
+            data: { search_value: search_value },
+            dataType: 'json',
+      
+            success: function (data) {
+              console.log('i am in success passport')
+              $('#deal-tables-body').html(data.search_list)
+            }
+          })
+        }
+        $('.search_passport_form').on('input', searchform)
+      })
+    </script>
+    {% include 'base/footer.html' %}
+  </div>
+{% endblock %}

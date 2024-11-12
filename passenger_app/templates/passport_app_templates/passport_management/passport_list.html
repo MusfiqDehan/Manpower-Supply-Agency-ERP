@@ -1,0 +1,58 @@
+{% for data in passport_list %}
+
+<tr class="hover-actions-trigger btn-reveal-trigger position-static">
+ 
+  <td class=" align-middle white-space-nowrap pe-4 text-center  text-uppercase border-end">
+            <a  class="fw-semi-bold" href="# ">{{ data.passport_number }}</a>
+ 
+  </td>
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.passenger.full_name }}</td>
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.passenger.passport_date_of_expairy }}</td>
+  {% if data.passport_scan %}
+   <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end"><a href="{{ data.passport_scan.url }}" target="_blank">{{ data.passport_scan }}</a>
+</td>
+   {% else %}
+   <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end"><span  style="color: red;">No Scan Data Available</span></td>
+  {% endif  %}
+   <!-- <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.description }}</td> -->
+ 
+
+ 
+
+  <td class="align-middle white-space-nowrap text-end pe-0 ps-4 ">
+    <div class="font-sans-serif btn-reveal-trigger position-static">
+      <div style="display: flex" class="end-0">
+
+        <!--view -->
+        <div>
+            <a href="{% url 'passport_app:passport_details' data.id %}"
+                class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-success px-0">
+                <span class="fas fa-angle-double-right"></span>
+            </a>
+            </div>
+
+        <!--edit -->
+        <!-- <div>
+          <button
+            class="btn passinfoEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0"
+            data-url="{% url 'passport_app:passport_info_edit' data.id %}"
+          >
+            <span class="fas fa-edit"></span>
+          </button>
+        </div> -->
+        
+        <!--delete-->
+        <div>
+          <button
+            class="btn passportinfoDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0"
+            data-url="{% url 'passport_app:passport_info_delete' data.id %}"
+          >
+            <span class="fas fa-trash"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>
+
+{% endfor %}

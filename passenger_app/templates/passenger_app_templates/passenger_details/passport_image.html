@@ -1,0 +1,97 @@
+<!-- If Passenger Passport Image Uploaded -->
+{% comment %}
+{% if passenger_passport.passport_scanned_image %}
+{% endcomment %}
+{% if  passport_received.document_file %}
+  
+
+  {% comment %} <button type="button" class="btn btn-info" id="imageButton">View Scanned passport 111</button> {% endcomment %}
+
+  <button type="button" class="btn btn-info" id=""><a href="{{ passport_received.document_file.url }}" target="_blank" style="color: aliceblue;">View || Download</a></button>
+
+<!-- else Passenger Passport Image Not Uploaded -->
+{% comment %}
+{% else %}
+<div class="card">
+  <div class="card-body">
+    <form method="post" action="{% url 'passenger_app:passport_image_add' passenger_id %}" class="passimageAddForm" enctype="multipart/form-data">
+      {% csrf_token %}
+      <h5 class="text-center mb-3" style="color: #ff2b00">
+        No Scanned Passport Image Attached
+        {{ passenger_passport.passport_scanned_image }}
+      </h5>
+      <input class="form-control" name="passport_scanned_image" type="file" id="fileInput" accept="image/*" />
+
+      <!-- submit & close -->
+      <div class="form-submit mt-3 d-flex justify-content-end">
+        <button type="submit" id="image-loading" class="btn btn-primary">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endcomment %}
+
+{% endif %}
+
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      {% if passenger_passport.passport_scanned_image %}
+        <img src="{{ passenger_passport.passport_scanned_image.url }}" alt="passport image" />
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% comment %} <script>
+  $(function () {
+    var imageLoad = function () {
+      $('#imageModal').modal('show')
+      console.log('showww')
+    }
+    $('#imageButton').on('click', imageLoad)
+  })
+</script>
+
+<!-- Passenger Passport Scrcan Image upload script -->
+<script>
+  $(function () {
+    /* Save Form */
+    var saveForm = function () {
+      var form = $(this)
+      var formData = new FormData(form[0])
+  
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+  
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          $('#image-loading').html(
+            '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+          )
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#imageModal modal-content').html(data.html_modal_images)
+            $('#image_divvv').html(data.html_images)
+            console.log('i am in image div')
+          } else {
+            // $().html(data.html_form);
+            console.log('errorrr in passenger tab')
+          }
+        }
+      })
+  
+      return false
+    }
+  
+    // add
+    $('.passimageAddForm').on('submit', saveForm)
+  })
+</script> {% endcomment %}

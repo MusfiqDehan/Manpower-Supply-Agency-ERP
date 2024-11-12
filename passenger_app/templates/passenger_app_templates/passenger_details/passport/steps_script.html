@@ -1,0 +1,79 @@
+<script>
+   
+document.addEventListener('DOMContentLoaded', function () {
+
+    // police clearence
+    const policeActiveStep = document.querySelector('.step.police-active');
+    if (policeActiveStep) {
+        const prevPoliceStep = policeActiveStep.previousElementSibling;
+        if (prevPoliceStep) {
+            prevPoliceStep.classList.add('police-active-prev');
+        }
+    }
+
+    // medical certificate
+    const medicalActiveStep = document.querySelector('.step.medical-active');
+    if (medicalActiveStep) {
+        const prevMedicalStep = medicalActiveStep.previousElementSibling;
+        if (prevMedicalStep) {
+            prevMedicalStep.classList.add('medical-active-prev');
+        }
+    }
+
+    // mofa status
+    var mofaActiveElement = document.querySelector('.training-step.mofa-active');
+    var passStepElement = document.querySelector('.track .step.pass-step');
+
+    if (mofaActiveElement && passStepElement) {
+        var isMofaActive = mofaActiveElement.classList.contains('mofa-active');
+        passStepElement.classList.toggle('border-green', isMofaActive);
+    }
+
+    // visa status
+    var visaActiveElement = document.querySelector('.track .visa-step.visa-active');
+    var trainingStepElement = document.querySelector('.track .training-step');
+
+    if (visaActiveElement && trainingStepElement) {
+        var isVisaActive = visaActiveElement.classList.contains('visa-active');
+        trainingStepElement.classList.toggle('visa-active-before', isVisaActive);
+    }
+    
+    // Training status
+    var trainingActiveElement = document.querySelector('.track .mofa-step.training-active');
+    var mofaStepElement = document.querySelector('.track .mofa-step');
+
+    if (trainingActiveElement && mofaStepElement) {
+        var isTrainingActive = trainingActiveElement.classList.contains('training-active');
+        mofaStepElement.classList.toggle('training-active-before', isTrainingActive);
+    }
+
+    // Finger status
+    var fingerActiveElement = document.querySelector('.track .step.finger-active');
+    var mofaStepExtraElement = document.querySelector('.track .mofa-step.training-extra-step');
+
+    if (fingerActiveElement && mofaStepExtraElement) {
+        var isFingerActive = fingerActiveElement.classList.contains('finger-active');
+        mofaStepExtraElement.classList.toggle('finger-active', isFingerActive);
+    }
+
+    // manpower status
+    const manpowerActiveStep = document.querySelector('.step.manpower-active');
+    if (manpowerActiveStep) {
+        const prevManpowerStep = manpowerActiveStep.previousElementSibling;
+        if (prevManpowerStep) {
+            prevManpowerStep.classList.add('manpower-active-prev');
+        }
+    }
+
+    // ticket status
+    const ticketActiveStep = document.querySelector('.step.ticket-active');
+    if (ticketActiveStep) {
+        const prevTicketStep = ticketActiveStep.previousElementSibling;
+        if (prevTicketStep) {
+            prevTicketStep.classList.add('ticket-active-prev');
+        }
+    }
+  });
+
+ 
+</script>

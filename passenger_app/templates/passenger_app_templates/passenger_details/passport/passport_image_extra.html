@@ -1,0 +1,135 @@
+
+    {% csrf_token %}
+
+<style>
+    .vertical-card {
+        transform: rotate(90deg);
+       
+        width: 400px; 
+        height: 540px; 
+        margin: 0 auto; 
+
+        display: flex;
+        margin-left: 350px;
+        margin-top: -60px;
+        
+    }
+.text-card {
+        transform: rotate(90deg);
+       
+        width: 400px; 
+        height: 540px; 
+        margin: 0 auto; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 350px;
+        margin-top: -60px;
+}
+    .vertical-image {
+        /* Rotate the image back to its original orientation */
+        transform: rotate(-360deg);
+       
+        max-width: 100%; /* Ensure the image fits within the card */
+        max-height: 100%; /* Ensure the image fits within the card */
+    }
+     .horizontal-text {
+        transform: rotate(-90deg);
+        /* Rotate the text to make it horizontal within the card */
+        text-align: center;
+        color: #ff2b00;
+    }
+     .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .text-container{
+       transform: rotate(270deg);
+       align-items: center;
+       margin-bottom: -350px;
+    }
+</style>
+
+<!-- <form method="post" enctype="multipart/form-data"> -->
+<div class="col-12 col-md-auto">
+  <div class="card mb-3 vertical-card" style="margin-bottom: 20px;">
+    <div class="card-body" id="imageCardBody">
+      <div class="text-container">
+        {% if passenger_passport.passport_scanned_image %}
+          <img class="" id="selectedImage" src="{{ passenger.passport_scanned_image }}" alt="passport image">
+          <!-- <button id="saveButton" class="btn btn-primary" onclick="saveImageURL({{ passenger.id }})">Save</button> -->
+        {% else %}
+          <label for="fileInput" style="margin-left: -155px; color: #ff2b00;" >No Scanned Image Attached</label>
+          <input class="form-control" name="passport_scanned_image" style="margin-left: -200px;" type="file" id="fileInput" accept="image/*" placeholder="passport_scanned_image" />
+          
+        {% endif %}
+      </div>
+    </div>
+  </div>
+ 
+</div>
+<!-- {{ form.as_p }} 
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form> -->
+
+
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const cardContainer = document.querySelector('.card.mb-3.vertical-card');
+
+  fileInput.addEventListener('change', function() {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      // Create a new image element
+      const newImage = document.createElement('img');
+      newImage.src = event.target.result;
+
+      // Remove any existing child elements from the card
+      while (cardContainer.firstChild) {
+        cardContainer.removeChild(cardContainer.firstChild);
+      }
+
+      // Append the new image to the card
+      cardContainer.appendChild(newImage);
+
+      // Send the image URL to the server when the image is displayed
+      saveImageURL(newImage.src);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  // function saveImageURL(imageURL) {
+  //   // Send the imageURL to the server using an AJAX request or a form submission
+  //   // Example using fetch and POST request:
+  //   fetch('passenger_app/save_image_url/', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'X-CSRFToken': getCookie('csrftoken'), // Ensure you have a function to get CSRF token
+  //     },
+  //     body: JSON.stringify({ image_url: imageURL }),
+  //   })
+  //     .then(response => {
+  //       if (response.ok) {
+  //         alert('Image URL saved successfully!');
+  //       } else {
+  //         alert('Failed to save image URL.');
+  //       }
+  //     })
+  //     .catch(error => {
+  //       console.error('Error:', error);
+  //     });
+  // }
+
+  // // Function to get the CSRF token from cookies
+  // function getCookie(name) {
+  //   const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+  //   return cookieValue ? cookieValue.pop() : '';
+  // }
+</script>

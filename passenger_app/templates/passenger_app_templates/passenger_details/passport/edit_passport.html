@@ -1,0 +1,40 @@
+<form method="post" action="{% url 'passenger_app:passport_edit'  passenger_id  %}" class="passportEditForm" >
+  {% csrf_token %}
+
+  <input type="text" name="passenger_passport" value="{{ passport.passenger_passport.id }}" hidden  />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Passport </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6" >
+         <!--Passport Number field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Passport NO</label>          
+          <input class="form-control" name="passport_number" type="text" value="{{ passport.passport_number  }}"  placeholder="Passport NO" />
+        </div>
+      </div>
+
+
+      <!--Passport date of expairy field-->
+      <!-- <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Passport Expairy Date</label>          
+          <input class="form-control" name="date_of_expairy" type="date" value="{{ passport.date_of_expairy | date:'Y-m-d' }}" placeholder="Expairy Date" />
+        </div>
+      </div>  -->
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!--submit & close-->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

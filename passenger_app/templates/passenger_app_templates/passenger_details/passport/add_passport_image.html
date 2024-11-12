@@ -1,0 +1,10 @@
+<form method="post" action="{% url 'passenger_app:passport_image_add' passenger_id %}" class="passportinfoEditForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input class="form-control" name="passport_scanned_image" style="margin-left: -200px;" type="file" id="fileInput" accept="image/*" />
+
+  <!-- submit & close -->
+  <div class="form-submit">
+    <button type="submit" id="image-loading" class="btn btn-primary" style="margin-left: -70px; margin-top: 20px;">Upload-1</button>
+  </div>
+</form>

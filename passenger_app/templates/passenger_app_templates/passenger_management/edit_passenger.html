@@ -1,0 +1,131 @@
+<form method="post" action="{% url 'passenger_app:passenger_edit' form.instance.pk %}" class="passportinfoEditForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Passenger Edit Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Passport Number field -->
+      <input class="form-control" name="passport" type="text" value="{{ passenger.passport }}" placeholder="Passport NO" hidden />
+
+      <!-- Passport date of expairy field -->
+      <input class="form-control" name="passport_date_of_expairy" type="date" value="{{ passenger.passport_date_of_expairy|date:'Y-m-d' }}" placeholder="Expairy Date" hidden />
+
+      <!-- Agent Field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          {% if passenger.agent_list %}
+            <label for="submitgrid">Agent</label>
+            <input class="form-control" name="agent_list" type="text" value="{{ passenger.agent_list.id }}" hidden />
+            <select id="select_agent_id" class="form-select" name="" disabled>
+              <option value="{{ passenger.agent_list.id }}" selected>{{ passenger.agent_list.full_name }}</option>
+            </select>
+          {% else %}
+            <label for="submitgrid">Agent</label>
+            <select id="select_agent_id" class="form-select" name="agent_list" onchange="agent_select()">
+              {% for data in agent_list %}
+                <option value="" selected>Select Agent</option>
+                <option value="{{ data.id }}">{{ data.full_name }}</option>
+              {% endfor %}
+            </select>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- FULL Name field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">FULL Name</label>
+          <input class="form-control" name="full_name" type="text" value="{{ passenger.full_name }}" placeholder="FULL Name" />
+        </div>
+      </div>
+
+      <!-- gender field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Gender</label>
+          <select class="form-select" name="gender" id="id_gender" type="text">
+            {% if passenger.gender %}
+              <option value="{{ passenger.gender }}" selected>{{ passenger.get_gender_display }}</option>
+              {% if passenger.gender == 'male' %}
+                <option value="female">Female</option>
+              {% else %}
+                <option value="male">Male</option>
+              {% endif %}
+            {% else %}
+              <option value="" selected>Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Birth Date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Date of Birth</label>
+          <input class="form-control" name="birth_date" type="date" value="{{ passenger.birth_date|date:'Y-m-d' }}" placeholder="Date of Birth" />
+        </div>
+      </div>
+
+      <!-- email field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Email Address</label>
+          {% if passenger.email %}
+            <input class="form-control" name="email" type="email" value="{{ passenger.email }}" />
+          {% else %}
+            <input class="form-control" name="email" type="email" value="" />
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- phone number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Phone Number</label>
+          <input class="form-control" name="phone_number" type="number" value="{{ passenger.phone_number }}" placeholder="Phone Number" />
+        </div>
+      </div>
+
+      <!-- emergency number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Emergency Number</label>
+          <input class="form-control" name="emergency_contact_number" type="number" value="{{ passenger.emergency_contact_number }}" placeholder="Emergency Number" />
+        </div>
+      </div>
+
+      <!-- address field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Address</label>
+          <input class="form-control" name="address" type="text" value="{{ passenger.address }}" placeholder="Address" />
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if passenger.passenger_image %}
+            <span class="col-sm-2 col-md-2 div2" style="width: fit-content;" id="file-label">Current Imgae: {{ passenger.passenger_image }}</span>
+            <input class="form-control" name="passenger_image" type="file" placeholder="PNG/JPG File" />
+          {% else %}
+            <label for="submitgrid">No Upload Image</label>
+            <input class="form-control" name="passenger_image" type="file" placeholder="PNG/JPG File" />
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

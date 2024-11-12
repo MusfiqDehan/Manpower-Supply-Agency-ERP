@@ -1,0 +1,117 @@
+{% csrf_token %}
+
+<style>
+  .vertical-card {
+    transform: rotate(90deg);
+
+    width: 400px;
+    height: 540px;
+    margin: 0 auto;
+
+    display: flex;
+    margin-left: 350px;
+    margin-top: -60px;
+  }
+  .text-card {
+    /* transform: rotate(90deg); */
+
+    width: 400px;
+    height: 540px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 350px;
+    margin-top: -60px;
+  }
+  .vertical-image {
+    /* Rotate the image back to its original orientation */
+    transform: rotate(-270deg);
+
+    max-width: 100% !important; /* Ensure the image fits within the card */
+    max-height: 100% !important; /* Ensure the image fits within the card */
+  }
+  .horizontal-text {
+    /* transform: rotate(-90deg); */
+    /* Rotate the text to make it horizontal within the card */
+    text-align: center;
+    color: #ff2b00;
+  }
+
+  .text-container {
+    transform: rotate(270deg);
+    align-items: center;
+    margin-bottom: -350px;
+  }
+  .btn-div {
+    transform: rotate(270deg);
+    margin-top: -30px !important;
+
+    margin: 0 auto;
+
+    display: flex;
+    margin-left: 380px;
+  }
+</style>
+
+<div class="col-6 col-md-auto">
+  <div class="card mb-3 vertical-card" style="margin-bottom: 20px">
+    <div class="card-body" id="image-card">
+      {% if passenger_passport.passport_scanned_image %}
+      <div class="vertical-image">{% include 'passenger_app_templates/passenger_details/passport/image_card.html' %}</div>
+
+      {% else %}
+
+      <div class="text-container">{% include 'passenger_app_templates/passenger_details/passport/no_image.html' %}</div>
+      {% endif %}
+    </div>
+    
+  </div>
+  <!--card-->
+
+  <div class="card">
+    <!-- <div class="btn-div">
+      <button class="btn btn-primary">change</button>
+    </div> -->
+  </div>
+</div>
+
+<script>
+  $(function () {
+    /* Save Form */
+    var saveForm = function () {
+      var form = $(this);
+      var formData = new FormData(form[0]);
+
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+          $('#image-loading').html(
+            '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>',
+          );
+        },
+
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#image-card').html(data.html_image_div);
+          } else {
+            $().html(data.html_form);
+          }
+        },
+      });
+
+      return false;
+    };
+
+    // add
+    $('.passimageAddForm').on('submit', saveForm);
+  });
+</script>

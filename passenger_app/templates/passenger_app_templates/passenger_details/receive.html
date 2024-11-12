@@ -1,0 +1,44 @@
+<form method="post" action="{% url 'passenger_app:receive' passenger_id %}" class="receiveForm">
+  {% csrf_token %}
+
+  <input type="text" name="passenger" value="{{ passenger_id }}" hidden />
+
+  <input class="form-control" name="previous_balance" value="0.0" hidden />
+  <input class="form-control" name="total_balance" value="0.0" hidden />
+
+  <input class="form-control" name="debit" value="0.0" hidden />
+
+  <input class="form-control" name="opening_balance" type="number" value="0.0" hidden />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Receive</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Opening Balance -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Credit Amount</label>
+          <input class="form-control" name="credit" type="number" placeholder="Credit" />
+        </div>
+      </div>
+      <!-- note field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Note</label>
+          <textarea name="note" class="form-control" rows="2" placeholder="Note"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

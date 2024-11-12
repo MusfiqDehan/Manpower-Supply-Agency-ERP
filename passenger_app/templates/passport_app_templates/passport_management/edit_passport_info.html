@@ -1,0 +1,144 @@
+<form
+  method="post"
+  action="{% url 'passport_app:passport_info_edit' form.instance.pk %}"
+  class="passportinfoEditForm"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Passport Information</h5>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+        <!--Passport Number field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Passport NO</label>          
+          <input class="form-control" name="passport_number" value="{{ passport.passport_number }}" type="text" placeholder="Passport NO" />
+        </div>
+      </div>
+
+        <!--Expairy Date field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expairy Date</label>
+          <input class="form-control" name="date_of_expairy" value="{{ passport.date_of_expairy | date:'Y-m-d' }}" type="date" placeholder="Expairy Date" />
+        </div>
+      </div>
+
+       <!--FULL Name field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">FULL Name</label>          
+          <input class="form-control" name="full_name" value="{{ passport.full_name }}" type="text" placeholder="FULL Name" />
+        </div>
+      </div>
+
+      
+   <!--Description  field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="description" class="form-control"  rows="3" placeholder="Description" >{{ passport.description }}</textarea>
+        </div>
+      </div>
+      {% comment %}
+      <!----style and script for file div-->
+      <style>
+        .div {
+        width:30vw;
+        border: 1px solid var(--phoenix-input-border-color);
+        padding: 10px;
+        border-radius: 5px;
+        border-top-right-radius: 1px;
+        border-bottom-right-radius: 1px;
+      }
+
+      .button-like-span {
+          display: inline-block;
+          padding: 10px;
+          border: 1px solid var(--phoenix-input-border-color);
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: #e0e0e0 ;
+      }
+
+      .button-like-span:hover {
+          background-color: #c0c0c0; /* Change the background color on hover for interactivity */
+      }
+
+      .div2 {
+        width:67vw;
+        border: 1px solid var(--phoenix-input-border-color);
+        padding: 10px;
+        border-radius: 5px;
+        border-top-left-radius: 1px;
+        border-bottom-left-radius: 1px;
+      
+      }
+      @media screen and (max-width:450px){
+
+      }
+      </style>
+      <script>
+          document.getElementById('file-input').addEventListener('change', function () {
+              var fileInput = document.getElementById('file-input');
+              var fileLabel = document.getElementById('file-label');
+              
+              if (fileInput.files.length > 0) {
+                  fileLabel.textContent = fileInput.files[0].name; // Display the selected file name
+              } else {
+                  fileLabel.textContent = 'Select a File'; // Reset the label if no file is selected
+              }
+          });
+      </script>
+
+      <!-- Document File field-->
+     <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid" class="mb-3">Scan File:</label>
+          <input
+          class="form-control"
+          id="file-input"
+          name="passport_scan"
+          type="file"
+          style="display: none;"  
+      />
+      <label for="file-input"  class="custom-file-upload" >
+       <div style="display:flex;flex-direction:row;"> <span class=" col-sm-1 col-md-1 div button-like-span ">Change File </span><span class="col-sm-2 col-md-2 div2 " id="file-label" >{{ passport.passport_scan}}</span></div>
+      </label>
+         
+         
+        </div>
+      </div>
+
+      {% endcomment %}
+
+
+</div>
+  </div>
+  <div class="modal-footer">
+    <!--submit & close-->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        Close
+      </button>
+      <button
+        type="submit"
+        id="loading"
+        class="btn btn-primary"
+        data-bs-save="modal"
+      >
+        submit
+      </button>
+    </div>
+  </div>
+</form>

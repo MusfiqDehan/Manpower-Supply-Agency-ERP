@@ -1,0 +1,207 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <div class="pb-3">
+      <div class="row g-4 g-xl-6">
+        <div class="col-xl-12 col-xxl-12" id="tracking_and_details_div">
+          <!-- Passenger Activites Details -->
+          {% include 'passenger_app_templates/passenger_details/passenger_tab.html' %}
+        </div>
+      </div>
+    </div>
+
+    <!-- include -->
+    {% include 'base/footer.html' %}
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="AccountModal" tabindex="-1" aria-labelledby="AccountLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="DocumentModal" tabindex="-1" aria-labelledby="DocumentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content(edit passenger ) -->
+    <div class="modal fade" id="PassengerModal" tabindex="-1" aria-labelledby="PassengerLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="PassengerGeneralDocumentModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- accounts -->
+    <script>
+      $(function () {
+        /* load form */
+        console.log('load form')
+        var loadForm = function () {
+          var edit = document.getElementById('AccountModal')
+          var url
+      
+          url = $(this).attr('data-url')
+      
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#AccountModal').modal('show')
+              $('#AccountModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+            },
+      
+            success: function (data) {
+              $('#AccountModal .modal-content').html(data.html_form)
+              console.log('Success !')
+            }
+          })
+        }
+      
+        /* Save Form */
+        var saveForm = function () {
+          var edit = document.getElementById('AccountModal')
+          var form = $(this)
+      
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#account-table tbody').html(data.html_account_list)
+                $('#opening-bal-date').html(data.html_opening_bal_date)
+                $('#opening-balance').html(data.html_opening_balance)
+                $('#account-all-button').html(data.html_account_button)
+      
+                $(edit).modal('hide')
+              } else {
+                $('#AccountModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+      
+        // create account
+        $('#account-create').on('click', '.accountCreateButton', loadForm)
+        $('#AccountModal').on('submit', '.accountCreateForm', saveForm)
+      
+        // receive
+        $('#receive-button').on('click', '.receieveButton', loadForm)
+        $('#AccountModal').on('submit', '.receiveForm', saveForm)
+      
+        // payment
+        $('#payment-button').on('click', '.paymentButton', loadForm)
+        $('#AccountModal').on('submit', '.paymentForm', saveForm)
+      
+        // Update Trainng List
+        //   $("#passenger-table").on("click", ".passengerEditButton", loadForm);
+        //   $("#PassengerModal").on("submit", ".passportinfoEditForm", saveForm);
+      
+        // Delete Training List
+        $('#account-table').on('click', '.accountDeleteButton', loadForm)
+        $('#AccountModal').on('submit', '.accountDeleteForm', saveForm)
+      })
+    </script>
+
+    <!-- document -->
+    <script>
+      $(function () {
+        /* load form */
+        var loadForm = function () {
+          var edit = document.getElementById('DocumentModal')
+          var url
+          url = $(this).attr('data-url')
+      
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#DocumentModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+              $('#DocumentModal').modal('show')
+            },
+      
+            success: function (data) {
+              $('#DocumentModal .modal-content').html(data.html_form)
+              console.log('Success !')
+            }
+          })
+        }
+      
+        /* Save Form */
+        var saveForm = function () {
+          var edit = document.getElementById('DocumentModal')
+          var form = $(this)
+      
+          var formData = new FormData(form[0])
+      
+          $.ajax({
+            url: form.attr('action'),
+      
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            data: formData,
+      
+            processData: false,
+            contentType: false,
+      
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#passenger-document-table tbody').html(data.html_passenger_document_list)
+                $('#passport_track_card #tracking-steps').html(data.tracking_steps_html)
+                //$('#image_divvv').html(data.passport_image_html)
+      
+                $(edit).modal('hide')
+              } else {
+                $('#DocumentModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+      
+        // add document
+        $('#document-add').on('click', '.documentAddButton', loadForm)
+        $('#DocumentModal').on('submit', '.documentAddForm', saveForm)
+      
+        // Update Trainng List
+        $('#passenger-document-table').on('click', '.documentEditButton', loadForm)
+        $('#DocumentModal').on('submit', '.documentEditForm', saveForm)
+      
+        // Delete passenger document
+        $('#passenger-document-table').on('click', '.documentDeleteButton', loadForm)
+        $('#DocumentModal').on('submit', '.documentDeleteForm', saveForm)
+      })
+    </script>
+  </div>
+{% endblock %}

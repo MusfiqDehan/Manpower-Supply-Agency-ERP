@@ -1,0 +1,587 @@
+<style>
+    .track {
+   display: grid;
+   flex-direction: column; /* Set the direction to column */
+   grid-template-columns: repeat(3,auto);
+   padding:20px;
+   margin-bottom: 60px;
+   margin-top: 50px;
+   margin-left: -65px;
+ }
+
+ .track .step {
+   text-align: center;
+   position: relative;
+   margin-bottom: 38px;
+   display: inline-block; /* Add this to remove the gap */
+   vertical-align: top; /* Add this to align the elements at the top */
+ }
+
+ .track .step::before {
+   height: 9px;
+   position: absolute;
+   background: black;
+   content: '';
+   width: 100%;
+   top: 21px;
+   left:200px
+ }
+
+ /* middle row  */
+
+ .track .mofa-step {
+   text-align: center;
+   position: relative;
+   margin-bottom: 38px;
+   display: inline-block; /* Add this to remove the gap */
+   vertical-align: top; /* Add this to align the elements at the top */
+ }
+ .track .mofa-step::before {
+   /*training & visa*/
+   height: 9px;
+   position: absolute;
+   background: black;
+   content: '';
+   width: 90%;
+   top: 21px;
+
+   margin-left: 40px;
+ }
+ .track .mofa-step.training-active-before::before {
+   background: greenyellow;
+ }
+ .track .training-step {
+   text-align: center;
+   position: relative;
+   margin-bottom: 38px;
+   display: inline-block; /* Add this to remove the gap */
+   vertical-align: top; /* Add this to align the elements at the top */
+ }
+ .track .training-step::before {
+   height: 9px;
+   position: absolute;
+   background: black;
+   content: '';
+   width: 100%;
+   top: 21px;
+   margin-left: -375px;
+ }
+ /* this is for visa active status */
+ .track .training-step.visa-active-before::before {
+   background: greenyellow;
+ }
+
+ .track .visa-step {
+   text-align: center;
+   position: relative;
+   margin-bottom: 38px;
+   display: inline-block; /* Add this to remove the gap */
+   vertical-align: top; /* Add this to align the elements at the top */
+   z-index: 1;
+ }
+
+ .track .step.pass-step::before {
+   height: 7px;
+   position: absolute;
+   background: white;
+   content: '';
+   width: 50%; /* Adjust the width to cover only the left side */
+   top: 21px;
+   right: 0;
+ }
+
+ .track .step.pass-step::after {
+   /* right round */
+   content: '';
+   position: absolute;
+   width: 130px;
+   height: 100px;
+   border-top-left-radius: 100px;
+   border-top-right-radius: 100px;
+   border: 10px solid black;
+   border-bottom: 0;
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   transform: rotate(-270deg);
+   margin-top: -44px;
+   margin-left: 8px;
+ }
+
+ /* this is for active status */
+ .track .step.pass-step.border-green::after {
+   border-color: greenyellow;
+ }
+ /* Add this block to create a half-circle line on the right side */
+ .track .mofa-step.training-extra-step::after {
+   content: '';
+   position: absolute;
+
+   width: 130px;
+   height: 100px;
+   /* background-color: gold; */
+   border-top-left-radius: 100px;
+   border-top-right-radius: 100px;
+   border: 10px solid black;
+   border-bottom: 0;
+
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box;
+   transform: rotate(-90deg);
+   margin-top: -44px;
+   margin-left: -120px;
+ }
+ @media screen and (max-width: 1300px) {
+   
+ .track .text {
+   display: block;
+   margin-top: 7px;
+   font-size:12px !important;
+ }
+
+   .track {
+     display: grid;
+     flex-direction: column; /* Set the direction to column */
+     grid-template-columns: repeat(3,auto);
+     padding:90px;
+     margin-bottom: 60px;
+     margin-top: 50px;
+     margin-left: -25px;
+   }
+
+  /*visa status mofa status*/
+   .track .training-step::before {
+     height: 9px;
+     position: absolute;
+     background: black;
+     content: '';
+     width: 100%;
+     top: 19px;
+     
+     left:300px;
+   }
+   /* left round*/
+   .track .mofa-step.training-extra-step::after {
+     content: '';
+     position: absolute;
+ 
+     width: 130px;
+     height: 100px;
+     /* background-color: gold; */
+     border-top-left-radius: 100px;
+     border-top-right-radius: 100px;
+     border: 10px solid black;
+     border-bottom: 0;
+ 
+     -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+     box-sizing: border-box;
+     transform: rotate(-90deg);
+     margin-top: -44px;
+     margin-left: -120px;
+   }
+   /*lines*/
+   .track .step::before {
+     height: 9px;
+     position: absolute;
+     background: black;
+     content: '';
+     width: 100%;
+     top: 21px;
+   }
+  
+ }
+ /* this is for active status */
+ .track .mofa-step.training-extra-step.finger-active::after {
+   border-color: greenyellow;
+ }
+
+ .track .step.side-step::before {
+   height: 9px;
+   position: absolute;
+   background-color: white;
+   content: '';
+   width: 50%; /* Adjust the width to cover only the left side */
+   top: 21px;
+   right: 0; /* Adjust the left position to start from the left */
+ }
+
+ .track .icon {
+   display: inline-block;
+   width: 50px;
+   height: 50px;
+   line-height: 50px;
+   position: relative;
+   border-radius: 100%;
+   background: #ddd;
+   margin-left: -3px;
+   z-index: 1;
+ }
+
+ .track .text {
+   display: block;
+   margin-top: 7px;
+  
+ }
+
+ /* active */
+ /* passport received */
+ .track .step.receive-active .icon {
+   background: green;
+   color: #fff;
+ }
+ .track .step.receive-active .text {
+   font-weight: 400;
+   color: green;
+ }
+ /* police clearence */
+ .track .step.police-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .step.police-active-prev::before {
+   background: greenyellow;
+ }
+ .track .step.police-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* medical */
+ .track .step.medical-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .step.medical-active-prev::before {
+   background: greenyellow;
+ }
+ .track .step.medical-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* mofa */
+
+ .track .training-step.mofa-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .training-step.mofa-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* visa */
+ .track .visa-step.visa-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .visa-step.visa-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* training */
+ .track .mofa-step.training-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .mofa-step.training-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* finger status */
+ .track .step.finger-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .step.finger-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* Manpower status */
+ .track .step.manpower-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .step.manpower-active-prev::before {
+   background: greenyellow;
+ }
+ .track .step.manpower-active .text {
+   font-weight: 400;
+   color: green;
+ }
+
+ /* ticket status */
+ .track .step.ticket-active .icon {
+   background: green;
+   color: #fff;
+ }
+
+ .track .step.ticket-active-prev::before {
+   background: greenyellow;
+ }
+ .track .step.ticket-active .text {
+   font-weight: 400;
+   color: green;
+ }
+</style>
+
+{% if passenger_passport.passport_received %}
+     
+     <div class="step receive-active ">
+       <span class="icon"><i class="fas fa-passport"></i></span>
+       <span class="text">Passport Received</span>
+       <span class="badge badge-phoenix badge-phoenix-warning">12-11-2023</span>
+     </div>
+     
+     {% else %}
+     <div class="step  ">
+       <span class="icon"><i class="fas fa-passport"></i></span>
+       <span class="text">Passport Received</span>
+     </div>
+     {% endif %}
+
+     <!----police clearence---->
+     {% if passenger_passport.police_clearance %}
+     <div class="step police-active" id="police">
+    
+       <span class="icon"><i class="fas fa-user-tie"></i></span>
+       <span class="text">Police Clearance</span>
+       <span class="badge badge-phoenix badge-phoenix-success">12-11-2023</span>
+     </div>
+     {% else %}
+     <div class="step ">
+       <span class="icon"><i class="fas fa-user-tie"></i></span>
+       <span class="text">Police Clearance</span>
+     </div>
+     {% endif %}
+
+     <!----medical certificate-->
+     {% if passenger_passport.medical_certificate %}
+     <div class="step pass-step medical-active  ">
+       <span class="icon"><i class="fas fa-clinic-medical"></i></span>
+       <span class="text">Medical Certificate</span>
+     </div>
+     {% else %}
+     <div class="step pass-step ">
+       <span class="icon"><i class="fas fa-clinic-medical"></i></span>
+       <span class="text">Medical Certificate</span>
+     </div>
+     {% endif %}
+
+     <!----second-->
+     <!----training status-->
+     <!-- {% if passenger_passport.training_status %}
+     <div class="mofa-step training-extra-step training-div training-active ">
+       <span class="icon"><i class="fas fa-check-double"></i></span>
+       <span class="text">Training Status</span>
+     </div>
+     {% else  %}   {% endif %}-->
+
+     {% if passenger_passport.visa_status %}
+     <div class="mofa-step training-extra-step training-div training-active ">
+       <span class="icon"><i class="fas fa-check-double"></i></span>
+       <span class="text">Visa Status</span>
+     </div>
+     {% else %}
+     <div class="mofa-step training-extra-step training-div ">
+       <span class="icon"><i class="fas fa-check-double"></i></span>
+       <span class="text">Visa Status</span>
+     </div>
+     {% endif %}
+     <!----visa status-->
+    
+     {% if passenger_passport.finger_appointment %}
+       <div class="visa-step visa-active">
+         <span class="icon"><i class="fa fa-check"></i></span>
+         <span class="text">Finger Appointment</span>
+       </div>
+     {% else %}
+       <div class="visa-step ">
+         <span class="icon"><i class="fa fa-check"></i></span>
+         <span class="text">Finger Appointment</span>
+       </div>
+     {% endif %}
+
+     <!-----mofa status -->
+     {% if passenger_passport.mofa_status  %}
+     <div class="training-step mofa-active  ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text"> Mofa Status</span>
+     </div>
+     {% else %}
+     <div class="training-step   ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text"> Mofa Status</span>
+     </div>
+     {% endif %}
+     
+     <!-- <div class="training-step   ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text">Finger Appointment</span>
+     </div> 
+
+           {% if passenger_passport.visa_status %}
+     <div class="visa-step visa-active ">
+       <span class="icon"><i class="fa fa-check"></i></span>
+       <span class="text">Visa Status</span>
+     </div>
+     {% else %}
+     <div class="visa-step ">
+       <span class="icon"><i class="fa fa-check"></i></span>
+       <span class="text">Visa Status</span>
+     </div>
+     {% endif %}
+   -->
+
+
+     <!-----third row-->
+     <!----Finger Status-->
+     <!-- {% if passenger_passport.finger_status %}
+     <div class="step  finger-active">
+       <span class="icon"><i class='fas fa-fingerprint'></i></span>
+       <span class="text">Finger Status</span>
+     </div>
+     {% else %}
+     <div class="step ">
+       <span class="icon"><i class='fas fa-fingerprint'></i></span>
+       <span class="text">Finger Status</span>
+     </div>
+     {% endif %} -->
+     {% if passenger_passport.training_status %}
+     <div class="step finger-active">
+       <span class="icon"><i class='fas fa-fingerprint'></i></span>
+       <span class="text">Training Status</span>
+     </div>
+     {% else %}
+     <div class="step ">
+       <span class="icon"><i class='fas fa-fingerprint'></i></span>
+       <span class="text">Training Status</span>
+     </div>
+     {% endif %}
+
+     <!---Manpower Status-->
+     <!-- {% if passenger_passport.manpower_status %}
+     <div class="step manpower-active ">
+       <span class="icon"><i class="fas fa-user-alt"></i></span>
+       <span class="text">Manpower Status</span>
+     </div>
+     {% else %}
+     <div class="step ">
+       <span class="icon"><i class="fas fa-user-alt"></i></span>
+       <span class="text">Manpower Status</span>
+     </div>
+     {% endif %} -->
+     {% if passenger_passport.finger_status %}
+     <div class="step manpower-active">
+       <span class="icon"><i class="fas fa-user-alt"></i></span>
+       <span class="text">Finger Status</span>
+     </div>
+     {% else %}
+     <div class="step ">
+       <span class="icon"><i class="fas fa-user-alt"></i></span>
+       <span class="text">Finger Status</span>
+     </div>
+     {% endif %}
+     <!---Ticket Status-->
+     <!-- {% if passenger_passport.ticket_status %}
+     <div class="step side-step ticket-active ">
+       <span class="icon"><i class="fa fa-ticket"></i></span>
+       <span class="text">Ticket Status</span>
+     </div>
+     {% else %}
+     <div class="step side-step">
+       <span class="icon"><i class="fa fa-ticket"></i></span>
+       <span class="text">Ticket Status</span>
+     </div>
+     {% endif %} -->
+
+     {% if passenger_passport.manpower_status %}
+     <div class="step pass-step ticket-active">
+       <span class="icon"><i class="fas fa-clinic-medical"></i></span>
+       <span class="text">Manpower Status</span>
+     </div>
+     {% else %}
+     <div class="step pass-step ">
+       <span class="icon"><i class="fas fa-clinic-medical"></i></span>
+       <span class="text">Manpower Status</span>
+     </div>
+     {% endif %}
+
+
+     {% if passenger_passport.ticket_status %}
+     <div class="Ticket_Status_step  Ticket_Status_step_active ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text">Ticket Status</span>
+     </div>
+     {% else %}
+     <div class="Ticket_Status_step   ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text">Ticket Status</span>
+     </div>
+     {% endif %}
+
+
+
+     <div class="fly  ">
+       <span class="icon"><i class="fa fa-check-circle"></i></span>
+       <span class="text"> Fly Status</span>
+     </div>
+     <style>
+       .track .Ticket_Status_step  {
+         text-align: center;
+         position: relative;
+         margin-bottom: 38px;
+         display: inline-block; /* Add this to remove the gap */
+         vertical-align: top; /* Add this to align the elements at the top */
+         left:750px
+       }
+       .track .Ticket_Status_step.Ticket_Status_step_active .icon {
+         background: green;
+         color: #fff;
+       }
+     
+       
+       .track .Ticket_Status_step.Ticket_Status_step_active .text {
+         font-weight: 400;
+         color: green;
+       }
+       .track .fly {
+         text-align: center;
+         position: relative;
+         margin-bottom: 38px;
+         display: inline-block; /* Add this to remove the gap */
+         vertical-align: top; /* Add this to align the elements at the top */
+       }
+       .track .fly::before {
+         height: 9px;
+         position: absolute;
+         background: black;
+         content: '';
+         width: 100%;
+         top: 21px;
+       left: 175px;
+       }
+     
+       
+     </style>
+     <!-- .track .Ticket_Status_step::before {
+       height: 9px;
+       position: absolute;
+       background: rgb(214, 18, 18);
+       content: '';
+       width: 100%;
+       top: 21px;
+       margin-left: 285px;
+     } -->

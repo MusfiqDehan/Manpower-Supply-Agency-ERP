@@ -1,0 +1,60 @@
+{% for data in cancel_passenger_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end text-center">{{ data.passport }}</td>
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold">{{ data.full_name }}</a>
+    </td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.gender }}</td>
+
+    {% if data.agent_list.full_name %}
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.agent_list.full_name }}</td>
+    {% else %}
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+        <span style="color: red;">NO AGENT</span>
+      </td>
+    {% endif %}
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.phone_number }}</td>
+
+    <!-- Passenger Status -->
+    <td class="name text-center align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.cancel_status }}</td>
+
+    <!-- Action-->
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          <!-- view -->
+          <div>
+            <a href="{% url 'passenger_app:passenger_details' data.id %}" class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-success px-0"><span class="fas fa-angle-double-right"></span></a>
+          </div>
+
+          <!-- prettier ignore -->
+          {% for i in user.Group_Users.first.permissions.all %}
+            <!-- prettier ignore -->
+            {% if i.codename == 'change_passenger' %}
+              <!-- edit -->
+              <div>
+                <button class="btn passengerEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'passenger_app:passenger_edit' data.id %}"><span class="fas fa-edit"></span></button>
+              </div>
+
+              <!-- prettier ignore -->
+            {% endif %}
+            <!-- prettier ignore -->
+          {% endfor %}
+
+          <!-- prettier ignore -->
+          {% for i in user.Group_Users.first.permissions.all %}
+            <!-- prettier ignore -->
+            {% if i.codename == 'delete_passenger' %}
+              <!-- delete -->
+              <div>
+                <button class="btn passengerDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'passenger_app:passenger_delete' data.id %}"><span class="fas fa-trash"></span></button>
+              </div>
+              <!-- prettier ignore -->
+            {% endif %}
+            <!-- prettier ignore -->
+          {% endfor %}
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

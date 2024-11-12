@@ -1,0 +1,78 @@
+<form method="post" action="{% url 'passport_app:passport_info_create'  %}" class="passportinfoAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Passport Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+        <!--Passport Number field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Passport NO</label>          
+          <input class="form-control" name="passport_number" type="text" placeholder="Passport NO" />
+        </div>
+      </div>
+
+     <div class="col-sm-6 col-md-6">
+    <div class="form-submit">
+        <label for="select_passenger">Passenger</label>
+        <select id="select_passenger" class="form-select" name="passenger">
+            <option value="">Select</option>
+            {% for data in passenger %}
+                <option value="{{ data.id }}">{{ data.full_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
+
+        <!--Expairy Date field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expairy Date</label>
+          <input class="form-control" name="date_of_expairy" type="date" placeholder="Expairy Date" />
+        </div>
+      </div>
+
+       <!--FULL Name field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">FULL Name</label>          
+          <input class="form-control" name="full_name" type="text" placeholder="FULL Name" />
+        </div>
+      </div>
+
+      
+   <!--Description  field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="description" class="form-control"  rows="3" placeholder="Description" ></textarea>
+        </div>
+      </div>
+
+      <!-- Document File field-->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Scan File</label>
+          <input class="form-control" name="passport_scan" type="file" placeholder="Document File" />
+        </div>
+      </div>
+
+
+</div>
+  </div>
+
+  <div class="modal-footer">
+    
+    <!--submit & close-->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

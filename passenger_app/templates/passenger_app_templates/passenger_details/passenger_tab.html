@@ -1,0 +1,463 @@
+<ul class="nav nav-underline deal-details scrollbar flex-nowrap w-100 pb-1 mb-6" id="myTab" role="tablist" style="overflow-y: hidden">
+  <!-- passenger -->
+  <li class="nav-item text-nowrap me-2" role="presentation">
+    <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#tab-profile" role="tab" aria-controls="tab-qualification" aria-selected="true">
+      <i class="fas fa-user"></i>
+      Profile Details
+    </a>
+  </li>
+
+  <!-- passenger -->
+  <li class="nav-item text-nowrap me-2" role="presentation">
+    <a class="nav-link" id="passport-tab" data-bs-toggle="tab" href="#tab-passport" role="tab" aria-controls="tab-qualification" aria-selected="true">
+      <i class="fas fa-passport"></i>
+      Passport
+    </a>
+  </li>
+
+  <!-- Accounts -->
+  <li class="nav-item text-nowrap me-2" role="presentation">
+    <a class="nav-link" id="new-account-tab" data-bs-toggle="tab" href="#tab-account-new" role="tab" aria-controls="tab-account-new-details" aria-selected="false" tabindex="-1">
+      <i class="fas fa-money-bill-transfer"></i>
+      Accounts
+    </a>
+  </li>
+
+  <!-- Passenger Report Status -->
+  <li class="nav-item text-nowrap me-2" role="presentation">
+    <a class="nav-link" id="passenger-status-tab" data-bs-toggle="tab" href="#tab-passenger-status" role="tab" aria-controls="tab-proposal" aria-selected="false" tabindex="-1">
+      <i class="fas fa-users"></i>
+      Passenger Status
+    </a>
+  </li>
+
+  <!-- General Documents -->
+  <li class="nav-item text-nowrap me-2" role="presentation">
+    <a class="nav-link" id="document-tab" data-bs-toggle="tab" href="#tab-documents" role="tab" aria-controls="tab-proposal" aria-selected="false" tabindex="-1">
+      <i class="fas fa-file"></i>
+      Documents
+    </a>
+  </li>
+</ul>
+
+<!-- Passport Image. -->
+<div class="modal fade" id="imageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      {% if passenger_passport.passport_scanned_image %}
+        <img src="{{ passenger_passport.passport_scanned_image.url }}" alt="passport image" />
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<!-- content -->
+<div class="tab-content" id="myTabContent">
+  <!-- Passenger Profile -->
+  <div class="tab-pane fade active show" id="tab-profile" role="tabpanel">
+    <!-- Header -->
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Passenger | Profile Details</h2>
+      </div>
+    </div>
+
+    <div class="card mb-3" id="card-1-div">
+      {% include 'passenger_app_templates/passenger_details/card_1.html' %}
+    </div>
+
+    <div class="card mb-3" id="card-2-div">
+      {% include 'passenger_app_templates/passenger_details/card_2.html' %}
+    </div>
+  </div>
+
+  <!-- Passenger Details/ Passport tab -->
+  <div class="tab-pane fade" id="tab-passport" role="tabpanel">
+    <!-- Header -->
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Passenger | Passport Tracking</h2>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-center g-3 mb-1">
+      <div class="col-12">
+        <!-- passport image Upload Div -->
+        <div id="image_divvv">
+          {% include 'passenger_app_templates/passenger_details/passport_image.html' %}
+        </div>
+
+        <div class="row align-items-center justify-content-center g-3 mb-5">
+          <div class="col-12">
+            <div class="card-tracking mt-3" id="passport_track_card">
+              {% include 'passenger_app_templates/passenger_details/passport/passport_track.html' %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passenger Account Management -->
+  <div class="tab-pane fade" id="tab-account-new" role="tabpanel">
+    <!-- Header -->
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Passenger | Accounts</h2>
+      </div>
+    </div>
+
+    <!-- Account Acctivites -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-4 g-xl-1 g-xxl-3 justify-content-between">
+          <div class="col-sm-auto">
+            <div class="d-sm-block d-inline-flex d-md-flex flex-xl-column flex-xxl-row align-items-center align-items-xl-start align-items-xxl-center">
+              <div class="d-flex bg-success-100 rounded flex-center me-3 mb-sm-3 mb-md-0 mb-xl-3 mb-xxl-0" style="width:32px; height:32px">
+                <!-- // icon // -->
+              </div>
+              <div>
+                <p class="fw-bold mb-1">Debit Amount</p>
+                <h4 class="fw-bolder text-nowrap">{{ passenger_total_debit }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <div class="d-sm-block d-inline-flex d-md-flex flex-xl-column flex-xxl-row align-items-center align-items-xl-start align-items-xxl-center border-start-sm ps-sm-5">
+              <div class="d-flex bg-info-100 rounded flex-center me-3 mb-sm-3 mb-md-0 mb-xl-3 mb-xxl-0" style="width:32px; height:32px">
+                <!-- // icon // -->
+              </div>
+              <div>
+                <p class="fw-bold mb-1">Credit Amount</p>
+                <h4 class="fw-bolder text-nowrap">{{ passenger_total_credit }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-auto">
+            <div class="d-sm-block d-inline-flex d-md-flex flex-xl-column flex-xxl-row align-items-center align-items-xl-start align-items-xxl-center border-start-sm ps-sm-5">
+              <div class="d-flex bg-primary-100 rounded flex-center me-3 mb-sm-3 mb-md-0 mb-xl-3 mb-xxl-0" style="width:32px; height:32px">
+                <!-- // icon // -->
+              </div>
+              <div>
+                <p class="fw-bold mb-1">Total Balance</p>
+                <h4 class="fw-bolder text-nowrap">{{ passenger_total_balance }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- table -->
+    <div class="card pt-3 pb-4">
+      <div class="card-body">
+        <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+          <table id="account-table" class="table fs--1 mb-0 leads-table border-bottom">
+            <thead>
+              <tr>
+                <!-- Date -->
+                <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 5%">Date</th>
+                <!-- Date -->
+
+                <!-- Debit -->
+                <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 5%">Debit</th>
+
+                <!-- Credit -->
+                <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 5%">Credit</th>
+
+                <!-- Balance -->
+                <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Balance</th>
+
+                <!-- Note -->
+                <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Note</th>
+              </tr>
+            </thead>
+
+            <!-- include passenger account data -->
+            <tbody class="list" id="deal-tables-body">
+              {% include 'passenger_app_templates/passenger_details/account_list.html' %}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- pegination -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Passenger Status -->
+  <div class="tab-pane fade" id="tab-passenger-status" role="tabpanel" aria-labelledby="tab-passenger-status">
+    <!-- Header -->
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Passenger | Status Documents</h2>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <div class="row align-items-center g-0 justify-content-start mb-3">
+          <div class="col-12 col-sm-auto d-flex">
+            <div id="document-add">
+              <button type="button" class="btn documentAddButton btn-primary" data-url="{% url 'passenger_app:passenger_document_add' passenger.id %} ">
+                <i class="fa fa-add"></i>
+                Add Status Document
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 pb-4">
+      <div class="">
+        <div class="">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table id="passenger-document-table" class="table fs--1 mb-0 leads-table border-bottom">
+                  <thead>
+                    <tr>
+                      <!-- Document Name -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Document Name</th>
+
+                      <!-- Document Type -->
+                      <!-- <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 5%">Type</th> -->
+
+                      <!-- Creation Date -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Collected Data Date</th>
+                      <!-- Expairy Date -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Expiry Date</th>
+
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Expiry Days</th>
+                      <!-- Document Description -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Description</th>
+
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Flight Date</th>
+
+                      <!-- document -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">File</th>
+
+                      <!-- action -->
+                      <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 10%">
+                        <div class="d-inline-flex flex-center">
+                          <div class="d-flex align-items-center px-1 py-1 rounded me-2">
+                            <i class="fas fa-tools"></i>
+                          </div>
+                          <span>Action</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="list" id="deal-tables-body">
+                    {% include 'passenger_app_templates/passenger_details/documents/document_list.html' %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- pegination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- General documents -->
+  <div class="tab-pane fade" id="tab-documents" role="tabpanel" aria-labelledby="tab-documents">
+    <!-- Header -->
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <h2 class="mb-0">Passenger | Other General Documents</h2>
+      </div>
+    </div>
+    <div class="row align-items-center justify-content-between g-3 mb-3">
+      <div class="col-12 col-md-auto">
+        <div class="row align-items-center g-0 justify-content-start mb-3">
+          <div class="col-12 col-sm-auto d-flex">
+            <div id="passengerGeneralDocument-create">
+              <button type="button" class="btn passengerGeneralDocumentAddButton btn-primary" data-url="{% url 'passenger_app:passenger_general_document_create' passenger.id %} ">
+                <i class="fa fa-add"></i>
+                Add Other Document
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 pb-4">
+      <div class="">
+        <div class="">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table id="passengerGeneralDocument_table" class="table fs--1 mb-0 leads-table border-bottom">
+                  <thead>
+                    <tr>
+                      <!-- Document Name -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Document Name</th>
+
+                      <!-- Document Type -->
+                      <!-- <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 5%">Type</th> -->
+
+                      <!-- Creation Date -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Type</th>
+                      <!-- Expairy Date -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Expiry Date</th>
+
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Notes</th>
+                      <!-- Document Description -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Description</th>
+
+                      <!-- document -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">File</th>
+
+                      <!-- action -->
+                      <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 10%">
+                        <div class="d-inline-flex flex-center">
+                          <div class="d-flex align-items-center px-1 py-1 rounded me-2">
+                            <i class="fas fa-tools"></i>
+                          </div>
+                          <span>Action</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody id="documents-list">
+                    {% include 'passenger_app_templates/passenger_details/passenger_general_document/create_document_list.html' %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- pegination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Image Add Script -->
+<script>
+  $(function () {
+    /* Save Form */
+    var saveForm = function () {
+      var form = $(this)
+      var formData = new FormData(form[0])
+  
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        data: formData,
+        dataType: 'json',
+        processData: false,
+        contentType: false,
+  
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          $('#image-loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#imageModal modal-content').html(data.html_modal_images)
+            $('#image_divvv').html(data.html_images)
+            console.log('i am in image save form--111')
+          } else {
+            // $().html(data.html_form);
+            console.log('errorrr in passenger tab')
+          }
+        }
+      })
+  
+      return false
+    }
+  
+    // add
+    $('.passimageAddForm').on('submit', saveForm)
+  })
+</script>
+
+<!-- // -->
+<script>
+  $(function () {
+    var imageLoad = function () {
+      $('#imageModal').modal('show')
+    }
+    $('#imageButton').on('click', imageLoad)
+  })
+</script>
+
+<!-- CRUD script for Company Document -->
+<script>
+  $(function () {
+    /* load form */
+    var loadForm = function () {
+      console.log('Edit')
+      var modal_form = document.getElementById('PassengerGeneralDocumentModal')
+      var url
+      url = $(this).attr('data-url')
+  
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#PassengerGeneralDocumentModal').modal('show')
+          $('#PassengerGeneralDocumentModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+        },
+        success: function (data) {
+          $('#PassengerGeneralDocumentModal .modal-content').html(data.html_form)
+          console.log('Success for company Document !')
+        }
+      })
+    }
+  
+    /* save form */
+    var saveForm = function () {
+      var form = $(this)
+      var formData = new FormData(form[0])
+  
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        dataType: 'json',
+        data: formData,
+  
+        processData: false,
+        contentType: false,
+  
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            console.log(data.passenger_general_document_list)
+            $('#documents-list').html(data.passenger_general_document_list)
+            $('#PassengerGeneralDocumentModal').modal('hide')
+          } else {
+            $('#passengerGeneralDocumentModal .modal-content').html(data.html_form)
+          }
+        }
+      })
+      return false
+    }
+  
+    //create
+    $('#passengerGeneralDocument-create').on('click', '.passengerGeneralDocumentAddButton', loadForm)
+    $('#PassengerGeneralDocumentModal').on('submit', '.passengerGeneralDocumentAddForm', saveForm)
+  
+    //edit
+    $('#documents-list').on('click', '.passengerGeneralDocumentEditButton', loadForm)
+    $('#PassengerGeneralDocumentModal').on('submit', '.passengerGeneralDocumentEditForm', saveForm)
+  
+    //delete
+    $('#documents-list').on('click', '.passengerGeneralDocumentDeleteButton', loadForm)
+    $('#PassengerGeneralDocumentModal').on('submit', '.passengerGeneralDocumentDeleteForm', saveForm)
+  })
+</script>

@@ -1,0 +1,445 @@
+<style>
+  .text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content horizontally */
+    text-align: center; /* Center text horizontally */
+    width: 400px; /* Set the desired width for the card. */
+    height: 540px; /* Set the desired height for the card. */
+    margin: 0 auto; /* Center the card horizontally. */
+   
+   
+    justify-content: center;
+   
+    margin-left: 350px;
+    margin-top: -60px;
+  }
+
+  .vertical-image {
+    max-width: 100%; /* Ensure the image fits within its container */
+    max-height: 100%;
+  }
+</style>
+
+<div class="row align-items-center justify-content-between g-3 mb-3">
+
+<div class="col-12 col-md-auto">
+  <div class="card mb-3 vertical-card" style="margin-bottom: 20px;">
+    <div class="card-body" id="imageCardBody">
+      <div class="text-container">
+        {% if passenger.passport_scanned_image %}
+          <img class="vertical-image" id="selectedImage" src="{{ passenger.passport_scanned_image }}" alt="passport image">
+        {% else %}
+          <label for="fileInput">No Scanned Image Attached</label>
+          <input class="form-control" name="passport_scanned_image" type="file" id="fileInput" accept="image/*" placeholder="passport_scanned_image" />
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const imageCardBody = document.getElementById('imageCardBody');
+
+  fileInput.addEventListener('change', function() {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      // Create a new image element
+      const newImage = document.createElement('img');
+      newImage.className = 'vertical-image';
+      newImage.id = 'selectedImage';
+      newImage.src = event.target.result;
+
+      // Replace the content of the card body
+      imageCardBody.innerHTML = '';
+      imageCardBody.appendChild(newImage);
+    };
+
+    reader.readAsDataURL(file);
+  });
+</script>
+
+
+
+
+</div>
+
+
+
+
+<!---------------------old div for passport image-->
+
+<div class="col-12 col-md-auto">
+  {% if passenger.passport_scanned_image %}
+    <div class="card mb-3 vertical-card">
+      <img class="vertical-image" id="selectedImage" src="{{ passenger.passport_scanned_image }}" alt="passport image">
+    </div>
+  {% else %}
+    <div class="card mb-3 text-card">
+      <div class="text-container"></div>
+      <div class="button-container">
+        <div class="col-sm-6 col-md-12 horizontal-text">
+          <div class="form-submit">
+            <label for="submitgrid">No Scanned Image Attached</label>
+            <input class="form-control" name="passport_scanned_image" type="file" id="fileInput" accept="image/*" placeholder="passport_scanned_image" />
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
+
+
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const cardContainer = document.querySelector('.card.mb-3.vertical-card');
+
+  fileInput.addEventListener('change', function() {
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(event) {
+      // Create a new image element
+      const newImage = document.createElement('img');
+      newImage.src = event.target.result;
+
+      // Remove any existing child elements from the card
+      while (cardContainer.firstChild) {
+        cardContainer.removeChild(cardContainer.firstChild);
+      }
+
+      // Append the new image to the card
+      cardContainer.appendChild(newImage);
+
+      // Send the image URL to the server when the image is displayed
+      saveImageURL(newImage.src);
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  function saveImageURL(imageURL) {
+    // Send the imageURL to the server using an AJAX request or a form submission
+    // Example using fetch and POST request:
+    fetch('/save_image_url/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': getCookie('csrftoken'), // Ensure you have a function to get CSRF token
+      },
+      body: JSON.stringify({ image_url: imageURL }),
+    })
+      .then(response => {
+        if (response.ok) {
+          alert('Image URL saved successfully!');
+        } else {
+          alert('Failed to save image URL.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }
+
+  // Function to get the CSRF token from cookies
+  function getCookie(name) {
+    const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+    return cookieValue ? cookieValue.pop() : '';
+  }
+</script>
+
+
+
+
+<!------tracking part-->
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+    body{
+      font-family: 'Open Sans',serif
+    }
+    .container{
+      margin-top:10px;
+      margin-bottom:10px;
+      
+    }
+    .card-tracking{
+      position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.10rem;
+    margin-top: -80px;
+    padding: 10px;
+    
+  }
+  .card-header:first-child{
+    border-radius: calc(0.37rem - 1px) calc(0.37rem - 1px) 0 0
+  }
+    .card-header{
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0;
+      background-color: #fff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      
+    }
+    .track{
+      position: relative;
+      background-color: #ddd;
+      height: 7px;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin-bottom: 60px;
+      margin-top: 50px
+    }
+    .track .step{
+      -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+      flex-grow: 1;
+      width: 25%;
+      margin-top: -18px;
+      text-align: center;
+      position: relative
+    }
+    .track .step.active:before{
+      background: #FF5722
+    }
+    .track .step::before{
+      height: 7px;
+      position: absolute;
+      content: "";
+      width: 100%;
+      left: 0;
+      top: 18px
+    }
+    .track .step.active .icon{
+      background: #ee5435;
+      color: #fff
+    }
+    .track .icon{
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      line-height: 40px;
+      position: relative;
+      border-radius: 100%;
+      background: #ddd
+    }
+    .track .step.active .text{
+      font-weight: 400;
+      color: #000
+    }
+    .track .text{
+      display: block;
+      margin-top: 7px
+    }
+    .itemside{
+      position: relative;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      width: 100%
+    }
+    .itemside .aside{
+      position: relative;
+      -ms-flex-negative: 0;
+      flex-shrink: 0
+    }
+    .img-sm{
+      width: 80px;
+      height: 80px;
+      padding: 7px
+    }
+    ul.row, ul.row-sm{
+      list-style: none;
+      padding: 0
+    }
+    .itemside .info{
+      padding-left: 15px;
+      padding-right: 7px
+    }
+    .itemside .title{
+      display: block;
+      margin-bottom: 5px;
+      color: #212529
+    }
+    p{
+      margin-top: 0;
+      margin-bottom: 1rem
+    }
+    .btn-warning{
+      color: #ffffff;
+      background-color: #ee5435;
+      border-color: #ee5435;
+      border-radius: 1px
+    }
+    .btn-warning:hover{
+      color: #ffffff;
+      background-color: #ff2b00;
+      border-color: #ff2b00;
+      border-radius: 1px
+      }
+</style>
+
+<header class="card-header"> My Orders / Tracking </header>
+        <div class="card-body">
+            <h6 class="p-2">Order ID: OD45345345435</h6>
+            <div class="card">
+                <div class="card-body row">
+                    <div class="col"> <strong>Estimated Delivery time:</strong> <br>29 nov 2019 </div>
+                    <div class="col"> <strong>Shipping BY:</strong> <br> BLUEDART, | <i class="fa fa-phone"></i> +1598675986 </div>
+                    <div class="col"> <strong>Status:</strong> <br> Picked by the courier </div>
+                    <div class="col"> <strong>Tracking #:</strong> <br> BD045903594059 </div>
+                </div>
+            </div>
+            <div class="track">
+                <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+               <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+
+               <div class="step active"> <span class="icon"> <i class="fa fa-check"></i> </span> <span class="text">Order confirmed</span> </div>
+                <div class="step active"> <span class="icon"> <i class="fa fa-user"></i> </span> <span class="text"> Picked by courier</span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span class="text"> On the way </span> </div>
+                <div class="step"> <span class="icon"> <i class="fa fa-box"></i> </span> <span class="text">Ready for pickup</span> </div>
+            </div>
+            <hr>
+            <ul class="row">
+               
+            </ul>
+            <hr>
+           
+        </div>
+
+
+
+
+<!----image edit-->
+
+<script>
+  function openFileInput() {
+    document.getElementById('file-input').click();
+  }
+
+  document.getElementById('file-input').addEventListener('change', function () {
+    var fileInput = document.getElementById('file-input');
+    var fileLabel = document.getElementById('file-label');
+    var removeImageBtn = document.getElementById('remove-image-btn');
+
+    if (fileInput.files.length > 0) {
+      fileLabel.textContent = fileInput.files[0].name;
+      removeImageBtn.style.display = 'inline-block';
+    } else {
+      fileLabel.textContent = 'No Image Uploaded';
+      removeImageBtn.style.display = 'none';
+    }
+  });
+
+  function removeImage() {
+    console.log('removeImage function called');
+    
+    var form = document.getElementById('edit-agent-form');
+    if (form) {
+      // Set the value of the remove-image-input field to indicate image removal
+      document.getElementById('remove-image-input').value = '1';
+      // Trigger the form submission
+      form.submit();
+    } else {
+      console.error('Form element not found');
+    }
+  }
+</script>
+<!-- Add a hidden input to indicate image removal -->
+<input type="hidden" id="remove-image-input" name="remove_image" value="" />
+
+<div class="col-sm-6 col-md-12">
+  <div class="form-submit">
+    <label for="submitgrid" class="mb-3">Upload Image:</label>
+    <form id="edit-agent-form" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <input
+        class="form-control"
+        id="file-input"
+        name="image"
+        type="file"
+        style="display: none;"
+      />
+      <label for="file-input" class="custom-file-upload">
+        <div style="display:flex;flex-direction:row;">
+          <span class="col-sm-1 col-md-1 div button-like-span" onclick="openFileInput()">Change Image</span>
+          <span class="col-sm-2 col-md-2 div2 " id="file-label">
+            {% if agent.image %}
+              {{ agent.image.url }}
+            {% else %}
+              No Image Uploaded
+            {% endif %}
+          </span>
+          <button id="remove-image-btn" class="col-sm-1 col-md-1 div button-like-span" type="button" onclick="removeImage()">Remove Image</button>
+        </div>
+      </label>
+    </form>
+  </div>
+</div>
+
+
+def remove_agent_image(request, agent):
+    # Assuming you have a field named 'image' in your AgentInfo model
+    if agent.image:
+        agent.image.delete(save=False)  # Delete the image file
+        agent.image = None  # Set the image field to None
+        agent.save()
+
+# ...
+
+def save_agent_edit_form(request, form, agent, template_name):
+    data = dict()
+
+    if request.method == 'POST':
+        if form.is_valid():
+            # Check if the 'remove_image' flag is set
+            if 'remove_image' in request.POST:
+                remove_agent_image(agent)
+
+            form.save()
+
+            data['form_is_valid'] = True
+
+            agent_list = AgentInfo.objects.all().order_by('id')
+
+            data['html_agent_list'] = render_to_string('agent_management/agent/agent_list.html', {
+                'agent_list': agent_list
+            })
+            data['html_agent_card_1'] = render_to_string('agent_management/agent_details/agent_card_1.html', {
+                'agent': agent
+            })
+            data['html_agent_card_2'] = render_to_string('agent_management/agent_details/agent_card_2.html', {
+                'agent': agent
+            })
+        else:
+            data['form_is_valid'] = False
+
+    context = {
+        'form': form,
+        'agent': agent
+    }
+
+    data['html_form'] = render_to_string(template_name, context, request=request)
+    return JsonResponse(data)
+

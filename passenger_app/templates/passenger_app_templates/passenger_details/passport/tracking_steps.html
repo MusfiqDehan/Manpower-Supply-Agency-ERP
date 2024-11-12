@@ -1,0 +1,222 @@
+<style>
+  .icon_active{
+  
+    color:rgb(108, 177, 5);
+  }
+</style>
+
+<!-- content -->
+<div class="container ">
+
+  <div class="row ">
+    {% if passport_received %}
+      <div class="col border d-flex flex-column  align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fas fa-passport icon_active" style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active"></span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Passport Received</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ passport_received.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ passport_received.expiry_date }}</span>
+
+      </div>
+    {% else %}
+      <div class="col border d-flex flex-column  align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fas fa-passport " style="font-size:2rem;"></i></span>
+        <span class="text ">Passport ?</span>
+      </div>
+    {% endif %}
+
+    {% if police_clearance %}
+    <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+      <span class="icon"><i class="fas fa-user-tie icon_active" style="font-size:2rem;"></i></span>
+      {% comment %} <span class="text icon_active">Police Clearance</span> {% endcomment %}
+      <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Police Clearance</span>
+
+      <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ police_clearance.collected_data }}</span>
+      <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ police_clearance.expiry_date }}</span>
+        
+    </div>
+    {% else %}
+    <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+      <span class="icon"><i class="fas fa-user-tie" style="font-size:2rem;"></i></span>
+       <span class="text">Police Clearance ?</span>
+    </div>
+    {% endif %}
+   
+    
+    {% if  medical_certificate %}
+      <div class="col border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fas fa-clinic-medical icon_active" style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Medical Certificate</span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Medical Certificate</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ medical_certificate.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ medical_certificate.expiry_date }}</span>
+      </div>
+    {% else %}
+      <div class="col border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fas fa-clinic-medical" style="font-size:2rem;"></i></span>
+        <span class="text">Medical Certificate ?</span>
+      </div>
+    {% endif %}
+
+  </div>
+
+  <div class="row ">
+    {% if  mofa_status %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-vihara icon_active" style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Mofa Status</span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Mofa Status</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ mofa_status.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ mofa_status.expiry_date }}</span>
+      </div>
+    {% else %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-vihara " style="font-size:2rem;"></i></span>
+        <span class="text">Mofa Status ?</span>
+
+      </div>
+    {% endif %}
+
+    {% if  finger_appointment %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-hand-spock icon_active"  style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Finger Appointment</span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Finger Appointment</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ finger_appointment.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ finger_appointment.expiry_date }}</span>
+
+      </div>
+    {% else %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-hand-spock "  style="font-size:2rem;"></i></span>
+        <span class="text ">Finger Appointment ?</span>
+      </div>
+    {% endif %}
+
+
+    {% if  visa_status %}
+    <div class="col  border d-flex flex-column align-items-center  justify-content-center p-2">
+      <span class="icon"><i class="fa-brands fa-cc-visa icon_active" style="font-size:2rem;"></i></span>
+      {% comment %} <span class="text icon_active">Visa Status</span> {% endcomment %}
+      <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Visa Status</span>
+
+      <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ visa_status.collected_data }}</span>
+      <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ visa_status.expiry_date }}</span>
+
+    </div>
+  {% else %}
+    <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+      <span class="icon"><i class="fa-brands fa-cc-visa" style="font-size:2rem;"></i></span>
+      <span class="text">Visa Status ?</span>
+    </div>
+  {% endif %}
+
+ 
+ 
+  </div>
+
+  <div class="row   ">
+    {% if  training_status %}
+    <div class="col  border d-flex flex-column align-items-center justify-content-center p-2" >
+      <span class="icon"><i class="fa-solid fa-chart-simple icon_active"  style="font-size:2rem;"></i></span>
+      {% comment %} <span class="text icon_active">Training Status</span> {% endcomment %}
+      <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Training Status</span>
+
+      <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ training_status.collected_data }}</span>
+      <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ training_status.expiry_date }}</span>
+    </div>
+  {% else %}
+    <div class="col  border d-flex flex-column align-items-center justify-content-center p-2" >
+      <span class="icon"><i class="fa-solid fa-chart-simple"  style="font-size:2rem;"></i></span>
+      <span class="text">Training Status ?</span>
+    </div>
+  {% endif %}
+
+
+    {% if  finger_status %}
+      <div class="col  border  d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class='fas fa-fingerprint icon_active'  style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Finger Status</span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Finger Status</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ finger_status.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ finger_status.expiry_date }}</span>
+      </div>
+    {% else %}
+      <div class="col  border  d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class='fas fa-fingerprint'  style="font-size:2rem;"></i></span>
+        <span class="text">Finger Status ?</span>
+
+      </div>
+    {% endif %}
+
+    {% if  manpower_status %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-people-roof icon_active" style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Manpower Status</span> {% endcomment %}
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Manpower Status</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ manpower_status.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ manpower_status.expiry_date }}</span>
+      </div>
+    {% else %}
+      <div class="col  border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa-solid fa-people-roof" style="font-size:2rem;"></i></span>
+        <span class="text">Manpower Status ?</span>
+
+      </div>
+    {% endif %}
+  
+  </div>
+
+  <div class="row ">
+    {% if ticket_status %}
+      <div class="col-4 border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa fa-check-circle icon_active" style="font-size:2rem;"></i></span>
+        {% comment %} <span class="text icon_active">Ticket Status</span> {% endcomment %}
+
+        <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Ticket Status</span>
+
+        <span class="badge badge-phoenix badge-phoenix-success mb-1">{{ ticket_status.collected_data }}</span>
+        <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color: #F96B15; !important">E-Date:  {{ ticket_status.expiry_date }}</span>
+
+      </div>
+    {% else %}
+      <div class="col-4 border d-flex flex-column align-items-center justify-content-center p-2">
+        <span class="icon"><i class="fa fa-check-circle" style="font-size:2rem;"></i></span>
+        <span class="text">Ticket Status ?</span>
+
+      </div>
+    {% endif %}
+
+   {% if   passport_received and police_clearance and medical_certificate and mofa_status and finger_appointment and visa_status and training_status and finger_status and manpower_status and ticket_status %}
+
+    <div class="col  border  d-flex flex-column align-items-center justify-content-center p-2">
+      <span class="icon"><i class="fa-solid fa-plane-departure icon_active" style="font-size:2rem;"></i></span>
+     
+
+      <span class="icon_active badge bg-success text-dark rounded-pill ms-1 mb-1">Fly Status</span>
+
+      {% if flight.flight_date %}
+      <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color:#F96B15;!important">Flight-Date: {{ flight.flight_date }}</span> 
+      {% endif %}
+   
+
+    </div>
+
+   {% else %}
+    <div class="col  border  d-flex flex-column align-items-center justify-content-center p-2">
+      <span class="icon"><i class="fa-solid fa-plane-departure" style="font-size:2rem;"></i></span>
+      <span class="text"> Fly Status?</span>
+      {% if flight.flight_date %}
+      <span class="badge badge-phoenix badge-phoenix-success mb-2" style="background-color: #F8F3EC; color:#F96B15;!important">Flight-Date: {{ flight.flight_date }}</span> 
+      {% endif %}
+    </div>
+   {% endif %}
+   
+  </div>
+</div>

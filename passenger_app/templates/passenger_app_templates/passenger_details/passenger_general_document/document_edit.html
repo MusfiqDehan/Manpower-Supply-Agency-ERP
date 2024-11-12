@@ -1,0 +1,84 @@
+<form method="post" action="{% url 'passenger_app:passenger_general_document_edit' general_document.id %}" class="passengerGeneralDocumentEditForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Document Info</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <input type="hidden" name="passenger" value="{{ general_document.passenger.id }}">
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- document_type field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Type</label>
+          <select id="select_document_type" class="form-select" name="document_type" required>
+            <option value="" hidden>Select Type</option>
+            {% for value, label in type_choices %}
+              <option value="{{ value }}" {% if value == general_document.document_type %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- document_name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+          <input class="form-control" name="document_name" value="{{ general_document.document_name }}" type="text" placeholder="Document Name" required />
+        </div>
+      </div>
+
+      <!-- expiration_date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expiration Date</label>
+          {% if general_document.expiry_date %}
+            <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" value="{{ general_document.expiry_date|date:'Y-m-d' }}"/>
+          {% else %}
+            <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" />
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- national_id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Notes</label>
+          <input class="form-control" name="note" value="{{ general_document.note }}"  type="text" placeholder="Small Notes" />
+        </div>
+      </div>
+
+      <!-- file field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if general_document.document_file %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label">Current File: <a href="{{ general_document.document_file.url }}" target="_blank">{{ general_document.document_file |truncatechars:40 }}</a> </span>
+            <input class="form-control" name="document_file" value="{{ general_document.document_file.url }}" type="file" placeholder="pdf File" />
+          {% else %}
+            <label for="submitgrid">Upload file (*pdf)</label>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" required/>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- note field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea class="form-control" name="description"  type="text" placeholder="Description">{{ general_document.description }}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

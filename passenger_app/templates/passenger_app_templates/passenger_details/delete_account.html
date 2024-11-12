@@ -1,0 +1,29 @@
+<form method="post" action="{% url 'passenger_app:account_delete' account.id  %}" class="accountDeleteForm">
+  {% csrf_token %}
+
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">
+      {% if account.debit == 0 %}
+      Credit Transaction Amount {{ account.credit }}
+      {% else %}
+      Debit Transaction Amount {{ account.debit }}
+      {% endif %}
+    </h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="input-group mb-3">
+      <h5 class="text">Are you sure you want to delete?</h5>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+

@@ -1,0 +1,57 @@
+
+<style>
+    .vertical-card {
+        transform: rotate(90deg);
+       
+        width: 400px; 
+        height: 540px; 
+        margin: 0 auto; 
+
+        display: flex;
+        margin-left: 350px;
+        margin-top: -60px;
+        
+    }
+.text-card {
+        transform: rotate(90deg);
+       
+        width: 400px; 
+        height: 540px; 
+        margin: 0 auto; 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 350px;
+        margin-top: -60px;
+}
+    .vertical-image {
+        /* Rotate the image back to its original orientation */
+        transform: rotate(-360deg);
+       
+        max-width: 100%; /* Ensure the image fits within the card */
+        max-height: 100%; /* Ensure the image fits within the card */
+    }
+     .horizontal-text {
+        transform: rotate(-90deg);
+        /* Rotate the text to make it horizontal within the card */
+        text-align: center;
+        color: #ff2b00;
+    }
+     .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .text-container{
+       transform: rotate(270deg);
+       align-items: center;
+       margin-bottom: -350px;
+    }
+</style>
+
+
+<img class="vertical-image"  src="{{ passenger_passport.passport_scanned_image.url }}" alt="passport image">
+
+
+

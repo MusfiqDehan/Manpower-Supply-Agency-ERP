@@ -1,0 +1,146 @@
+<style>
+  .edit_button_design {
+    margin-left: 50px;
+  }
+  .other-info-edit-btn {
+    margin-left: 210px;
+  }
+  @media only screen and (max-width: 1200px) {
+    .edit_button_design {
+      margin-left: -15px;
+      margin-top: -25px;
+    }
+  }
+</style>
+
+<div class="card-body">
+  <div class="d-flex align-items-center justify-content-between mb-5">
+    <h3>About Passenger</h3>
+
+    <div class="" id="edit_button_container">
+      <button class="btn passengerEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'passenger_app:passenger_edit' passenger.id %}"><span class="fas fa-edit"></span></button>
+    </div>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-envelope-alt"></span>
+      <h5 class="text-1000 mb-0">Email</h5>
+    </div>
+    <a href="mailto:shatinon@jeemail.com:" class="mb-0 p-2">{{ passenger.email }}</a>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-phone"></span>
+      <h5 class="text-1000 mb-0">Phone</h5>
+    </div>
+    <a href="tel:+1234567890" class="mb-0 p-2">{{ passenger.phone_number }}</a>
+  </div>
+
+  <h4 class="p-2" style="color: blueviolet">Basic Info</h4>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-postcard"></span>
+      <h5 class="text-1000 mb-0">Emergency Contact</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ passenger.emergency_contact_number }}</p>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-dollar-alt"></span>
+      <h5 class="text-1000 mb-0">Address</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ passenger.address }}</p>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-building"></span>
+      <h5 class="text-1000 mb-0">Date Of Birth</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ passenger.birth_date }}</p>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-building"></span>
+      <h5 class="text-1000 mb-0">Gender</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ passenger.gender }}</p>
+  </div>
+</div>
+
+
+
+
+
+<script>
+  $(function () {
+    /* load form */
+    var loadForm = function () {
+      console.log('success load');
+      var edit = document.getElementById('PassengerModal');
+      var url;
+      url = $(this).attr('data-url');
+
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+
+       
+        beforeSend: function () {
+          $('#PassengerModal').modal('show')
+          $('#PassengerModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+        },
+
+        success: function (data) {
+          $('#PassengerModal .modal-content').html(data.html_form);
+          console.log('Success !');
+        },
+      });
+    };
+
+    /* Save Form */
+    var saveForm = function () {
+      var edit = document.getElementById('PassengerModal');
+      var form = $(this);
+
+      var formData = new FormData(form[0]);
+
+      $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+
+        data: formData,
+
+        processData: false,
+        contentType: false,
+
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}');
+          $('#loading').html(
+            '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>',
+          );
+        },
+
+        success: function (data) {
+          if (data.form_is_valid) {
+            console.log('detail edit');
+            $('#passenger-table tbody').html(data.html_passenger_list);
+            $('#card-1-div').html(data.html_card_1_div);
+            $('#card-2-div').html(data.html_card_2_div);
+            $('#edit_button_container').html(data.html_edit_btn);
+            $(edit).modal('hide');
+          } else {
+            $('#PassengerModal .modal-content').html(data.html_form);
+          }
+        },
+      });
+      return false;
+    };
+
+    // Update Trainng List
+    $('#edit_button_container').on('click', '.passengerEditButton', loadForm);
+    $('#PassengerModal').on('submit', '.passportinfoEditForm', saveForm);
+  });
+</script>

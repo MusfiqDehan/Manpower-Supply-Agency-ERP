@@ -1,0 +1,26 @@
+<div class="card-body">
+  <div class="row align-items-center g-3 text-center text-xxl-start"></div>
+  <div class="row align-items-center g-3 text-center text-xxl-start m-1">
+    <div class="col-12 col-xxl-auto">
+      {% if passenger.passenger_image %}
+        <div class="avatar avatar-4xl">
+          <img class="rounded-circle" src="{{ passenger.passenger_image.url }}" alt="passenger image" />
+        </div>
+      {% else %}
+        <div class="avatar avatar-4xl">
+          {% comment %} <img class="rounded-circle" src="/media/default user image/default-user.png" alt="default User" /> {% endcomment %}
+          <img class="rounded-circle" src="https://cdn.musfiqdehan.com/images/avatar.png" alt="" />
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-12 col-sm-auto flex-1">
+      <h3 class="fw-bolder mb-2">{{ passenger.full_name }}</h3>
+
+      {% if passenger.agent_list.full_name %}
+        <a class="fw-bold">Agent:<span style="color: blue;" class="p-1">{{ passenger.agent_list.full_name }}</span></a>
+      {% else %}
+        <a class="fw-bold">Agent:<span style="color: red;" class="p-1">No</span></a>
+      {% endif %}
+    </div>
+  </div>
+</div>

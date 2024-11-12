@@ -1,0 +1,117 @@
+<form method="post" action="{% url 'passenger_app:passenger_create' %}" class="passengerAddForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Passenger Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Passport Number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Passport Number</label>
+          <input class="form-control" name="passport" type="text" placeholder="Passport NO" required />
+        </div>
+      </div>
+
+      <!-- Passport date of expairy field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Passport Expiry Date</label>
+          <input class="form-control" name="passport_date_of_expairy" type="date" placeholder="Expairy Date" />
+        </div>
+      </div>
+
+      <!-- Agent Field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Agent (Optional)</label>
+
+          <select id="select_agent_id" class="form-select" name="agent_list" onchange="agent_select()">
+            <option value="">Select Agent</option>
+            {% for data in agent_list %}
+              <option value="{{ data.id }}">{{ data.full_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+
+      <!-- FULL Name field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Full Name</label>
+          <input class="form-control" name="full_name" type="text" placeholder="Full Name" required />
+        </div>
+      </div>
+
+      <!-- gender field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Gender</label>
+          <select id="select_gender" class="form-select" name="gender">
+            <option value="">Select Gender</option>
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Birth Date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Date of Birth</label>
+          <input class="form-control" name="birth_date" type="date" placeholder="Date of Birth" />
+        </div>
+      </div>
+
+      <!-- email field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Email Address</label>
+          <input class="form-control" name="email" type="text" placeholder="Email Address" />
+        </div>
+      </div>
+
+      <!-- phone number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Phone Number</label>
+          <input class="form-control" name="phone_number" type="number" placeholder="Phone Number" required />
+        </div>
+      </div>
+      <!-- emergency number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Emergency Number</label>
+          <input class="form-control" name="emergency_contact_number" type="number" placeholder="Emergency Number" />
+        </div>
+      </div>
+
+      <!-- address field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Address</label>
+          <input class="form-control" name="address" type="text" placeholder="Address" />
+        </div>
+      </div>
+
+      <!-- image field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Upload Image</label>
+          <input class="form-control" name="passenger_image" type="file" placeholder="PNG/JPG File" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

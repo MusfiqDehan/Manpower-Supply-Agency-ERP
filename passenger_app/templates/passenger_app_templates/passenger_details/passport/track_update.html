@@ -1,0 +1,195 @@
+<form method="post" action="{% url 'passenger_app:passport_tracking_update'  passenger_id  %}" class="trackForm" >
+  {% csrf_token %}
+
+  <input type="text" name="passenger_passport" value="{{ passport.passenger_passport.id }}" hidden  />
+  <input type="text" name="passport_number" value="{{ passport.passport_number  }}" hidden />
+  <input type="date" name="date_of_expairy" value="{{ passport.date_of_expairy | date:'Y-m-d' }}" hidden  />
+
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Update Passport Tracking Steps</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6" >
+
+      <!--Passport Received field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Passport Received </label>
+          <select id="select_passport_received" class="form-select" name="passport_received">
+            {% if passport.passport_received %}
+            <option value="True" selected>Approved</option>
+            <option value="False" >Pending</option> 
+            {% else %}
+            <option value="False" selected>Pending</option> 
+            <option value="True" >Approved</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+       <!--Police Clearence field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Police Clearence </label>
+          <select id="select_police_clearance" class="form-select" name="police_clearance">
+           {% if passport.police_clearance %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option>
+             <option value="True" >Approved</option> 
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+       <!--Medical Certificate field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Medical Certificate </label>
+          <select id="select_medical_certificate" class="form-select" name="medical_certificate">
+           {% if passport.medical_certificate %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option>
+             <option value="True" >Approved</option> 
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+       <!--MOFA Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">MOFA Status </label>
+          <select id="select_mofa_status" class="form-select" name="mofa_status">
+           {% if passport.mofa_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option>
+             <option value="True" >Approved</option> 
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!--Finger Appointment field-->
+      <div class="col-sm-6 col-md-6">
+      <div class="form-submit">
+        <label for="submitgrid">Finger Appointment </label>
+        <select id="select_medical_certificate" class="form-select" name="finger_appointment">
+          {% if passport.finger_appointment %}
+          <option value="True" selected>Approved</option>
+            <option value="False" >Pending</option>
+          {% else %}
+          <option value="False" selected>Pending</option>
+            <option value="True" >Approved</option> 
+          {% endif %}
+        </select>
+      </div>
+    </div>
+
+      <!--Visa Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Visa Status </label>
+          <select id="select_visa_status" class="form-select" name="visa_status">
+           {% if passport.visa_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option> 
+             <option value="True" >Approved</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+     
+
+      <!--Training Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Training Status </label>
+          <select id="select_training_status" class="form-select" name="training_status">
+           {% if passport.training_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option> 
+             <option value="True" >Approved</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      
+
+       <!--Finger Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Finger Status </label>
+          <select id="select_finger_status" class="form-select" name="finger_status">
+           {% if passport.finger_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option> 
+             <option value="True" >Approved</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+       <!--Manpower Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Manpower Status</label>
+          <select id="select_manpower_status" class="form-select" name="manpower_status">
+           {% if passport.manpower_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option>
+             <option value="True" >Approved</option> 
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!--Ticket Status field-->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Ticket Status</label>
+          <select id="select_ticket_status" class="form-select" name="ticket_status">
+           {% if passport.ticket_status %}
+            <option value="True" selected>Approved</option>
+              <option value="False" >Pending</option>
+            {% else %}
+            <option value="False" selected>Pending</option> 
+             <option value="True" >Approved</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+       
+
+     
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!--submit & close-->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

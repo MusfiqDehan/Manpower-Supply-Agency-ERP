@@ -1,0 +1,31 @@
+{% for passport in ticket_status_list %}
+<tr class="hover-actions-trigger btn-reveal-trigger position-static">
+  <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+    <a class="fw-semi-bold" href="{% url 'passenger_app:passenger_details' passport.id %} ">{{ passport.passenger.passport }}</a>
+  </td>
+
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ passport.passenger.full_name }}</td>
+
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+ 
+      <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span class="badge-label">Approved</span></span>
+   
+     
+   
+  </td>
+
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ passport.passenger.phone_number }}</td>
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ passport.passenger.email }}</td>
+  <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ passport.passenger.agent_list.full_name }}</td>
+  <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+    <div class="font-sans-serif btn-reveal-trigger position-static">
+      <div style="display: flex" class="end-0">
+        <!-- view -->
+        <div>
+          <a href="{% url 'passenger_app:passenger_details' passport.passenger.id %}" class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-success px-0"><span class="fas fa-angle-double-right"></span></a>
+        </div>
+      </div>
+    </div>
+  </td>
+</tr>
+{% endfor %}

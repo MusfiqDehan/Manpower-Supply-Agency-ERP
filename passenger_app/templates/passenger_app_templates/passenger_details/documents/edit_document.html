@@ -1,0 +1,299 @@
+<form method="post" action="{% url 'passenger_app:passenger_document_edit' document.pk %}" class="documentEditForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input type="text" name="passenger" value="{{ document.passenger.id }}" hidden />
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Document</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+   
+      <!--Document Name field-->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+
+          <select id="select_document_name" class="form-select" name="document_name" required>
+            <option value="{{ document.document_name }}" selected hidden>{{ document.document_name }}</option>
+            <option value="passport_received">passport received</option>
+            <option value="police_clearance">police clearance</option>
+            <option value="medical_certificate">medical certificate</option>
+            <option value="mofa_status">mofa_status</option>
+            <option value="finger_appointment">finger appointment</option>
+            <option value="visa_status">visa status</option>
+            <option value="training_status">training status</option>
+            <option value="finger_status">finger status</option>
+            <option value="manpower_status">manpower status</option>
+            <option value="ticket_status">ticket_status</option>
+            <option value="flight">flight</option>
+            <option value="others">Others</option>
+          </select>
+        </div>
+      </div>
+
+
+           <!-- visa -->
+           <div class="col-sm-12 col-md-12">
+            <div class="form-submit visa_select" style="display: {% if document.visa %} block {% else %} none {% endif %}">
+              <label for="submitgrid">Visa</label>
+    
+              <select id="visa_selected" class="form-select" name="visa" >
+                {% if document.visa %}
+                  <option value="{{ document.visa.pk }}" hidden >{{ document.visa.visa_id }}</option>
+                {% else %}
+                  <option value="" hidden >Select Visa</option>
+                {% endif %}
+                
+                {% for visa in visa_list %}
+                  <option value="{{ visa.pk }}">{{ visa.visa_id }}  ({{ visa.number_of_visa }})</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+      <!-- Document Type field -->
+      <div class="col-sm-6 col-md-6 select_document_type">
+        <div class="form-submit">
+          <label for="submitgrid">Document Type</label>
+
+          <select class="form-select" name="document_type" id="select_document_type" type="text">
+            <option value="{{ document.document_type }}" selected>{{ document.get_document_type_display }}</option>
+            {% if document.document_type == 'pdf' %}
+              <option value="image">IMAGE</option>
+              <option value="word">WORD</option>
+            {% elif document.document_type == 'image' %}
+              <option value="pdf">PDF</option>
+              <option value="word">WORD</option>
+            {% else %}
+              <option value="image">IMAGE</option>
+              <option value="pdf">PDF</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!--flight date-->
+      <div class="col-sm-12 col-md-12 flight_date" hidden>
+        <div class="form-submit">
+          <label for="submitgrid">Flight Date</label>
+          {% if document.flight_date %}
+          <input id="flight_date" class="form-control" name="flight_date" type="date" placeholder="Flight Date" value="{{ document.flight_date|date:'Y-m-d'}}" />
+          {% else %}
+          <input id="flight_date" class="form-control" name="flight_date" type="date" placeholder="Flight Date" />
+          {% endif %}
+          
+        </div>
+      </div>
+
+ 
+
+      <!-- Creation Date field -->
+      <div class="col-sm-6 col-md-6 creation_date">
+        <div class="form-submit">
+          <label for="submitgrid">Creation Date</label>
+          {% if document.collected_data %}
+          <input id="creation_date" class="form-control" name="collected_data" type="date" placeholder="Creation Date" value="{{ document.collected_data|date:'Y-m-d' }}" />
+          {% else %}
+          <input id="creation_date" class="form-control" name="collected_data" type="date" placeholder="Creation Date"  />
+          {% endif %}
+          
+          <p id="date_error" style="color: brown;"></p>
+        </div>
+      </div>
+
+      <!-- Total Days -->
+      <div class="col-sm-6 col-md-6 expiry_days">
+        <div class="form-submit">
+          <label for="submitgrid">Expire in Days</label>
+          {% if document.expiry_days %}
+          <input id="expiry_days" class="form-control" name="expiry_days" type="number" placeholder="number of days" onKeyup="ExpireDatecount()" value="{{ document.expiry_days }}" />
+          {% else %}
+          <input id="expiry_days" class="form-control" name="expiry_days" type="number" placeholder="number of days" onKeyup="ExpireDatecount()"  />
+          {% endif %}
+         
+        </div>
+      </div>
+
+      <!-- Expiry Date field -->
+      <div class="col-sm-6 col-md-6 expiry_date">
+        <div class="form-submit">
+          <label for="submitgrid">Expiry Date</label>
+          {% if document.expiry_date %}
+            <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" value="{{ document.expiry_date|date:'Y-m-d' }}"/>
+          {% else %}
+            <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" />
+          {% endif %}
+         
+        </div>
+      </div>
+
+      <!-- Description field -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="description" class="form-control" rows="3" placeholder="Description">{{ document.description }}</textarea>
+        </div>
+      </div>
+
+  <!-- Document File field-->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          {% if document.document_file %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label">Current File: <a href="{{ document.document_file.url }}" target="_blank">{{ document.document_file |truncatechars:40 }}</a> </span>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% else %}
+            <label for="submitgrid">Upload file (*pdf)</label>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% endif %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+{% comment %} <!-- --s -->
+
+<style>
+  .div {
+    width: 30vw;
+    border: 1px solid var(--phoenix-input-border-color);
+    padding: 10px;
+    border-radius: 5px;
+    border-top-right-radius: 1px;
+    border-bottom-right-radius: 1px;
+  }
+  
+  .button-like-span {
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid var(--phoenix-input-border-color);
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+  }
+  
+  .button-like-span:hover {
+    background-color: #c0c0c0; /* Change the background color on hover for interactivity */
+  }
+  
+  .div2 {
+    width: 67vw;
+    border: 1px solid var(--phoenix-input-border-color);
+    padding: 10px;
+    border-radius: 5px;
+    border-top-left-radius: 1px;
+    border-bottom-left-radius: 1px;
+  }
+  @media screen and (max-width: 450px) {
+  }
+</style>
+<!-- --- -->
+ <!--script for document file field -->  
+<script>
+  document.getElementById('file-input').addEventListener('change', function () {
+    var fileInput = document.getElementById('file-input')
+    var fileLabel = document.getElementById('file-label')
+  
+    if (fileInput.files.length > 0) {
+      fileLabel.textContent = fileInput.files[0].name // Display the selected file name
+    } else {
+      fileLabel.textContent = 'Select a File' // Reset the label if no file is selected
+    }
+  })
+</script> {% endcomment %}
+
+<script>
+  function ExpireDatecount() {
+    let creation_date = document.getElementById('creation_date').value
+    let expire_days = parseInt(document.getElementById('expiry_days').value) // Parse to integer
+  
+    let date_error = document.getElementById('date_error')
+    let expire_day_error = document.getElementById('expiry_days')
+  
+    if (creation_date) {
+      // Create a new Date object using the creation_date
+      let creationDateObj = new Date(creation_date)
+  
+      // Add the expire_days to the creation_date
+      creationDateObj.setDate(creationDateObj.getDate() + expire_days)
+  
+      // Format the new_expaire_date as a string (e.g., "yyyy-mm-dd")
+      let year = creationDateObj.getFullYear()
+      let month = (creationDateObj.getMonth() + 1).toString().padStart(2, '0') // Months are zero-indexed
+      let day = creationDateObj.getDate().toString().padStart(2, '0')
+  
+      let new_expiry_date = `${year}-${month}-${day}`
+  
+      // Update the Expiry Date input field
+      document.getElementById('expiry_date').value = new_expiry_date
+  
+      date_error.innerHTML = ''
+    } else {
+      date_error.innerHTML = 'Please add creation date first.'
+      expire_day_error.value = null
+    }
+  }
+</script>
+
+<script>
+  $(function(){
+    $('#select_document_name').on('change',()=>{
+      var document_type=$('#select_document_name').val()
+      if (document_type =='flight'){
+         console.log(document_type,'document_type')
+         $('.flight_date').attr('hidden',false)
+         $('.creation_date').attr('hidden',true)
+         $('.expiry_days').attr('hidden',true)
+         $('.expiry_date').attr('hidden',true)
+         $('.select_document_type').attr('hidden',true)
+  
+      }else{
+         $('.flight_date').attr('hidden',true)
+         $('.creation_date').attr('hidden',false)
+         $('.expiry_days').attr('hidden',false)
+         $('.expiry_date').attr('hidden',false)
+         $('.select_document_type').attr('hidden',false)
+      }
+    })
+    if( $('#select_document_name').val()=='flight'){
+  
+      $('.flight_date').attr('hidden',false)
+      $('.creation_date').attr('hidden',true)
+      $('.expiry_days').attr('hidden',true)
+      $('.expiry_date').attr('hidden',true)
+      $('.select_document_type').attr('hidden',true)
+  
+    }else{
+         $('.flight_date').attr('hidden',true)
+         $('.creation_date').attr('hidden',false)
+         $('.expiry_days').attr('hidden',false)
+         $('.expiry_date').attr('hidden',false)
+         $('.select_document_type').attr('hidden',false)
+    }
+  })
+ 
+</script>
+<script>
+  $(function(){
+    $('#select_document_name').on('change',function(){
+      if($(this).val() == 'visa_status'){
+        $('.visa_select').css({'display':'block' })
+        console.log('visa status ')
+      }else{
+        $('.visa_select').css({'display':'none' })
+        $('#visa_selected').prop('selectedIndex',-1)
+      }
+    })
+  })
+</script>
