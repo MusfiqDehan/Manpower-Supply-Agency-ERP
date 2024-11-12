@@ -1,0 +1,138 @@
+<form method="post" action="{% url 'agent_management_app:agent_document_add' agent_id %}" class="agentdocumentAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input type="text" name="agent" value="{{ agent_id }}" hidden />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Agent Document</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Document Name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+          <input class="form-control" name="document_name" type="text" placeholder="Document Name" required />
+        </div>
+      </div>
+
+      <!-- Document Type field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Type</label>
+
+          <select id="select_document_type" class="form-select" name="document_type" required>
+            <option value="">Select Document Type</option>
+            <option value="pdf">PDF</option>
+            <option value="image">IMAGE</option>
+            <option value="word">WORD</option>
+          </select>
+        </div>
+      </div>
+
+
+      
+
+      <!-- Creation Date field -->
+
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Creation Date</label>
+          <input id="creation_date" class="form-control" name="creation_date" type="date" placeholder="Creation Date"/>
+          <p id="date_error" style="color: brown;"></p>
+        </div>
+      </div>
+
+
+
+      <!-- Total Days -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expire in Days</label>
+          <input id="expiry_days" class="form-control" name="expiry_days" type="number" placeholder="number of days" onKeyup="ExpireDatecount()" />
+        </div>
+      </div>
+
+
+      <!-- Expiry Date field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Expiry Date</label>
+          <input id="expiry_date" class="form-control" name="expiry_date" type="date" placeholder="Expiry Date" />
+        </div>
+      </div>
+
+      <!-- Description field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="document_description" class="form-control" rows="3" placeholder="Description"></textarea>
+        </div>
+      </div>
+
+      <!-- Document File field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Document File</label>
+          <input class="form-control" name="document_file" type="file" placeholder="Document File" required />
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+
+
+<!-- Expire Days count script -->
+<script>
+  function ExpireDatecount() {
+    console.log("working");
+    let creation_date = document.getElementById('creation_date').value;
+    let expire_days = parseInt(document.getElementById('expiry_days').value); // Parse to integer
+
+    let date_error = document.getElementById('date_error')
+    let expire_day_error = document.getElementById('expiry_days')
+
+    if (creation_date){
+      // Create a new Date object using the creation_date
+      let creationDateObj = new Date(creation_date);
+  
+      // Add the expire_days to the creation_date
+      creationDateObj.setDate(creationDateObj.getDate() + expire_days);
+  
+      // Format the new_expaire_date as a string (e.g., "yyyy-mm-dd")
+      let year = creationDateObj.getFullYear();
+      let month = (creationDateObj.getMonth() + 1).toString().padStart(2, '0'); // Months are zero-indexed
+      let day = creationDateObj.getDate().toString().padStart(2, '0');
+  
+      let new_expiry_date = `${year}-${month}-${day}`;
+  
+  
+      // Update the Expiry Date input field
+      document.getElementById('expiry_date').value = new_expiry_date;
+
+      date_error.innerHTML = '';
+    }
+
+    else {
+      date_error.innerHTML = 'Please add creation date first.'
+      expire_day_error.value = null;
+    }
+
+
+    }
+
+
+</script>

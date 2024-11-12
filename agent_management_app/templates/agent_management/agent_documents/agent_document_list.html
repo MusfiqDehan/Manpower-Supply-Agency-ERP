@@ -1,0 +1,37 @@
+{% if agent_document_list %}
+  {% for data in agent_document_list %}
+    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+      <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+        <a class="fw-semi-bold" href=" ">{{ data.document_name }}</a>
+      </td>
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.document_type }}</td>
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.creation_date }}</td>
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.expiry_date }}</td>
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.document_description }}</td>
+
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+        {% if data.document_file %}
+          <a href="{{ data.document_file.url }}" target="_blank">{{ data.document_file }}</a>
+        {% endif %}
+      </td>
+
+      <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+        <div class="font-sans-serif btn-reveal-trigger position-static">
+          <div style="display: flex" class="end-0">
+            <div>
+              <button class="btn agentdocumentEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'agent_management_app:agent_document_edit' data.id %} " data-id="{{ data.agent.id }}"><span class="fas fa-edit"></span></button>
+            </div>
+
+            <div>
+              <button class="btn agentdocumentDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'agent_management_app:agent_document_delete' data.id %}"><span class="fas fa-trash"></span></button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr>
+    <td colspan="7" class="text-center" style="color: red;">No Document Available</td>
+  </tr>
+{% endif %}

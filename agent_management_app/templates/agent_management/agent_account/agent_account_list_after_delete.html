@@ -1,0 +1,64 @@
+{% for data in agent_account_payment_receive %}
+
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+
+    
+    {% if data.payment_date %}
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.payment_date }}</td>
+    {% else %}
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.created_date }}</td>
+    {% endif %}
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+      
+      {% if data.online_transaction_file %}
+      <a href="{{ data.online_transaction_file.url }}" target="_blank">{{ data.payment_type }}</a>
+      {% elif data.bank_transaction_file %}
+      <a href="{{ data.bank_transaction_file.url }}" target="_blank">{{ data.payment_type }}</a>
+      {% else %}
+      {{ data.payment_type }}
+      {% endif %}
+      
+    </td>
+    {% if data.note %}
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.note }}</td>
+    {% else %}
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+        <span style="color: red;">No Note</span>
+      </td>
+    {% endif %}
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.debit }}</td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.credit }}</td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.balance }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 text-center border-end">
+      {% if data.transaction_hold_status %}
+        <span class="badge badge-phoenix badge-phoenix-warning rounded-pill fs--1 ms-2"><span class="badge-label">Hold</span></span>
+      {% else %}
+      <span class="badge badge-phoenix badge-phoenix-success rounded-pill fs--1 ms-2"><span class="badge-label">Success</span></span>
+      {% endif %}
+    </td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          
+          <!-- Edit/Hold Button -->
+          {% if data.transaction_hold_status %}
+            <div>
+              <button class="btn AgentTransButtonId btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" 
+              data-url="{% url 'agent_management_app:agent_A_transaction_edit' data.id %}"><span class="fas fa-edit"></span></button>
+            </div>
+          {% endif %}
+
+          <!-- delete -->
+          <div id="middleman_account_transaction_id">
+            <button type="button" class="btn AgentTransactionDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'agent_management_app:agent_transaction_delete' data.id %}"><span class="fas fa-trash"></span></button>
+          </div>
+
+
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

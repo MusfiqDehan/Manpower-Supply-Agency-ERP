@@ -1,0 +1,20 @@
+<form method="post" action="{% url 'agent_management_app:agent_account_delete' agent_account.id %}" class="AgentDeleteForm">
+  {% csrf_token %}
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Delete Account</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="input-group mb-3">
+      <h5 class="text">Are you sure, you want to delete?</h5>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-danger agent-account-delete-button" data-bs-save="modal">Delete</button>
+    </div>
+  </div>
+</form>

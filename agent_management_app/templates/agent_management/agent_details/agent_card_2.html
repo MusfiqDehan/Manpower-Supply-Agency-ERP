@@ -1,0 +1,156 @@
+<style>
+  .edit_button_design {
+    margin-left: 100px;
+  }
+  
+  @media only screen and (max-width: 1200px) {
+    .edit_button_design {
+      margin-left: -15px;
+      margin-top: -25px;
+    }
+  }
+</style>
+
+<div class="card-body">
+  <div class="d-flex align-items-center justify-content-between mb-5">
+    <h3>About Agent</h3>
+    <div class="" id="agent-edit-button-container">
+      <button class="btn agentEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'agent_management_app:agent_edit' agent.id %} "><span class="fas fa-edit"></span></button>
+    </div>
+  </div>
+
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-envelope-alt"></span>
+      <h5 class="text-1000 mb-0">Email</h5>
+    </div>
+    <a href="mailto:shatinon@jeemail.com:" class="mb-0 p-2">{{ agent.email }}</a>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-phone"></span>
+      <h5 class="text-1000 mb-0">Phone</h5>
+    </div>
+    <a href="tel:+1234567890" class="mb-0 p-2">{{ agent.phone_number }}</a>
+  </div>
+
+  <h4 class="p-2" style="color: blueviolet">Basic Info</h4>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-postcard"></span>
+      <h5 class="text-1000 mb-0">Emergency Contact</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ agent.emergency_contact_number }}</p>
+  </div>
+
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-dollar-alt"></span>
+      <h5 class="text-1000 mb-0">Address</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ agent.address }}</p>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-building"></span>
+      <h5 class="text-1000 mb-0">National ID:</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ agent.national_id }}</p>
+  </div>
+
+  <h4 class="p-2" style="color: blueviolet">More Info</h4>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-clock"></span>
+      <h5 class="text-1000 mb-0">Total Passengers</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ agent_passengers_list_count }}</p>
+  </div>
+  <div class="mb-4">
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-file-check-alt"></span>
+      <h5 class="text-1000 mb-0">Gender:</h5>
+    </div>
+    <p class="mb-0 text-800 p-2">{{ agent.gender }}</p>
+  </div>
+  <div>
+    <div class="d-flex align-items-center mb-1">
+      <span class="me-2 uil uil-check-circle"></span>
+      <h5 class="text-1000 mb-0">Status</h5>
+    </div>
+    {% if agent.status %}
+      <span class="badge badge-phoenix badge-phoenix-success mb-0">Active</span>
+    {% else %}
+      <span class="badge badge-phoenix badge-phoenix-danger mb-0">Inactive</span>
+    {% endif %}
+  </div>
+</div>
+
+<!-- this script is for edit the agent details information button work -->
+<script>
+  $(function () {
+    /* load form */
+    var loadForm = function () {
+      var edit = document.getElementById('AgentModal')
+      var url
+      url = $(this).attr('data-url')
+  
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+  
+        beforeSend: function () {
+          $('#AgentModal').modal('show')
+          $('#AgentModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+        },
+  
+        success: function (data) {
+          $('#AgentModal .modal-content').html(data.html_form)
+          console.log('Success !')
+        }
+      })
+    }
+  
+    /* Save Form */
+    var saveForm = function () {
+      var edit = document.getElementById('AgentModal')
+      var form = $(this)
+  
+      var formData = new FormData(form[0])
+  
+      $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        type: form.attr('method'),
+        dataType: 'json',
+  
+        data: formData,
+  
+        processData: false,
+        contentType: false,
+  
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+        },
+  
+        success: function (data) {
+          if (data.form_is_valid) {
+            $('#agent-table tbody').html(data.html_agent_list)
+            $('#agent-card-1').html(data.html_agent_card_1)
+            $('#agent-card-2').html(data.html_agent_card_2)
+            $(edit).modal('hide')
+          } else {
+            $('#AgentModal .modal-content').html(data.html_form)
+          }
+        }
+      })
+      return false
+    }
+  
+    // Update Trainng List
+    $('#agent-edit-button-container').on('click', '.agentEditButton', loadForm)
+    $('#AgentModal').on('submit', '.passportinfoEditForm', saveForm)
+  })
+</script>

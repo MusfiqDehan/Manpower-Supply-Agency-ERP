@@ -1,0 +1,123 @@
+<style>
+  .animationLoading {
+    background: #fff;
+    border: 1px solid;
+    border-color: #e5e6e9;
+    border-radius: 3px;
+    display: block;
+    height: 324px;
+    width: 494px;
+    padding: 12px;
+  }
+  @keyframes animate {
+    from {
+      transition: none;
+    }
+    to {
+      background-color: #f6f7f8;
+      transition: all 0.3s ease-out;
+    }
+  }
+  #one,
+  #two,
+  #three,
+  #four,
+  #five,
+  #six,
+  #seven,
+  #eight,
+  #nine,
+  #ten {
+    position: relative;
+    background-color: #ccc;
+    height: 6px;
+    animation-name: animate;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
+
+  #one {
+    left: 0;
+    height: 40px;
+    width: 40px;
+  }
+
+  #two {
+    left: 50px;
+    top: -33px;
+    width: 25%;
+  }
+
+  #Three {
+    left: 50px;
+    top: -20px;
+    width: 15%;
+  }
+
+  #four {
+    left: 0px;
+    top: 30px;
+    width: 80%;
+  }
+
+  #five {
+    left: 0px;
+    top: 45px;
+    width: 90%;
+  }
+
+  #six {
+    left: 0px;
+    top: 60px;
+    width: 50%;
+  }
+  #seven {
+    left: 0px;
+    top: 80px;
+    width: 75%;
+  }
+
+  #eight {
+    left: 0px;
+    top: 100px;
+    width: 25%;
+  }
+  #nine {
+    left: 0px;
+    top: 120px;
+    width: 75%;
+  }
+  #ten {
+    left: 0px;
+    top: 140px;
+    width: 90%;
+  }
+</style>
+
+<form method="" action="" class="" enctype="multipart/form-data">
+  <div class="modal-header">
+    <div id="five"></div>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="modal"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <div class="col-sm-12 col-md-12"><div id="three"></div></div>
+      <div class="col-sm-12 col-md-12"><div id="four"></div></div>
+      <div class="col-sm-6 col-md-12"><div id="seven"></div></div>
+      <div class="col-sm-6 col-md-6"><div class="form-submit"></div></div>
+      <div class="col-sm-6 col-md-6"><div class=""></div></div>
+      <div class="col-sm-6 col-md-12"><div class=""></div></div>
+      <div class="col-sm-6 col-md-6"><div class=""></div></div>
+      <div class="col-sm-12 col-md-12"><div id="eight"></div></div>
+      <div class="col-sm-6 col-md-12"><div id="ten"></div></div>
+      <div class="col-sm-6 col-md-12"><div id="nine"></div></div>
+    </div>
+  </div>
+  <div class="modal-footer"><div id="six"></div></div>
+</form>

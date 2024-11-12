@@ -1,0 +1,102 @@
+<form method="post" action="{% url 'agent_management_app:agent_document_edit' form.instance.pk %}" class="agentdocumentEditForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input type="text" name="agent" value="{{ document.agent.id }}" hidden />
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Agent Document</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Document Name field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Name</label>
+          <input class="form-control" name="document_name" value="{{ document.document_name }}" type="text" placeholder="Document Name" />
+        </div>
+      </div>
+
+      <!-- Document Type field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Document Type</label>
+
+          <select class="form-select" name="document_type" id="id_document_type" type="text">
+            <option value="{{ document.document_type }}" selected>{{ document.get_document_type_display }}</option>
+            {% if document.document_type == 'pdf' %}
+              <option value="image">IMAGE</option>
+              <option value="word">WORD</option>
+            {% elif document.document_type == 'image' %}
+              <option value="pdf">PDF</option>
+              <option value="word">WORD</option>
+            {% else %}
+              <option value="image">IMAGE</option>
+              <option value="pdf">PDF</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!-- Creation Date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Creation Date</label>
+          <input class="form-control" name="creation_date" value="{{ document.creation_date|date:'Y-m-d' }}" type="date" placeholder="Creation Date" />
+        </div>
+      </div>
+
+      <!-- Expiry Date field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Expiry Date</label>
+          <input class="form-control" name="expiry_date" value="{{ document.expiry_date|date:'Y-m-d' }}" type="date" placeholder="Expiry Date" />
+        </div>
+      </div>
+
+      <!-- Description field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Description</label>
+          <textarea name="document_description" class="form-control" rows="3" placeholder="Description">{{ document.document_description }}</textarea>
+        </div>
+      </div>
+
+      <!-- Document File field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if document.document_file %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label">Current File: <a href="{{ document.document_file.url }}">{{ document.document_file|truncatechars:40 }}</a> </span>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% else %}
+            <label for="submitgrid">Upload file (*pdf)</label>
+            <input class="form-control" name="document_file" type="file" placeholder="pdf File" />
+          {% endif %}
+        </div>
+      </div>
+
+      {% comment %} <!-- Document File field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid" class="mb-3">Document File:</label>
+          <input class="form-control" id="file-input" name="document_file" type="file" style="display: none;" />
+          <label for="file-input" class="custom-file-upload">
+            <div style="display:flex;flex-direction:row;">
+              <span class="col-sm-1 col-md-1 div button-like-span" onclick="handleButtonClick()">Change File</span>
+
+              <span class="col-sm-2 col-md-2 div2" id="file-label">{{ document.document_file }}</span>
+            </div>
+          </label>
+        </div>
+      </div> {% endcomment %}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

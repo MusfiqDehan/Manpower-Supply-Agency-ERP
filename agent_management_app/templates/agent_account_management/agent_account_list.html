@@ -1,0 +1,27 @@
+{% for data in agentAccount_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold" href=" ">{{ data.agent_account.full_name}}</a>
+    </td>
+
+
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.opening_balance }}</td>
+
+
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.previous_balance }}</td>
+
+
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.total_balance }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.open_date }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 ">{{ data.note }}</td>
+
+ 
+  </tr>
+  
+{% endfor %}

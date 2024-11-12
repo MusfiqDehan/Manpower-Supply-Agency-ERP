@@ -1,0 +1,772 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+{{ page_name }}
+{% endblock %}
+
+{% block content %}
+<div class="content">
+  <div class="pb-3">
+    <div class="row g-4 g-xl-6">
+
+      <!-- Agent Details And About Agent -->
+      <div class="col-xl-12 col-xxl-12" id="tracking_and_details_div">
+        <ul class="nav nav-underline deal-details scrollbar flex-nowrap w-100 pb-1 mb-6" id="myTab" role="tablist"
+          style="overflow-y: hidden">
+          <!-- Passenger -->
+          <li class="nav-item text-nowrap me-2" role="presentation">
+            <a class="nav-link active" id="activity-tab" data-bs-toggle="tab" href="#tab-profile" role="tab"
+              aria-controls="tab-qualification" aria-selected="true">
+              <i class="fas fa-user"></i>
+              Agent Profile
+            </a>
+          </li>
+
+          <!-- Passenger -->
+          <li class="nav-item text-nowrap me-2" role="presentation">
+            <a class="nav-link" id="activity-tab" data-bs-toggle="tab" href="#tab-passenger" role="tab"
+              aria-controls="tab-qualification" aria-selected="true">
+              <i class="fas fa-users"></i>
+              Passengers
+            </a>
+          </li>
+
+          <!-- Accounts -->
+          <li class="nav-item text-nowrap me-2" role="presentation">
+            <a class="nav-link" id="personal-information-tab" data-bs-toggle="tab" href="#account-tab-account"
+              role="tab" aria-controls="tab-assessment" aria-selected="false" tabindex="-1">
+              <i class="fas fa-money-bill-transfer"></i>
+              Accounts
+            </a>
+          </li>
+
+          <!-- Documents -->
+          <li class="nav-item text-nowrap me-2" role="presentation">
+            <a class="nav-link" id="documents" data-bs-toggle="tab" href="#tab-document" role="tab"
+              aria-controls="tab-proposal" aria-selected="false" tabindex="-1">
+              <i class="fas fa-file"></i>
+              Documents
+            </a>
+          </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+          <!-- passenger tab -->
+          <div class="tab-pane fade active show" id="tab-profile" role="tabpanel">
+            <div class="row align-items-center justify-content-between g-3 mb-3">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">Agent | Profile Details</h2>
+              </div>
+            </div>
+            {% include 'agent_management/agent_details/agent_info.html' %}
+          </div>
+
+          <!-- passenger tab -->
+          <div class="tab-pane fade" id="tab-passenger" role="tabpanel">
+            <div class="row align-items-center justify-content-between g-3 mb-3">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">Agent | Passengers list</h2>
+              </div>
+            </div>
+            <div class="card pt-3 pb-4">
+              <div class="card-body">
+                <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                  <table id="passenger-table" class="table fs--1 mb-0 leads-table border-bottom">
+                    <thead>
+                      <tr>
+                        <!-- passenger information fields -->
+                        <!-- passport -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Serial No.</th>
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 15%">Full Name</th>
+                        <!-- Full Name Name -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 15%">Gender</th>
+
+                        <!-- Gender -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 15%">Passport Number</th>
+
+                        <!-- agency -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 10%">Phone Number</th>
+
+                        <!-- phone number -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 15%">Email Address</th>
+
+                        <!-- Action -->
+                        <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 5%">
+                          <div class="d-inline-flex flex-center">
+                            <div class="d-flex align-items-center px-1 py-1 rounded me-2">
+                              <i class="fas fa-tools"></i>
+                            </div>
+                            <span>Action</span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="list" id="deal-tables-body">
+                      {% include 'agent_management/agent_passengers/agent_passenger_list.html' %}
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- pegination -->
+              </div>
+            </div>
+          </div>
+
+          <!-- ===========Agent Documents=============== -->
+          <div class="tab-pane fade" id="tab-document" role="tabpanel" aria-labelledby="document-tab">
+            <!-- Header -->
+            <div class="row align-items-center justify-content-between g-3 mb-3">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">Agent | Documents</h2>
+              </div>
+            </div>
+
+            <div class="row align-items-center justify-content-between g-3 mb-1">
+              <div class="col-12 col-md-auto">
+                <div class="row align-items-center g-0 justify-content-start">
+                  <div class="col-12 col-sm-auto d-flex">
+                    <div id="agent-document-add">
+                      <button type="button" class="btn agentdocumentAddButton btn-primary"
+                        data-url="{% url 'agent_management_app:agent_document_add' agent.id %}">
+                        <i class="fa fa-add"></i>
+                        Add Document
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-3 pb-4">
+              <div class="">
+                <div class="">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                        <table id="agent-document-table" class="table fs--1 mb-0 leads-table border-bottom">
+                          <thead>
+                            <tr>
+                              <!-- Document Name -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 10%">Document Name</th>
+
+                              <!-- Document Type -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 5%">Type</th>
+
+                              <!-- Creation Date -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 10%">Creation Date</th>
+                              <!-- Expairy Date -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 10%">Expairy Date</th>
+
+                              <!-- Document Description -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 15%">Description</th>
+
+                              <!-- document -->
+                              <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                                scope="col" style="width: 10%">File</th>
+
+                              <!-- action -->
+                              <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 10%">
+                                <div class="d-inline-flex flex-center">
+                                  <div class="d-flex align-items-center px-1 py-1 rounded me-2">
+                                    <i class="fas fa-tools"></i>
+                                  </div>
+                                  <span>Action</span>
+                                </div>
+                              </th>
+                            </tr>
+                          </thead>
+
+                          <tbody class="list" id="deal-tables-body">
+                            {% include 'agent_management/agent_documents/agent_document_list.html' %}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <!-- pegination -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- =================== Agent Account Management (RM)================= -->
+          <div class="tab-pane fade" id="account-tab-account" role="tabpanel">
+            <!-- Header -->
+            <div class="row align-items-center justify-content-between g-3 mb-3">
+              <div class="col-12 col-md-auto">
+                <h2 class="mb-0">Agent | Account Management</h2>
+              </div>
+            </div>
+            <!-- buttons row -->
+            <div class="row d-flex align-items-center justify-content-between g-1 mb-3">
+              <!-- <div class="col-12 col-md-auto"> -->
+              <!-- <div class="row d-flex align-items-center g-1 mb-3"> -->
+
+              <div class="col-10 col-sm-auto d-flex">
+                <div id="account-all-button">
+                  <!-- Include the Agent Account Button -->
+                  {% include 'agent_management/agent_account/agent_tabs_account_button.html' %}
+                </div>
+              </div>
+
+              <!-- </div> -->
+              <!-- </div> -->
+            </div>
+            <!-- table -->
+            <div class="card pt-3 pb-4">
+              <div class="card-body">
+                <div class="row">
+                  <div id="middleman_total_due_amount">
+                    {% include 'agent_management/agent_account/agent_total_due_account.html' %}
+                  </div>
+                </div>
+
+                <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                  <table id="agent-account-table" class="table fs--1 mb-0 leads-table border-bottom">
+                    <thead>
+                      <!-- Total Balance -->
+
+                      <!-- Openning Balance -->
+                      <tr id="account_info_id">
+                        {% include 'agent_management/agent_account/agent_account_info.html' %}
+                      </tr>
+
+                      <!-- Transaction Details -->
+                      <tr>
+                        <!-- Date -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Date</th>
+
+                        <!-- Date -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Payment Type</th>
+
+                        <!-- Date -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 10%">Note</th>
+
+                        <!-- Debit -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Debit</th>
+                        <!-- Credit -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Credit</th>
+
+                        <!-- Balance -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end"
+                          scope="col" style="width: 5%">Balance</th>
+
+                        <!-- Balance -->
+                        <th
+                          class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-top border-end"
+                          scope="col" style="width: 5%">Transaction Status</th>
+
+                        <!-- action -->
+                        <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-top"
+                          scope="col" style="width: 5%">
+                          <div class="d-inline-flex flex-center">
+                            <div class="d-flex align-items-center px-1 py-1 rounded me-2">
+                              <i class="fas fa-tools"></i>
+                            </div>
+                            <span>Action</span>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody class="list">
+                      {% include 'agent_management/agent_account/agent_account_list.html' %}
+                    </tbody>
+                  </table>
+                  {% comment %} <div id="pagination_container">
+                    {% include 'agent_management/agent_account/agent_account_pagination.html' %}
+                  </div> {% endcomment %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="AgentAccountModal" tabindex="-1" aria-labelledby="AgentAccountLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="AgentDocumentModal" tabindex="-1" aria-labelledby="AgentDocumentLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content ( for edit agent details ) -->
+    <div class="modal fade" id="AgentModal" tabindex="-1" aria-labelledby="AgentLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="agent_account_Modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for MiddleMan Account -->
+    <div class="modal fade" id="accountTransaction_receive_Modal" tabindex="-1" aria-labelledby="AgentAccountLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="accountTransaction_payment_Modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="accountTransaction_delete_Modal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Ajax (Agent Account) modal for Agent Account -->
+    <div class="modal fade" id="AgentAccountModal" tabindex="-1" aria-labelledby="AgentAccountLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- ======= Agent Accounts Script =======RM======= -->
+    <script>
+      $(function () {
+        /* load form */
+        var loadForm = function () {
+          console.log('loadForm payment')
+          var edit = document.getElementById('AgentAccountModal')
+          var url
+
+          url = $(this).attr('data-url')
+
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+
+            beforeSend: function () {
+
+              $('#AgentAccountModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+              $('#AgentAccountModal').modal('show')
+            },
+            success: function (data) {
+              $('#AgentAccountModal .modal-content').html(data.html_form)
+              console.log('Success !')
+            }
+          })
+        }
+
+        /* Save Form */
+        var saveForm = function () {
+          console.log('save payment')
+          var edit = document.getElementById('AgentAccountModal')
+          var form = $(this)
+
+          // for file.
+          var formData = new FormData(form[0])
+
+          $.ajax({
+            url: form.attr('action'),
+            // data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+
+            data: formData,
+            processData: false,
+            contentType: false,
+
+
+
+
+            beforeSend: function () {
+              $('#loading').html(
+                '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+              )
+            },
+
+            success: function (data) {
+              if (data.form_is_valid) {
+                console.log('====Creating Account, Creating Payment, Creating Receive=====');
+
+                // Check the source of the response
+
+                if (data.agent_account_add) {
+                  console.log('Creating Account');
+                  // Handle changes for agent_account_add
+                  // Button Chnage.
+
+                  $('#account-all-button').html(data.agent_account_button)
+
+                  // middelam account Total due
+                  $('#middleman_total_due_amount').html(data.agent_account_total_due)
+
+                  // body content change.
+                  $('#account_info_id').html(data.agent_account)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#delete-account-btn').show()
+
+
+                  $(edit).modal('hide')
+
+                }
+
+                if (data.agent_payment_debit) {
+                  console.log('Creating Payment');
+                  // Handle changes for payment_list
+                  // body content change.
+                  $('#account_info_id').html(data.agent_account)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#delete-account-btn').hide()
+                  $('#agent-total-balance').html(data.agent_total_balance)
+
+                  $(edit).modal('hide')
+                }
+
+                if (data.agent_payment_receive) {
+                  console.log('Creating Payment');
+                  // Handle changes for payment_list
+                  // body content change.
+                  $('#account_info_id').html(data.agent_account)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#delete-account-btn').hide()
+                  $('#agent-total-balance').html(data.agent_total_balance)
+
+                  $(edit).modal('hide')
+                }
+
+                if (data.agent_account_transaction_edit) {
+                  console.log('Editing Transaction');
+
+                  $('#account_info_id').html(data.agent_account)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#delete-account-btn').hide()
+                  $('#agent-total-balance').html(data.agent_total_balance)
+
+                  $(edit).modal('hide')
+                }
+
+
+              } else {
+                $('#AgentAccountModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+
+        // Create Account--Done
+        $('#account-tab-account').on('click', '.AgentAccountCreateButton', loadForm)
+        $('#AgentAccountModal').on('submit', '.AgentAccountCreateForm', saveForm)
+
+        // Agent Account Receive
+        $('#account-tab-account').on('click', '.AgentTransactionreceieveButton', loadForm)
+        $('#AgentAccountModal').on('submit', '.AgentTransactionReceiveCreateForm', saveForm)
+
+        // Agent Account Payment Debite
+        $('#account-tab-account').on('click', '.AgentTransactionpaymentButton', loadForm)
+        $('#AgentAccountModal').on('submit', '.AgentTransactionDebitCreateForm', saveForm)
+
+        // Agent Transaction Edit ====================
+        $('#account-tab-account').on('click', '.AgentTransButtonId', loadForm)
+        $('#AgentAccountModal').on('submit', '.ATranactionEditForm', saveForm)
+
+        // Delete Account Transaction
+        //$('#middleman-account-table').on('click', '.AgentTransactionDeleteButton', loadForm)
+        //$('#AgentAccountModal').on('submit', '.AgentTransactionDeleteForm', saveForm)
+
+
+      })
+    </script>
+
+    <!-- Agent Transaction Delete Script -->
+    <script>
+      $(function () {
+        var deleteLoad = function () {
+
+          $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'get',
+
+            dataType: 'json',
+
+            success: function (data) {
+              $('#accountTransaction_delete_Modal .modal-content').html(data.html_form)
+              $('#accountTransaction_delete_Modal').modal('show')
+            }
+          })
+        }
+
+        var deleteSave = function () {
+          var form = $(this)
+
+          $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+
+            dataType: 'json',
+
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html(
+                '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+              )
+            },
+
+            success: function (data) {
+              if (data.form_is_valid) {
+
+                console.log('data', data.agent_account_payment_receive)
+
+                if (data.agent_account_payment_receive == 0) {
+                  $('#delete-account-btn').show()
+                  // $('#agent-total-balance').html(0)
+                  $('#agent-total-balance').html(data.agent_total_balance)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#accountTransaction_delete_Modal').modal('hide')
+
+
+                }
+                else {
+
+                  $('#agent-total-balance').html(data.agent_total_balance)
+                  $('#agent-account-table tbody').html(data.receive_list)
+                  $('#agent-total-balance').html(data.agent_total_balance)
+                  $('#accountTransaction_delete_Modal').modal('hide')
+
+                }
+              } else {
+                $('#accountTransaction_delete_Modal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+
+        //delete
+        $('#agent-account-table').on('click', '.AgentTransactionDeleteButton', deleteLoad)
+        $('#accountTransaction_delete_Modal').on('submit', '.AgentTransactionDeleteForm', deleteSave)
+
+      })
+    </script>
+
+    <!-- document Script -->
+    <script>
+      $(function () {
+        /* load form */
+        var loadForm = function () {
+          var edit = document.getElementById('AgentDocumentModal')
+          var url
+          url = $(this).attr('data-url')
+
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+
+            beforeSend: function () {
+
+              $('#AgentDocumentModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+              $('#AgentDocumentModal').modal('show')
+            },
+            success: function (data) {
+              $('#AgentDocumentModal .modal-content').html(data.html_form)
+              console.log('Success !')
+            }
+          })
+        }
+
+        /* Save Form */
+        var saveForm = function () {
+          var edit = document.getElementById('AgentDocumentModal')
+          var form = $(this)
+
+          var formData = new FormData(form[0])
+
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+
+            data: formData,
+
+            processData: false,
+            contentType: false,
+
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html(
+                '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+              )
+            },
+
+            success: function (data) {
+              if (data.form_is_valid) {
+                $('#agent-document-table tbody').html(data.html_agent_document_list)
+
+                $(edit).modal('hide')
+              } else {
+                $('#AgentDocumentModal .modal-content').html(data.html_form)
+              }
+            }
+          })
+          return false
+        }
+
+        // add document
+        $('#agent-document-add').on('click', '.agentdocumentAddButton', loadForm)
+        $('#AgentDocumentModal').on('submit', '.agentdocumentAddForm', saveForm)
+
+        // Update documents List
+        $('#agent-document-table').on('click', '.agentdocumentEditButton', loadForm)
+        $('#AgentDocumentModal').on('submit', '.agentdocumentEditForm', saveForm)
+
+        // Delete passenger document
+        $('#agent-document-table').on('click', '.agentdocumentDeleteButton', loadForm)
+        $('#AgentDocumentModal').on('submit', '.agentdocumentDeleteForm', saveForm)
+      })
+    </script>
+
+    <!-- Script for search pagination + normal pagination start -->
+    <script>
+      var searchText
+      $('#leadSearchInput').on('keyup', function () {
+        searchText = $(this).val()
+        console.log('search text', searchText)
+
+        $.ajax({
+          url: '',
+          type: 'get',
+          dataType: 'json',
+          data: { search_text: searchText },
+          success: function (data) {
+            $('#agent-account-table tbody').html(data.html_save_user)
+            $('#pagination_container').html(data.html_pagination)
+            console.log('Success search!')
+          }
+        })
+      })
+
+      $(function () {
+        var loadForm = function () {
+          console.log('i am in loadform')
+          var url = $(this).attr('data-url')
+          console.log(searchText)
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            data: { search_text: searchText },
+
+            success: function (data) {
+              $('#agent-account-table tbody').html(data.html_save_user)
+              $('#pagination_container').html(data.html_pagination)
+              console.log('Success loadform!')
+            }
+          })
+          console.log('search text loadform', searchText)
+        }
+
+        $(document).on('click', '.pagination-item', loadForm)
+
+
+        //script for dot(...) button pagination start
+        var dotForm = function () {
+          var url = $(this).attr('data-url')
+          console.log('i am in dot')
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            data: { search_text: searchText },
+            success: function (data) {
+              console.log(data.html_pagination)
+              $('#pagination_container').html(data.html_pagination)
+              console.log('Success!')
+            }
+          })
+        }
+        $('#pagination_container').on('click', '.dot', dotForm)
+      }
+      )
+    </script>
+
+
+    <!-- -script for export to xlsx -->
+    <script>
+      $(function () {
+
+        $('.print').on('click', function () {
+
+          $.ajax({
+
+            url: $(this).attr('data-url'),
+            type: 'get',
+
+            data: { 'agent_pk': {{ agent.pk }} },
+
+
+        xhrFields: {
+        responseType: 'blob' // Set the response type to blob
+      },
+
+        success: function (response) {
+          // Create a Blob from the response data
+          var blob = new Blob([response]);
+
+          // Create a link and trigger a click to initiate the download
+          var link = document.createElement('a');
+          link.href = window.URL.createObjectURL(blob);
+          link.download = 'agent_transaction.xlsx';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        },
+        error: function (error) {
+          console.error('Error downloading Excel file:', error);
+        }
+
+        })
+
+      })
+
+
+      })
+    </script>
+  </div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% for data in agentTransaction_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold" href=" ">{{ data.created_date }}</a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.note }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.debit }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.credit }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.balance }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          <div>
+            <button class="btn transactionDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'agent_management_app:agentTransaction_delete' data.pk %}"><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

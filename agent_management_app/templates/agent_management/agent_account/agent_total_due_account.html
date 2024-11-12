@@ -1,0 +1,30 @@
+{% comment %} {% if agent_account %}
+  <div class="col-xl-12">
+    <div class="d-sm-flex justify-content-between mb-3">
+      <h4 class="mb-1">Total Due: <span class="badge badge-phoenix badge-phoenix-info rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_payable }}</span></span></h4>
+
+      <h4 class="mb-1">Total Credit: <span class="badge badge-phoenix badge-phoenix-primary rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_total_credit }}</span></span></h4>
+
+      <h4 class="mb-1">Total Debit: <span class="badge badge-phoenix badge-phoenix-warning rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_total_debit }}</span></span></h4>
+
+      <div class="d-flex mb-3">
+        <button class="btn btn-phoenix-secondary me-2 px-6" style="display: none;">Update</button>
+      </div>
+    </div>
+  </div>
+{% endif %} {% endcomment %}
+
+{% comment %}
+<div class="col-xl-12">
+  <div class="d-sm-flex justify-content-between">
+    <h4 class="mb-1">Total Due: <span class="badge badge-phoenix badge-phoenix-warning rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_payable }}</span></span></h4>
+
+    <h4 class="mb-1">Total Credit: <span class="badge badge-phoenix badge-phoenix-warning rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_total_credit }}</span></span></h4>
+
+    <h4 class="mb-1">Total Debit: <span class="badge badge-phoenix badge-phoenix-warning rounded-pill ms-2"><span class="badge-label">{{ agent_account.agent_total_debit }}</span></span></h4>
+
+    <div class="d-flex mb-3">
+      <button class="btn btn-phoenix-primary me-2 px-6">Update</button>
+    </div>
+  </div>
+</div> {% endcomment %}

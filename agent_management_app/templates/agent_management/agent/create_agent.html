@@ -1,0 +1,103 @@
+<form method="post" action="{% url 'agent_management_app:agent_add' %}" class="agentAddForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Agent Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- agent id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Agent ID</label>
+          <input class="form-control" name="agent_id" type="text" placeholder="Identity No"/>
+        </div>
+      </div>
+
+      <!-- Visa Rate -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Visa Rate</label>
+          <input class="form-control" name="visa_rate" type="number" placeholder="Visa Rate"/>
+        </div>
+      </div>
+
+      <!-- FULL Name field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Full Name</label>
+          <input class="form-control" name="full_name" type="text" placeholder="Full Name" required />
+        </div>
+      </div>
+
+      <!-- gender field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Gender</label>
+          <select id="select_gender" class="form-select" name="gender">
+            <option value="">Select Gender</option>
+            <option value="male" selected>Male</option>
+            <option value="female">Female</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- national_id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">National ID</label>
+          <input class="form-control" name="national_id" type="text" placeholder="National ID"/>
+        </div>
+      </div>
+
+      <!-- email field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Email Address</label>
+          <input class="form-control" name="email" type="text" placeholder="Email Address" />
+        </div>
+      </div>
+
+      <!-- phone number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Phone Number</label>
+          <input class="form-control" name="phone_number" type="number" placeholder="Phone Number" required />
+        </div>
+      </div>
+      <!-- emergency number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Emergency Number</label>
+          <input class="form-control" name="emergency_contact_number" type="number" placeholder="Emergency Number" />
+        </div>
+      </div>
+
+      <!-- address field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Address</label>
+          <input class="form-control" name="address" type="text" placeholder="Address" />
+        </div>
+      </div>
+
+      <!-- image field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Upload Image</label>
+          <input class="form-control" name="image" type="file" placeholder="PNG/JPG File" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

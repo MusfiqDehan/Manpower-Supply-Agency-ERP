@@ -1,0 +1,219 @@
+<form method="post" action="{% url 'agent_management_app:agent_payment_receive' agent_account_id %}" class="AgentTransactionReceiveCreateForm" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <!-- Agent Account -->
+    <input type="text" name="agent_account" value="{{ agent_account_id }}" hidden />
+
+    <div class="modal-header">
+      <h5 class="modal-title" id="exampleModalLabel">Agent Money || Credit/Receive Form</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+
+    <div class="modal-body">
+      <div class="row g-3 mb-6">
+        <!-- Credit Receive -->
+        <div class="col-sm-6 col-md-6">
+          <div class="form-submit">
+            <label for="submitgrid">Receive Amount</label>
+            <input class="form-control" name="credit" type="number" step="any" placeholder="Credit/Receive Amount" required/>
+          </div>
+        </div>
+
+        <!-- Payment Date -->
+        <div class="col-sm-6 col-md-6" >
+          <div class="form-submit">
+            <label for=""> Receive Date</label>
+            <input class="form-control" name="payment_date" type="date" placeholder="Payment Date" required/>
+          </div>
+        </div>
+
+
+        <div id="passenger_add_method_container" class="justify-content-between scrollbar" style="max-height: 150px">
+          <div id="1" class="input-group money_bolt mb-1">
+            <!-- Passenger List -->
+            <select class="form-select" name="selected_passenger_data[]">
+              <option value="">Select Passenger</option>
+
+              {% for data in middleman_passenger_list %}
+                <option value="{{ data.id }}">{{ data.full_name }}</option>
+              {% endfor %}
+            </select>
+
+            <!-- Amount of passenger Money -->
+            <input name="passenger_amount_data[]" type="number" class="form-control text-center" placeholder="Total amount" />
+
+            <!-- Note -->
+            <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" />
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-center">
+          <button id="" class="btn btn-sm btn-outline-info w-100" onclick="addMoreMethods(event)">Add More Passengers</button>
+        </div>
+
+        <!-- payment_type -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Payment Type</label>
+            <select id="paymentType" class="form-select" name="payment_type" required>
+              <option value="">Select Payment Type</option>
+              <option value="Cash">Cash Payment</option>
+              <option value="Online">Mobile Banking (bKash, Nagad, Rocket, Upay)</option>
+              <option value="Bank">Bank Payment</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Receive Note -->
+        <div class="col-sm-12 col-md-12">
+          <div class="form-submit">
+            <label for="submitgrid">Any Note</label>
+            <textarea name="note" class="form-control" rows="2" placeholder="Any Note" required></textarea>
+          </div>
+        </div>
+
+        {% comment %} <!-- Receive Note -->
+        <div class="col-sm-12 col-md-12" id="noteField" style="display: none;">
+          <div class="form-submit">
+            <label for="submitgrid">Any Note</label>
+            <textarea name="note" class="form-control" rows="2" placeholder="Any Note"></textarea>
+          </div>
+        </div> {% endcomment %}
+
+        <!-- Bank_transaction_number -->
+        <div class="col-sm-12 col-md-12" id="bankTransactionNumber" style="display: none;">
+          <div class="form-submit">
+            <label for="submitgrid">Bank Account/Card Number</label>
+            <input class="form-control" name="bank_transaction_number" type="text" placeholder="Bnak Account/Card Number Or any Note" />
+          </div>
+        </div>
+
+        <!-- Bank_transaction_file -->
+        <div class="col-sm-12 col-md-12" id="bankTransactionFile" style="display: none;">
+          <div class="form-submit">
+            <label for="submitgrid">Upload Transaction Document File || (PDF/PNG/JPG)</label>
+            <input class="form-control" name="bank_transaction_file" type="file" placeholder="(PDF/PNG/JPG) File" />
+          </div>
+        </div>
+
+        <!-- online_transaction_number -->
+        <div class="col-sm-12 col-md-12" id="onlineTransactionNumber" style="display: none;">
+          <div class="form-submit">
+            <label for="submitgrid"> Phone/Transaction Number</label>
+            <input class="form-control" name="online_transaction_number" type="text" placeholder="Phone or transaction number" />
+          </div>
+        </div>
+
+        <!-- online_transaction_file -->
+        <div class="col-sm-12 col-md-12" id="onlineTransactionFile" style="display: none;">
+          <div class="form-submit">
+            <label for="submitgrid">Upload Transaction File || (PDF/PNG/JPG)</label>
+            <input class="form-control" name="online_transaction_file" type="file" placeholder="PDF/PNG/JPG File" />
+          </div>
+        </div>
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <!-- submit & close -->
+      <div class="form-submit">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+      </div>
+    </div>
+  </form>
+
+  <!-- JavaScript to add new Passenger Payment fields for passenger (more passenger button) -->
+  <script>
+    var method_id = 1;
+
+    // Function to add a new passenger
+    function addMoreMethods(event) {
+      event.preventDefault()
+      method_id += 1;
+      var passengerContainer = document.getElementById("passenger_add_method_container");
+
+      var div = document.createElement("div");
+      div.classList.add("input-group", "money_bolt");
+      div.id = method_id;
+      div.style.marginBottom = "5px";
+
+      var newMethod = `
+        <!-- Passenger List -->
+        <select class="form-select" name="selected_passenger_data[]">
+          <option value="">Select Passenger</option>
+          {% for data in middleman_passenger_list %}
+          <option value="{{ data.id }}">{{ data.full_name }}</option>
+          {% endfor %}
+        </select>
+
+        <!-- Amount of passenger Money -->
+        <input
+          name="passenger_amount_data[]"
+          type="number"
+          class="form-control text-center passenger_amount_data"
+          placeholder="Total amount"
+        />
+
+        <!-- Note -->
+        <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" />
+
+        <!-- Delete Button -->
+        <button
+          class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0"
+          data-url=""
+          style="height: 37px;"
+          onclick="deleteMoreMethods(${method_id})"
+        >
+          <span class="fas fa-trash"></span>
+        </button>
+      `;
+      div.innerHTML = newMethod;
+
+      passengerContainer.appendChild(div);
+      // method_id++;
+    };
+
+    // Function to delete a passenger
+    function deleteMoreMethods(method_id) {
+      var servicesContainer = document.getElementById("passenger_add_method_container");
+      var childElement = document.getElementById(method_id);
+      servicesContainer.removeChild(childElement);
+    };
+  </script>
+
+
+  <!-- Payment Type selected script -->
+  <script>
+    // Get references to the elements (selected elements)
+    var paymentTypeSelect = document.getElementById('paymentType')
+
+    // Field (change of element field)
+    // var noteField = document.getElementById('noteField')
+    var bankTransactionNumber = document.getElementById('bankTransactionNumber')
+    var bankTransactionFile = document.getElementById('bankTransactionFile')
+    var onlineTransactionNumber = document.getElementById('onlineTransactionNumber')
+    var onlineTransactionFile = document.getElementById('onlineTransactionFile')
+
+    // Add an event listener to the Payment Type select element
+    paymentTypeSelect.addEventListener('change', function () {
+    var selectedPaymentType = paymentTypeSelect.value
+
+
+      // Show/hide fields based on the selected Payment Type
+      // noteField.style.display = selectedPaymentType === 'Cash' ? 'block' : 'none'
+      bankTransactionNumber.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+      bankTransactionFile.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+      onlineTransactionNumber.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+      onlineTransactionFile.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+    })
+  </script>

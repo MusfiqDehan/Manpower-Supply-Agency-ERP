@@ -1,0 +1,23 @@
+<div class="card-body">
+  <div class="row align-items-center g-3 text-center text-xxl-start"></div>
+
+  <div class="row align-items-center g-3 text-center text-xxl-start m-1">
+    <div class="col-12 col-xxl-auto">
+      {% if agent.image %}
+        <div class="avatar avatar-4xl">
+          <img class="rounded-circle" src="{{ agent.image.url }}" alt="agent image" />
+        </div>
+      {% else %}
+        <div class="avatar avatar-4xl">
+          <img class="rounded-circle" src="https://cdn.musfiqdehan.com/images/avatar.png" alt="" />
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-12 col-sm-auto flex-1">
+      <h3 class="fw-bolder mb-2">{{ agent.full_name }}</h3>
+      <p class="mb-0 fw-bold">
+        ID: <span style="color: green;">{{ agent.agent_id }}</span>
+      </p>
+    </div>
+  </div>
+</div>

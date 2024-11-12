@@ -1,0 +1,25 @@
+{% if agent.agent_account.opening_balance %}
+  <div class="d-flex">
+    <div id="agent_payment_button">
+      <button type="button" class="btn agentpaymentBtn btn-warning" style="margin-right: 15px" data-url="{% url 'agent_management_app:agentTransaction_payment' agent.agent_account.id %}">
+        <i class="fa fa-add"></i>
+        Payment
+      </button>
+    </div>
+
+    <div id="agent_receive_button">
+      <button type="button" class="btn agentreceieveBtn btn-success" data-url="{% url 'agent_management_app:agentTransaction_receive' agent.agent_account.id %} ">
+        <i class="fa fa-add"></i>
+        Receive
+      </button>
+    </div>
+    <button type="button"></button>
+  </div>
+{% else %}
+  <div id="agent-account-add">
+    <button type="button" class="btn agentAccountCreateBtn btn-primary" data-url="{% url 'agent_management_app:agentAccount_create' agent.id %}">
+      <i class="fa fa-add"></i>
+      Add Agent Account
+    </button>
+  </div>
+{% endif %}

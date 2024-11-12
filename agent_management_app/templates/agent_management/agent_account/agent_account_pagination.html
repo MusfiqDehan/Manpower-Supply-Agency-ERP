@@ -1,0 +1,65 @@
+<style>
+    .s{
+        font-weight: bold;
+    }
+</style>
+
+<div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+    <div class="col-auto d-flex">
+      <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="data-list-info">
+    
+        Page <span style="font-weight:bold"><b>{{ page_obj.number }}</b></span><span class="text-600"> of</span> total {{ total_pages }} pages.
+     
+      
+      </p>
+    </div>
+  
+    <div class="col-auto d-flex">
+      {% if page_obj.has_previous %}
+        <button class="page-link pagination-item" data-url="{% url 'agent_management_app:list_pagination' page_number=page_obj.previous_page_number index=index agent=agent.pk %}"><span class="fas fa-chevron-left"></span></button>
+      {% else %}
+        <button class="page-link pagination-item disabled"><span class="fas fa-chevron-left"></span></button>
+      {% endif %}
+  
+      <ul class="mb-0 pagination">
+        <!-- {{ chunks.0 }} -->
+  
+        {% if index == 0 %}
+  
+        {% else %}
+          <a type="button" class="page dot" style="font-size: 20px;margin:8px;color:#283747 !important" data-url="{% url 'agent_management_app:pagination_index' index=index|add:-1  agent=agent.pk %}"><i class="fa-solid fa-ellipsis"></i></a>
+        {% endif %}
+  
+        {% if page_obj.number not in chunks %}
+          {% for item in chunks %}
+            <li class="{% if item == page_obj.number %} s {% else %} {% endif %}">
+              <a type="button" class="page pagination-item" style="font-size: 18px;margin:8px;text-decoration:none!important;color:#283747 " data-url="{% url 'agent_management_app:list_pagination' page_number=item index=index agent=agent.pk %}">{{ item }}</a>
+            </li>
+          {% endfor %}
+        {% endif %}
+  
+        {% if page_obj.number in chunks %}
+          {% for item in chunks %}
+            <li class="{% if item == page_obj.number %} s {% else %} {% endif %}">
+              <a type="button" class="page pagination-item" style="font-size: 18px;margin:8px;text-decoration:none!important;color:#283747 " data-url="{% url 'agent_management_app:list_pagination' page_number=item index=index agent=agent.pk %}">{{ item }}</a>
+            </li>
+          {% endfor %}
+        {% endif %}
+  
+        <!-- // -->
+        {% if index != chunk_length %}
+          <a type="button" class="page dot" style="font-size: 20px;margin:8px;color:#283747 !important" data-url="{% url 'agent_management_app:pagination_index' index=index|add:1  agent=agent.pk %}"><i class="fa-solid fa-ellipsis"></i></a>
+        {% else %}
+  
+        {% endif %}
+      </ul>
+  
+      {% if page_obj.has_next %}
+        <button class="page-link pe-0 pagination-item" data-url="{% url 'agent_management_app:list_pagination' page_number=page_obj.next_page_number index=index agent=agent.pk %}"><span class="fas fa-chevron-right"></span></button>
+      {% else %}
+        <button class="page-link pe-0 pagination-item disabled"><span class="fas fa-chevron-right"></span></button>
+      {% endif %}
+    </div>
+  </div>
+
+ 

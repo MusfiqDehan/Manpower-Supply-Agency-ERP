@@ -1,0 +1,41 @@
+<form method="post" action="{% url 'agent_management_app:agent_account_add' agent_id %}" class="AgentAccountCreateForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input type="text" name="agent" value="{{ agent_id }}" hidden />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Create Agent Account</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Opening Balance -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Opening Balance</label>
+          <input class="form-control" name="opening_balance" type="number" placeholder="Opening Balance" required />
+        </div>
+      </div>
+
+      <!-- debit/C -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Select Payment Type</label>
+          <select class="form-select" name="is_credit" type="text">
+            <option value="True" selected>Credit</option>
+            <option value="False">Debit</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

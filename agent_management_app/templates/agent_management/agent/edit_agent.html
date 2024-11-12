@@ -1,0 +1,190 @@
+<form method="post" action="{% url 'agent_management_app:agent_edit' form.instance.pk %}" class="passportinfoEditForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Edit Agent Information</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- agent id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">ID No</label>
+
+          
+          {% if agent.agent_id is none %}
+              <input class="form-control" name="agent_id" type="text" value="" placeholder="Identity No" />
+          {% else %}
+              <input class="form-control" name="agent_id" type="text" value="{{ agent.agent_id }}" placeholder="Identity No" />
+          {% endif %}
+                      
+        </div>
+      </div>
+
+      <!-- Visa Rate -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Visa Rate</label>
+          <input class="form-control" name="visa_rate" type="number" value="{{ agent.visa_rate }}"/>
+        </div>
+      </div>
+
+      <!-- FULL Name field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">FULL Name</label>
+          <input class="form-control" name="full_name" type="text" value="{{ agent.full_name }}" placeholder="FULL Name" required/>
+        </div>
+      </div>
+
+      <!-- gender field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Gender</label>
+          <select class="form-select" name="gender" id="id_gender" type="text">
+            <option value="{{ agent.gender }}" selected>{{ agent.get_gender_display }}</option>
+            {% if agent.gender == 'male' %}
+              <option value="female">Female</option>
+            {% else %}
+              <option value="male">Male</option>
+            {% endif %}
+          </select>
+        </div>
+      </div>
+
+      <!-- national_id field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">National ID</label>
+          <input class="form-control" name="national_id" type="text" value="{{ agent.national_id }}" placeholder="National ID" />
+        </div>
+      </div>
+
+      <!-- email field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Email Address</label>
+          {% if agent.email is none %}
+          <input class="form-control" name="email" type="text" value="" placeholder="Email Address" />
+          {% else %}
+          <input class="form-control" name="email" type="text" value="{{ agent.email }}" placeholder="Email Address" />
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- phone number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Phone Number</label>
+          <input class="form-control" name="phone_number" type="number" value="{{ agent.phone_number }}" placeholder="Phone Number" required/>
+        </div>
+      </div>
+      <!-- emergency number field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Emergency Number</label>
+          <input class="form-control" name="emergency_contact_number" type="number" value="{{ agent.emergency_contact_number }}" placeholder="Emergency Number" />
+        </div>
+      </div>
+
+      <!-- address field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Address</label>
+          <input class="form-control" name="address" type="text" value="{{ agent.address }}" placeholder="Address" />
+        </div>
+      </div>
+
+      <!-- tyle and script for image field div -->
+      {% comment %} <style>
+        .div {
+          width: 30vw;
+          border: 1px solid var(--phoenix-input-border-color);
+          padding: 10px;
+          border-radius: 5px;
+          border-top-right-radius: 1px;
+          border-bottom-right-radius: 1px;
+        }
+        
+        .button-like-span {
+          display: inline-block;
+          padding: 10px;
+          border: 1px solid var(--phoenix-input-border-color);
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: #e0e0e0;
+        }
+        
+        .button-like-span:hover {
+          background-color: #c0c0c0; /* Change the background color on hover for interactivity */
+        }
+        
+        .div2 {
+          width: 67vw;
+          border: 1px solid var(--phoenix-input-border-color);
+          padding: 10px;
+          border-radius: 5px;
+          border-top-left-radius: 1px;
+          border-bottom-left-radius: 1px;
+        }
+        @media screen and (max-width: 450px) {
+        }
+      </style>
+
+      <script>
+        document.getElementById('file-input').addEventListener('change', function () {
+          var fileInput = document.getElementById('file-input')
+          var fileLabel = document.getElementById('file-label')
+        
+          if (fileInput.files.length > 0) {
+            fileLabel.textContent = fileInput.files[0].name // Display the selected file name
+          } else {
+            fileLabel.textContent = 'Select a File' // Reset the label if no file is selected
+          }
+        })
+      </script> {% endcomment %}
+      {% comment %}
+      <!-- image File field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid" class="mb-3">Upload Image:</label>
+          <input class="form-control" id="file-input" name="image" type="file" style="display: none;" />
+          <label for="file-input" class="custom-file-upload">
+            <div style="display:flex;flex-direction:row;">
+              <span class="col-sm-1 col-md-1 div button-like-span">Change Image</span>
+              {% if agent.image %}
+                <span class="col-sm-2 col-md-2 div2" id="file-label">{{ agent.image }}</span>
+              {% else %}
+                <span class="col-sm-2 col-md-2 div2" style="color: red;" id="file-label">No Image Uploaded</span>
+              {% endif %}
+            </div>
+          </label>
+        </div>
+      </div> {% endcomment %}
+
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          {% if agent.image %}
+            <span class="col-sm-2 col-md-2 div2" id="file-label"> Current Imgae: {{ agent.image.url }}</span>
+            <input class="form-control" name="image" type="file" placeholder="PNG/JPG File" />
+          {% else %}
+            <label for="submitgrid">Upload Image</label>
+            <input class="form-control" name="image" type="file" placeholder="PNG/JPG File" />
+          {% endif %}
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>

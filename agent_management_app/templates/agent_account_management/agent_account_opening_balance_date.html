@@ -1,0 +1,32 @@
+<!-- opening balance -->
+<th id="agent-opening-bal-date" class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" colspan="3">
+  <div class="d-inline-flex flex-center">
+    <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+    {% if agent_account.is_credit %}
+    <span style="color: rgb(20, 220, 43);">Opening Balance(৳):<span class="p-2" style="color: black;">{{ agent_account.opening_balance }} || Credit</span></span>
+    {% else %}
+    <span style="color: rgb(20, 220, 43);">Opening Balance(৳):<span class="p-2" style="color: black;">{{ agent_account.opening_balance }} || Debit</span></span>
+    {% endif %}
+  </div>
+</th>
+
+<!-- balance amount -->
+<th id="agent-opening-balance" class="align-middle white-space-nowrap pe-4 text-center text-uppercase" scope="col" colspan="3">
+  <div class="d-inline-flex flex-center">
+    <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+    {% if agent_account %}
+      <span>Total balance: {{ agent_account.total_balance }}</span>
+    {% else %}
+      <span>0.00</span>
+    {% endif %}
+  </div>
+</th>
+
+
+
+
+{% comment %} <div class="d-inline-flex flex-center">
+  <div class="d-flex align-items-center px-1 py-1 rounded me-2 "></div>
+  <span style="color: rgb(20, 220, 43);">Opening Balance(৳):<span class="p-2" style="color: black;"></span>{{ agent.agent_account.opening_balance }}</span>
+</div>
+   {% endcomment %}

@@ -1,0 +1,187 @@
+<form method="post" id="yourFormId" action="{% url 'agent_management_app:agent_A_transaction_edit' middleman_transaction_id %}" class="ATranactionEditForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <!-- middleman_account -->
+  <input type="text" name="agent_account" value="{{ middleman_transaction.agent_account.id }}" hidden />
+
+  <!-- middleman_account balance -->
+  <input type="number" name="balance" value="{{ middleman_transaction.balance }}" hidden />
+
+  <input type="text" name="note" value="{{ middleman_transaction.note }}" hidden />
+  <input type="number" name="bank_transaction_number" value="{{ middleman_transaction.bank_transaction_number }}" hidden />
+  <input type="file" name="bank_transaction_file" value="{{ middleman_transaction.bank_transaction_file }}" hidden />
+  <input type="number" name="online_transaction_number" value="{{ middleman_transaction.online_transaction_number }}" hidden />
+  <input type="file" name="online_transaction_file" value="{{ middleman_transaction.online_transaction_file }}" hidden />
+
+  <input class="" type="checkbox" value="{{ middleman_transaction.transaction_hold_status }}" name="transaction_hold_status" hidden />
+  <input type="number" name="payment_transaction_id" value="{{ middleman_transaction.payment_transaction_id }}" hidden />
+  <input type="date" name="payment_date" value="{{ middleman_transaction.payment_date }}" hidden/>
+  <input class="" type="checkbox" value="{{ middleman_transaction.payment_status }}" id="" name="payment_status" hidden />
+
+  <input type="text" name="payment_transaction_id" value="{{ middleman_transaction.payment_transaction_id }}" hidden />
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Agent || Transaction Edit Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <!-- Content -->
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+
+      <!-- Passenger Debit/Credit Amount -->
+     {% if middleman_transaction.credit != 0.0 %}
+        <!-- Credit -->
+        <div class="col-sm-12 col-md-12">
+            <div class="form-submit">
+                <label for="submitgrid">Credit Amount</label>
+                <input class="form-control" name="credit" type="number" value="{{ middleman_transaction.credit }}" placeholder="credit Amount" id="creditAmount" disabled/>
+            </div>
+        </div>
+
+        <!-- debit (Hidden) -->
+        <div class="col-sm-12 col-md-12" hidden>
+        <div class="form-submit">
+            <input class="form-control" name="debit" type="number" value="{{ middleman_transaction.debit }}" />
+        </div>
+        </div>
+
+     {% else %}
+        <!-- Credit (Hidden) -->
+        <input class="form-control" name="credit" type="number" value="{{ middleman_transaction.credit }}" hidden />
+
+        <!-- debit -->
+        <div class="col-sm-12 col-md-12">
+            <div class="form-submit">
+                <label for="submitgrid">Debit Amount</label>
+                <input class="form-control" name="debit" type="number" value="{{ middleman_transaction.debit }}" placeholder="Debit Amount" disabled/>
+            </div>
+        </div>
+     {% endif %}
+
+      <!-- Passenger Assign -->
+      <div id="passenger_add_method_container" class="justify-content-between scrollbar" style="max-height: 150px">
+        <div id="1" class="input-group money_bolt mb-1">
+          <!-- Passenger List -->
+          <select class="form-select" name="selected_passenger_data[]" required>
+            <option value="">Select Passenger</option>
+            {% for data in middleman_passenger_list %}
+                <option value="{{ data.id }}">{{ data.full_name }}</option>
+            {% endfor %}
+        </select>
+
+          <!-- Amount of passenger Money -->
+          <input name="passenger_amount_data[]" type="number" class="form-control text-center" placeholder="Total Amount" required/>
+
+          <!-- Note -->
+          <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" required/>
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <button id="" class="btn btn-sm btn-outline-info w-100" onclick="addMoreMethods(event)">Add More Passengers</button>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+
+
+
+
+
+
+<!-- JavaScript to add new Passenger Payment fields for passenger (more passenger button) -->
+<script>
+  var method_id = 1;
+
+  // Function to add a new passenger
+  function addMoreMethods() {
+    method_id += 1;
+    var passengerContainer = document.getElementById("passenger_add_method_container");
+
+    var div = document.createElement("div");
+    div.classList.add("input-group", "money_bolt");
+    div.id = method_id;
+    div.style.marginBottom = "5px";
+
+    var newMethod = `
+      <!-- Passenger List -->
+      <select class="form-select" name="selected_passenger_data[]">
+        <option value="">Select Passenger</option>
+        {% for data in middleman_passenger_list %}
+        <option value="{{ data.id }}">{{ data.full_name }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Amount of passenger Money -->
+      <input
+        name="passenger_amount_data[]"
+        type="number"
+        class="form-control text-center"
+        placeholder="Total amount"
+      />
+
+      <!-- Note -->
+      <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" />
+
+      <!-- Delete Button -->
+      <button
+        class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0"
+        data-url=""
+        style="height: 37px;"
+        onclick="deleteMoreMethods(${method_id})"
+      >
+        <span class="fas fa-trash"></span>
+      </button>
+    `;
+    div.innerHTML = newMethod;
+
+    passengerContainer.appendChild(div);
+    // method_id++;
+  };
+
+  // Function to delete a passenger
+  function deleteMoreMethods(method_id) {
+    var servicesContainer = document.getElementById("passenger_add_method_container");
+    var childElement = document.getElementById(method_id);
+    servicesContainer.removeChild(childElement);
+  };
+</script>
+
+
+
+<!-- Payment Type selected script -->
+<script>
+  // Get references to the elements (selected elements)
+  var paymentTypeSelect = document.getElementById('paymentType')
+
+  // Field (change of element field)
+  var noteField = document.getElementById('noteField')
+ var bankTransactionNumber = document.getElementById('bankTransactionNumber')
+  var bankTransactionFile = document.getElementById('bankTransactionFile')
+  var onlineTransactionNumber = document.getElementById('onlineTransactionNumber')
+ var onlineTransactionFile = document.getElementById('onlineTransactionFile')
+
+  // Add an event listener to the Payment Type select element
+  paymentTypeSelect.addEventListener('change', function () {
+   var selectedPaymentType = paymentTypeSelect.value
+
+    // Show/hide fields based on the selected Payment Type
+    noteField.style.display = selectedPaymentType === 'Cash' ? 'block' : 'none'
+    bankTransactionNumber.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+    bankTransactionFile.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+    onlineTransactionNumber.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+    onlineTransactionFile.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+  })
+</script>

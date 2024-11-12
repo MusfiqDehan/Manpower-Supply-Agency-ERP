@@ -1,0 +1,9 @@
+<div class="d-inline-flex flex-center">
+  <div class="d-flex align-items-center px-1 py-1 rounded me-2 "></div>
+ {% if agent.agent_account.total_balance %}
+      <span>Toal Balance: {{agent.agent_account.total_balance }}</span>
+ {% else %}
+      <span>0.00</span>
+ {% endif %}
+       
+</div>

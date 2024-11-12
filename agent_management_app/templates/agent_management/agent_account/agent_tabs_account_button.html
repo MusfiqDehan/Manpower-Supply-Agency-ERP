@@ -1,0 +1,107 @@
+{% if agent_account %}
+  <div class="d-flex">
+    <!-- payment -->
+    <div id="agent-payment-button">
+      <button type="button" class="btn AgentTransactionpaymentButton btn-warning" style="margin-right: 15px" data-url="{% url 'agent_management_app:agent_payment_debit' agent_account.id %}">
+        <i class="fa fa-add"></i>
+        Payment
+      </button>
+    </div>
+
+    <!-- Receive -->
+    <div id="agent-receive-button">
+      <button type="button" class="btn AgentTransactionreceieveButton btn-success" data-url="{% url 'agent_management_app:agent_payment_receive' agent_account.id %}">
+        <i class="fa fa-add"></i>
+        Receive
+      </button>
+    </div>
+
+    <div id="create-delete-account-container" class="mx-2">
+      <button id="delete-account-btn" type="button" class="btn btn-danger" data-url="{% url 'agent_management_app:agent_account_delete' agent_account.id %}">
+        <i class="fas fa-trash-alt me-2"></i>
+        Delete Account
+      </button>
+    </div>
+
+    <div id="agent-export-button" class="col-2 col-sm-auto ms-2">
+      <button type="button" class="btn print btn-info" data-url="{% url 'agent_management_app:agent_transaction_print' %}">
+        <i class="fa-solid fa-file-excel"></i>
+        Export
+      </button>
+    </div>
+  </div>
+{% else %}
+  <div id="create-account-container">
+    {% include 'agent_management/agent_account/agent_account_create_button.html' %}
+  </div>
+{% endif %}
+
+<div class="modal fade" id="agentAccountDeleteModal" tabindex="-1" aria-labelledby="agentAccountDeleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Content will be loaded here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const transactionCount = {{ agentTransaction_list_count }};
+
+  if (transactionCount > 0) {
+    $('#delete-account-btn').hide()
+  }
+</script>
+<script>
+  $(document).ready(function () {
+    // Load form data into the modal
+    $('#delete-account-btn').on('click', function (e) {
+      e.preventDefault()
+      var url = $(this).attr('href') || $(this).data('url')
+
+      $.ajax({
+        url: url,
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function () {
+          $('#agentAccountDeleteModal').modal('show')
+        },
+        success: function (data) {
+          $('#agentAccountDeleteModal .modal-content').html(data.html_form)
+        }
+      })
+    })
+
+    // Save form data
+    $('#agentAccountDeleteModal').on('submit', '.AgentDeleteForm', function (e) {
+      e.preventDefault()
+      var form = $(this)
+      var formData = new FormData(form[0])
+
+      $.ajax({
+        url: form.attr('action'),
+        type: form.attr('method'),
+        dataType: 'json',
+        data: formData,
+        processData: false,
+        contentType: false,
+        beforeSend: function (xhr) {
+          xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+          $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+        },
+        success: function (data) {
+          if (data.success) {
+            $('#agentAccountDeleteModal').modal('hide')
+            $('#agent-payment-button').hide()
+            $('#agent-receive-button').hide()
+            $('#agent-export-button').hide()
+            $('#agent-opening-bal-date').hide()
+            $('#agent-opening-balance').hide()
+            $('#delete-account-btn').hide()
+            // $('#agent-account-create').hide()
+            $('#create-delete-account-container').html(data.agent_account_create_button)
+          }
+        }
+      })
+    })
+  })
+</script>

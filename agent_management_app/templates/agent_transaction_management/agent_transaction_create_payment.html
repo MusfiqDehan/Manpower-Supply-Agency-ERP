@@ -1,0 +1,213 @@
+<form method="post" action="{% url 'agent_management_app:agentTransaction_payment' agent_account %}"
+  class="agentAccountPaymentForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <input class="form-control" name="credit" value="0.0" hidden />
+
+  <input class="form-control" name="agent_account" value="{{ agent_account }}" hidden />
+
+  <!-- <input class="form-control" name="opening_balance" type="number" value="0.0" hidden /> -->
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Payment/Debit Transaction Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+
+    <div class="row g-3 mb-6">
+      <!-- Credit Receive -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Debit Amount</label>
+          <input class="form-control" name="debit" type="number" placeholder="Debit Amount" />
+        </div>
+      </div>
+
+      <div id="passenger_add_method_container" class="justify-content-between scrollbar" style="max-height: 150px">
+        <div id="1" class="input-group money_bolt mb-1">
+          <!-- Passenger List -->
+          <select class="form-select" name="selected_passenger_data[]">
+            <option value="">Select Passenger</option>
+
+            {% for data in agent_passenger_list %}
+
+            {% if data in agent_middleman_passengers_list %}
+            <option value="{{ data.id }}">{{ data.full_name }} (Middleman)</option>
+
+            {% else %}
+            <option value="{{ data.id }}">{{ data.full_name }}</option>
+
+            {% endif %}
+
+            {% endfor %}
+          </select>
+
+          <!-- Amount of passenger Money -->
+          <input name="passenger_amount_data[]" type="number" class="form-control text-center"
+            placeholder="Total amount" />
+
+          <!-- Note -->
+          <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" />
+        </div>
+      </div>
+
+
+      <!-- payment_type -->
+      <div class="col-sm-12 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Payment Type</label>
+          <select id="paymentType" class="form-select" name="payment_type">
+            <option value="" hidden>Select Payment Type</option>
+            <option value="Cash">Cash Payment</option>
+            <option value="Bank">Bank Payment</option>
+            <option value="Online">Online Banking</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Receive Note -->
+      <div class="col-sm-6 col-md-12" id="noteField" style="display: none;">
+        <div class="form-submit">
+          <label for="submitgrid">Receive Note</label>
+          <textarea name="note" class="form-control" rows="2" placeholder="Any Note"></textarea>
+        </div>
+      </div>
+
+      <!-- Bank_transaction_number -->
+      <div class="col-sm-6 col-md-6" id="bankTransactionNumber" style="display: none;">
+        <div class="form-submit">
+          <label for="submitgrid">Bank Transaction Number</label>
+          <input class="form-control" name="bank_transaction_number" type="text"
+            placeholder="bank_transaction_number" />
+        </div>
+      </div>
+
+      <!-- Bank_transaction_file -->
+      <div class="col-sm-6 col-md-6" id="bankTransactionFile" style="display: none;">
+        <div class="form-submit">
+          <label for="submitgrid">Upload Bank Document file</label>
+          <input class="form-control" name="bank_transaction_file" type="file" placeholder="pdf File" />
+        </div>
+      </div>
+
+      <!-- online_transaction_number -->
+      <div class="col-sm-6 col-md-6" id="onlineTransactionNumber" style="display: none;">
+        <div class="form-submit">
+          <label for="submitgrid">Payment Transaction Number</label>
+          <input class="form-control" name="online_transaction_number" type="text"
+            placeholder="online Payment transaction number" />
+        </div>
+      </div>
+
+      <!-- online_transaction_file -->
+      <div class="col-sm-6 col-md-6" id="onlineTransactionFile" style="display: none;">
+        <div class="form-submit">
+          <label for="submitgrid">Upload online Transaction File</label>
+          <input class="form-control" name="online_transaction_file" type="file" placeholder="PDF/PNG/JPG File" />
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">submit</button>
+    </div>
+  </div>
+</form>
+
+
+<!-- Add more button for passenger -->
+<button id="" class="btn btn-sm btn-outline-info w-100 mt-1" onclick="addMoreMethods()">Add More Passenger</button>
+
+
+<!-- Script to add new Passenger Payment fields for passenger (more passenger button) -->
+<script>
+  var method_id = 1;
+
+  // Function to add a new passenger
+  function addMoreMethods() {
+    method_id += 1;
+    var passengerContainer = document.getElementById("passenger_add_method_container");
+
+    var div = document.createElement("div");
+    div.classList.add("input-group", "money_bolt");
+    div.id = method_id;
+    div.style.marginBottom = "5px";
+
+    var newMethod = `
+      <!-- Passenger List -->
+      <select class="form-select" name="selected_passenger_data[]">
+        <option value="">Select Passenger</option>
+        {% for data in middleman_passenger_list %}
+        <option value="{{ data.id }}">{{ data.full_name }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Amount of passenger Money -->
+      <input
+        name="passenger_amount_data[]"
+        type="number"
+        class="form-control text-center"
+        placeholder="Total amount"
+      />
+
+      <!-- Note -->
+      <input class="form-control" name="passenger_payment_note[]" type="text" placeholder="Any Note" />
+
+      <!-- Delete Button -->
+      <button
+        class="btn btn-phoenix-secondary btn-icon fs--2 text-danger px-0"
+        data-url=""
+        style="height: 37px;"
+        onclick="deleteMoreMethods(${method_id})"
+      >
+        <span class="fas fa-trash"></span>
+      </button>
+    `;
+    div.innerHTML = newMethod;
+
+    passengerContainer.appendChild(div);
+    // method_id++;
+  }
+
+  // Function to delete a passenger
+  function deleteMoreMethods(method_id) {
+    var servicesContainer = document.getElementById("passenger_add_method_container");
+    var childElement = document.getElementById(method_id);
+    servicesContainer.removeChild(childElement);
+  }
+
+</script>
+
+
+
+
+<!-- Payment Type selected script -->
+<script>
+  // Get references to the elements (selected elements)
+  var paymentTypeSelect = document.getElementById('paymentType')
+
+  // Field (change of element field)
+  var noteField = document.getElementById('noteField')
+  var bankTransactionNumber = document.getElementById('bankTransactionNumber')
+  var bankTransactionFile = document.getElementById('bankTransactionFile')
+  var onlineTransactionNumber = document.getElementById('onlineTransactionNumber')
+  var onlineTransactionFile = document.getElementById('onlineTransactionFile')
+
+  // Add an event listener to the Payment Type select element
+  paymentTypeSelect.addEventListener('change', function () {
+    const selectedPaymentType = paymentTypeSelect.value
+
+    // Show/hide fields based on the selected Payment Type
+    noteField.style.display = selectedPaymentType === 'Cash' ? 'block' : 'none'
+    bankTransactionNumber.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+    bankTransactionFile.style.display = selectedPaymentType === 'Bank' ? 'block' : 'none'
+    onlineTransactionNumber.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+    onlineTransactionFile.style.display = selectedPaymentType === 'Online' ? 'block' : 'none'
+  })
+</script>

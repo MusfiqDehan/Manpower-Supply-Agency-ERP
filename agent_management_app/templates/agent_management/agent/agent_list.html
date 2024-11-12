@@ -1,0 +1,34 @@
+{% for data in agent_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+      <a class="fw-semi-bold" href=" ">{{ forloop.counter }}</a>
+    </td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.visa_rate }}</td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.full_name }}</td>
+
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.gender }}</td>
+    <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.phone_number }}</td>
+
+    <td class="name text-center align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.status }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex" class="end-0">
+          <!-- view -->
+          <div>
+            <a href="{% url 'agent_management_app:agent_details' data.id %}" class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-success px-0"><span class="fas fa-angle-double-right"></span></a>
+          </div>
+
+          <div>
+            <button class="btn agentEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'agent_management_app:agent_edit' data.id %} "><span class="fas fa-edit"></span></button>
+          </div>
+
+          <div>
+            <button class="btn agentDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'agent_management_app:agent_delete' data.id %}"><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

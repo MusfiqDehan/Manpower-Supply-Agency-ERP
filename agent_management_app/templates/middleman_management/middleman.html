@@ -1,0 +1,195 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="content">
+    <!-- prettier ignore -->
+    {% for i in user.Group_Users.first.permissions.all %}
+      <!-- prettier ignore -->
+      {% if i.codename == 'view_agentaccount' %}
+        <div class="pb-9">
+          <h2 class="mb-4">Middleman Management</h2>
+          <div id="dealsTable">
+            <div class="row g-3 justify-content-between mb-4">
+              <div class="col-auto">
+                <div class="d-md-flex justify-content-between">
+                  <!-- prettier ignore -->
+                  {% for i in user.Group_Users.first.permissions.all %}
+                    <!-- prettier ignore -->
+                    {% if i.codename == 'add_agentaccount' %}
+                      <div id="middleman-create">
+                        <button type="button" class="btn middlemanAddButton btn-primary" data-url="{% url 'agent_management_app:middleman_create' %}">
+                          <i class="fa fa-add"></i>
+                          Add Middleman Info
+                        </button>
+                      </div>
+
+                      <!-- prettier ignore -->
+                    {% endif %}
+                    <!-- prettier ignore -->
+                  {% endfor %}
+                </div>
+              </div>
+
+              <!-- search by agent name -->
+
+              <div class="col-auto">
+                <div class="d-flex">
+                  <div class="search-box me-2">
+                    <form class="position-relative search_middleman_form" action="" data-bs-toggle="search" data-bs-display="static">
+                      <input class="form-control search-input search" type="search" id="middleman_search_input" placeholder="Search by middleman ID,name,phone number" />
+                      <span class="fas fa-search search-box-icon"></span>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- middleman card -->
+            <div class="col-xl-12 col-xxl-12">
+              <div class="card">
+                <div class="card-body">
+                  <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                    <table id="middleman-table" class="table fs--1 mb-0 leads-table border-bottom">
+                      <thead>
+                        <tr>
+                          <!-- middle id -->
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Middleman ID</th>
+
+                          <!-- Name -->
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Agent</th>
+
+                          <!-- Name -->
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Name</th>
+
+                          <!-- phone number -->
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Phone Number</th>
+
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Email</th>
+
+                          <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">National ID</th>
+
+                          <!-- action -->
+                          <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 15%">
+                            <div class="d-inline-flex flex-center">
+                              <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+                              <span>Action</span>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+
+                      <tbody class="list" id="middleman_table_list">
+                        {% include 'middleman_management/middleman_list.html' %}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- pegination -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ajax modal for dynamic content -->
+        <div class="modal fade" id="MiddlemanModal" tabindex="-1">
+          <div class="modal-dialog">
+            <div class="modal-content"></div>
+          </div>
+        </div>
+
+        <script>
+          $(function () {
+            var loadForm = function () {
+              $.ajax({
+                url: $(this).attr('data-url'),
+                dataType: 'json',
+                type: 'get',
+                success: function (data) {
+                  $('#MiddlemanModal .modal-content').html(data.html_form)
+                  $('#MiddlemanModal').modal('show')
+                }
+              })
+            }
+            var saveForm = function () {
+              var form = $(this)
+          
+              var formData = new FormData(form[0])
+          
+              $.ajax({
+                url: form.attr('action'),
+          
+                type: form.attr('method'),
+                dataType: 'json',
+          
+                data: formData,
+          
+                processData: false,
+                contentType: false,
+          
+                beforeSend: function (xhr) {
+                  xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+                  $('#loading').html(
+                    '<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>'
+                  )
+                },
+          
+                success: function (data) {
+                  if (data.form_is_valid) {
+                    $('#middleman-table tbody').html(data.middleman_list)
+                    console.log('i am here')
+                    $('#MiddlemanModal').modal('hide')
+                  } else {
+                    $('#middlemanModal .modal-content').html(data.html_form)
+                  }
+                }
+              })
+              return false
+            }
+          
+            //create
+            $('#middleman-create').on('click', '.middlemanAddButton', loadForm)
+            $('#MiddlemanModal').on('submit', '.midlemanAddForm', saveForm)
+          
+            //edit
+            $('#middleman_table_list').on('click', '.middlemanEditButton', loadForm)
+            $('#MiddlemanModal').on('submit', '.middlemanEditForm', saveForm)
+          
+            //delete
+            $('#middleman_table_list').on('click', '.middlemanDeleteButton', loadForm)
+            $('#MiddlemanModal').on('submit', '.middlemanDeleteForm', saveForm)
+          })
+        </script>
+
+        <!-- search script -->
+        <script>
+          $(function () {
+            var searchform = function () {
+              var form = $(this)
+              var search_value = $('#middleman_search_input').val()
+              console.log(search_value, 'search_value')
+              $.ajax({
+                url: form.attr('action'),
+                data: { search_value: search_value },
+                dataType: 'json',
+          
+                success: function (data) {
+                  console.log('i am in success')
+                  $('#deal-tables-body').html(data.search_list)
+                }
+              })
+            }
+            $('.search_agent_form').on('input', searchform)
+          })
+        </script>
+
+        <!-- Footer -->
+        {% include 'base/footer.html' %}
+
+        <!-- prettier ignore -->
+      {% endif %}
+      <!-- prettier ignore -->
+    {% endfor %}
+
+  </div>
+{% endblock %}
