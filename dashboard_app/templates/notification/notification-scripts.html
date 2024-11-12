@@ -1,0 +1,94 @@
+<script>
+    $(document).ready(function () {
+      // Mark as read for notification page
+      $('.mark-as-read').click(function (e) {
+        e.preventDefault()
+        e.stopPropagation() // Prevent the event from bubbling up
+        var notificationId = $(this).data('id')
+        $.post("{% url 'dashboard_app:mark_as_read' 0 %}".replace('0', notificationId), function (data) {
+          if (data.success) {
+            var notificationCard = $('#notification-page-' + notificationId)
+            notificationCard.removeClass('unread').addClass('read')
+            var badge = $('#notification-badge')
+            badge.text(data.unread_notifications)
+            // Close the dropdown
+            $('.notification-card-dropdown-menu').dropdown('hide')
+          }
+        })
+      })
+
+      // Mark as read for notification modal
+      $('.mark-as-read').click(function (e) {
+        e.preventDefault()
+        e.stopPropagation() // Prevent the event from bubbling up
+        var notificationId = $(this).data('id')
+        $.post("{% url 'dashboard_app:mark_as_read' 0 %}".replace('0', notificationId), function (data) {
+          if (data.success) {
+            var notificationCard = $('#notification-modal-' + notificationId)
+            notificationCard.removeClass('unread').addClass('read')
+            var badge = $('#notification-badge')
+            badge.text(data.unread_notifications)
+            // Close the dropdown
+            $('.notification-card-dropdown-menu').dropdown('hide')
+          }
+        })
+      })
+
+      // Delete notification for notification page
+      $('.delete-notification').click(function (e) {
+        e.preventDefault()
+        e.stopPropagation() // Prevent the event from bubbling up
+        var notificationId = $(this).data('id')
+        $.post("{% url 'dashboard_app:delete_notification' 0 %}".replace('0', notificationId), function (data) {
+          if (data.success) {
+            $('#notification-page-' + notificationId).remove()
+            var badge = $('#notification-badge')
+            badge.text(data.unread_notifications)
+            // Close the dropdown
+            $('.notification-card-dropdown-menu').dropdown('hide')
+          }
+        })
+      })
+
+      // Delete notification  for notification modal
+      $('.delete-notification').click(function (e) {
+        e.preventDefault()
+        e.stopPropagation() // Prevent the event from bubbling up
+        var notificationId = $(this).data('id')
+        $.post("{% url 'dashboard_app:delete_notification' 0 %}".replace('0', notificationId), function (data) {
+          if (data.success) {
+            $('#notification-modal-' + notificationId).remove()
+            var badge = $('#notification-badge')
+            badge.text(data.unread_notifications)
+            // Close the dropdown
+            $('.notification-card-dropdown-menu').dropdown('hide')
+          }
+        })
+      })
+
+      // Mark all as read
+      $('.mark-all-as-read').click(function (e) {
+        e.preventDefault()
+        $.post("{% url 'dashboard_app:mark_all_as_read' %}", function (data) {
+          if (data.success) {
+            $('.notification-card').removeClass('unread').addClass('read')
+            var badge = $('#notification-badge')
+            badge.text(data.unread_notifications)
+          }
+        })
+      })
+
+      // Notification Card Action
+      $('.notification-card').click(function (e) {
+        e.preventDefault()
+        var notificationId = $(this).attr('data-id')
+        console.log(notificationId)
+        $.post("{% url 'dashboard_app:notification_action' 0 %}".replace('0', notificationId), function (data) {
+          if (data.success) {
+            // Redirect to the desired URL
+            window.location.href = data.redirect_url
+          }
+        })
+      })
+    })
+  </script>

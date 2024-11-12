@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content bg-white">
+    <nav class="mb-2" aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+          <a href="#!">Home</a>
+        </li>
+        <li class="breadcrumb-item active">{{ page_name }}</li>
+      </ol>
+    </nav>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fs-3 text-black mt-3">Notifications</h2>
+      <button id="" class="fs-1 mark-all-as-read btn btn-link p-0 fs--1 fw-normal" type="button">Mark all as Read</button>
+    </div>
+    <div class="mx-n4 mx-lg-n6 mb-5 border-bottom">
+      {% include 'notification/notification-page-list.html' %}
+    </div>
+    {% include 'notification/notification-pagination.html' %}
+    {% include 'base/footer.html' %}
+  </div>
+
+  {% include 'notification/notification-scripts.html' %}
+{% endblock %}

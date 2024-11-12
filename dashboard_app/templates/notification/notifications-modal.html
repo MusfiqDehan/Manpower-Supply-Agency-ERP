@@ -1,0 +1,32 @@
+<li class="nav-item dropdown">
+  <a class="nav-link position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside">
+    <span class="fa-solid fa-bell" style="height: 20px; width: 20px"></span>
+    <span id="notification-badge" class="badge rounded-pill bg-danger position-absolute translate-middle p-1" style="font-size: 0.6rem; top: -15; right: 5;">{{ unread_notifications }}</span>
+  </a>
+
+  <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border border-300 navbar-dropdown-caret" id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
+    <div class="card position-relative border-0">
+      <div class="card-header p-2">
+        <div class="d-flex justify-content-between">
+          <h5 class="text-black mb-0">Notifications</h5>
+          <button id="" class="mark-all-as-read btn btn-link p-0 fs--1 fw-normal" type="button">Mark all as Read</button>
+        </div>
+      </div>
+      <div class="card-body p-0">
+        <div class="scrollbar-overlay" style="height: 27rem">
+          <div class="border-300">
+            {% include 'notification/notification-modal-list.html' %}
+          </div>
+        </div>
+      </div>
+
+      <div class="card-footer p-0 border-top border-0">
+        <div class="my-2 text-center fw-bold fs--2 text-600">
+          <a class="fw-bolder" href="{% url 'dashboard_app:notifications' %}">Notification History</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</li>
+
+{% include 'notification/notification-scripts.html' %}
