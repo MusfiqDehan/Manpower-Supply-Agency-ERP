@@ -1,0 +1,44 @@
+{% for data in all_superusers %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center border-end">
+      {% if data.username %}
+        <a class="d-flex align-items-center" href=""><p class="fs-0 fw-bold px-2">{{ data.username }}</p></a>
+      {% else %}
+        <a class="d-flex align-items-center" href=""><p class="fs-0 fw-bold px-2">Super Admin</p></a>
+      {% endif %}
+    </td>
+
+    <td class="email align-middle white-space-nowrap pe-5 fw-semi-bold border-end text-center">{{ data.email }}</td>
+
+    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000 border-end text-center">
+      {% if data.is_active %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span class="badge-label">Activated</span></span>
+      {% else %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span class="badge-label">Deactivated</span></span>
+      {% endif %}
+    </td>
+
+    <td class="city align-middle white-space-nowrap text-1000 border-end text-center">
+      {% if data.is_staff %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span class="badge-label">Super User</span></span>
+      {% else %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span class="badge-label">Normal User</span></span>
+      {% endif %}
+    </td>
+
+    <td class="last-seen align-middle white-space-nowrap text-700 border-end text-center">{{ data.date_joined }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4 text-center">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex; justify-content: center;" class="end-0">
+          <div>
+            <button class="btn adminEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="" disabled><span class="fas fa-edit"></span></button>
+          </div>
+          <div>
+            <button class="btn adminDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="" disabled><span class="fas fa-trash"></span></button>
+          </div>
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}

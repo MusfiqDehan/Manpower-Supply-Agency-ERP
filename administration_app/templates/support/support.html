@@ -1,0 +1,30 @@
+{% extends 'base/base.html' %}
+
+{% block content %}
+  <div class="content">
+    <style>
+      a {
+        text-decoration: none !important;
+        color: black;
+      }
+    </style>
+
+    <div class="card" style="height: 80vh; ">
+      <div class="card-body d-flex flex-column justify-content-center align-items-center">
+        <h1 class="text-center" style="color:#0079b3">Support 24/7</h1>
+        <div class="pb-5 pt-1">
+          <h4 class="text-center">For any query and guidelines we are available 24/7 .</h4>
+        </div>
+
+        <div class="mt-5 text-center">
+          <h2 class="mb-5 text-muted"><a href="mailto:info@musfiqdehan.com"><i class="fa-solid fa-envelope" style="margin-right:8px"></i>info@musfiqdehan.com</a></h2>
+          <h2><a href="tel:+88 01616 500515"><i class="fa-solid fa-phone" style="margin-right:8px"></i>+88 01616 500515</a></h2>
+        </div>
+        <!--    <a href="#" class="card-link">Card link</a>
+      <a href="#" class="card-link">Another link</a>    -->
+      </div>
+    </div>
+
+    {% include 'base/footer.html' %}
+  </div>
+{% endblock %}
