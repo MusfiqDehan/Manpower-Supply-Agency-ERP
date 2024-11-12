@@ -1,0 +1,68 @@
+<form method="post" action="{% url 'company_cost_app:company_cost_create' %}" class="companyCostCreateForm" enctype="multipart/form-data">
+  {% csrf_token %}
+
+  <!-- <input type="text" name="passenger" value="{{ passenger_id }}" hidden /> -->
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Add Company Cost</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- category -->
+      {% comment %} <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Category</label>
+
+          <select id="select_document_type" class="form-select" name="category">
+            <option value="" hidden>Select Category</option>
+            {% for category in cost_categories %}
+              <option value="{{ category.pk }}">{{ category.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div> {% endcomment %}
+
+      <!-- Date Incurred field -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Date Incurred</label>
+          <input class="form-control" name="date_incurred" type="date" placeholder="Date Incurred" />
+        </div>
+      </div>
+
+      <!-- amount -->
+      <div class="col-sm-6 col-md-6">
+        <div class="form-submit">
+          <label for="submitgrid">Amount</label>
+          <input class="form-control" name="amount" type="number" placeholder=" amount" />
+        </div>
+      </div>
+
+      <!-- cost Document File field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Cost Document File</label>
+          <input class="form-control" name="cost_document" type="file" placeholder="Document File" />
+        </div>
+      </div>
+
+      <!-- Note field -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-submit">
+          <label for="submitgrid">Note</label>
+          <textarea class="form-control" name="note" placeholder="Note"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <!-- submit & close -->
+    <div class="form-submit">
+      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      <button type="submit" id="loading" class="btn btn-primary" data-bs-save="modal">Submit</button>
+    </div>
+  </div>
+</form>

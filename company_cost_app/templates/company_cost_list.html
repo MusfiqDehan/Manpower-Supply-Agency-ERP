@@ -1,0 +1,45 @@
+{% if company_cost_list %}
+  {% for data in company_cost_list %}
+    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.date_incurred|date:'Y-m-d' }}</td>
+
+      {% comment %} <td class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end">
+        <a class="fw-semi-bold" href=" ">{{ data.category }}</a>
+      </td> {% endcomment %}
+
+      <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">{{ data.note }}</td>
+
+      <td class="name align-middle white-space-nowrap text-center fw-semi-bold text-1000 border-end">{{ data.amount }}</td>
+
+      {% if data.cost_document %}
+        {% if data.cost_document == 'default.pdf' %}
+          <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">No Document</td>
+        {% else %}
+          <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">
+            <a class="btn btn-secondary" href="{{ data.cost_document.url }}" target="_blank">View</a>
+          </td>
+        {% endif %}
+      {% else %}
+        <td class="name align-middle white-space-nowrap fw-semi-bold text-1000 ps-4 border-end">No Document</td>
+      {% endif %}
+
+      <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+        <div class="font-sans-serif btn-reveal-trigger position-static">
+          <div style="display: flex" class="end-0">
+            <div>
+              <button class="btn companyCostEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'company_cost_app:company_cost_edit' data.id %} " data-id="{{ data.category.id }}"><span class="fas fa-edit"></span></button>
+            </div>
+
+            <div>
+              <button class="btn companyCostDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'company_cost_app:company_cost_delete' data.id %} "><span class="fas fa-trash"></span></button>
+            </div>
+          </div>
+        </div>
+      </td>
+    </tr>
+  {% endfor %}
+{% else %}
+  <tr>
+    <td colspan="7" class="text-center" style="color: red;">No Document Available</td>
+  </tr>
+{% endif %}

@@ -1,0 +1,280 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <div class="content">
+    <style>
+      #table-top-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      #cost-amount-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 20px;
+        gap: 20px;
+      }
+    </style>
+    <!-- content -->
+    <div class="pb-9">
+      <h2 class="mb-4">Company Cost || Management</h2>
+      <div id="dealsTable">
+        <div class="row g-3 justify-content-between mb-4">
+          <div class="col-auto">
+            <div id="table-top-container" class="d-md-flex justify-content-between">
+              <div id="addCostButton-container">
+                <button type="button" class="btn btn-primary" data-url="{% url 'company_cost_app:company_cost_create' %}" id="addCostButton">
+                  <i class="fa fa-add"></i>
+                  Add New Cost
+                </button>
+              </div>
+
+              <!-- Date Filter Container Start -->
+              <div id="date-filter-container" class="d-flex align-items-center ms-2">
+                <label for="start-date" class="me-2">From:</label>
+                <input type="date" id="start-date" class="form-control me-2" />
+                <label for="end-date" class="me-2">To:</label>
+                <input type="date" id="end-date" class="form-control me-2" />
+                <button type="button" class="btn btn-secondary" id="filter-date-button">Filter</button>
+              </div>
+              <!-- Date Filter Container End -->
+
+              <!-- Cost Amounts Container Start -->
+              <div id="cost-amount-container">
+                <div class="filtered-amount-container bg-white border-1 p-2 rounded">
+                  Filtered Cost:
+                  <span class="fw-bold" id="filtered-amount">{{ filtered_amount }}</span>
+                </div>
+                <!--                <div class="current-month-total-container bg-primary-200 p-2 rounded">
+                  {{ current_month_name }} Cost:
+                  <span class="fw-bold" id="current-month-total">{{ current_month_total }}</span>
+                </div>
+                <div class="overall-total-container bg-primary-300 p-2 rounded">
+                  Total Cost:
+                  <span class="fw-bold" id="total-amount">{{ total_amount }}</span>
+                </div>                -->
+              </div>
+              <!-- Cost Amounts Container End -->
+              <button type="button" class="btn btn-secondary" id="export-button">Export</button>
+            </div>
+          </div>
+
+          <!-- search by name -->
+          <!-- Category Filter Dropdown -->
+          {% comment %} <div class="col-auto">
+            <select id="category-filter" class="form-select">
+              <option value="">Select Category</option>
+              {% for category in cost_categories %}
+                <option value="{{ category.pk }}">{{ category.name }}</option>
+              {% endfor %}
+            </select>
+          </div> {% endcomment %}
+        </div>
+
+        <!-- Cost Table -->
+        <div class="col-xl-12 col-xxl-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                <table id="cost-table" class="table fs--1 mb-0 leads-table border-bottom">
+                  <thead>
+                    <tr>
+                      <!-- Date -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 10%">Date Incurred</th>
+
+                      <!-- Category -->
+                      {% comment %} <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Category</th> {% endcomment %}
+
+                      <!-- Note -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Note</th>
+
+                      <!-- Amount -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Amount</th>
+
+                      <!-- Cost Document -->
+                      <th class="align-middle white-space-nowrap pe-4 text-center text-uppercase border-end" scope="col" style="width: 15%">Cost Document</th>
+
+                      <!-- Action -->
+                      <th class="sort align-middle ps-4 pe-5 text-uppercase" scope="col" style="width: 15%">
+                        <div class="d-inline-flex flex-center">
+                          <div class="d-flex align-items-center px-1 py-1 rounded me-2"></div>
+                          <span>Action</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="list" id="table_list">
+                    {% include 'company_cost_list.html' %}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- pegination -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    {% include 'base/footer.html' %}
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="CompanyCostModal" tabindex="-1">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- CRUD Script -->
+    <script>
+      $(function () {
+        var loadForm = function () {
+          $.ajax({
+            url: $(this).attr('data-url'),
+            type: 'get',
+            dataType: 'json',
+            beforeSend: function () {
+              $('#CompanyCostModal').modal('show')
+              $('#CompanyCostModal .modal-content').html('<form method="" action="" class="" enctype="multipart/form-data"><div class="modal-header"><div id="five"></div> <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div class="row g-3 mb-6"><div class="col-sm-12 col-md-12"><div id="three"></div></div><div class="col-sm-12 col-md-12"><div id="four"></div></div><div class="col-sm-6 col-md-12"><div id="seven"></div></div><div class="col-sm-6 col-md-6"><div class="form-submit"></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-6 col-md-12"><div class=""></div></div><div class="col-sm-6 col-md-6"><div class=""></div></div><div class="col-sm-12 col-md-12"><div id="eight"></div></div><div class="col-sm-6 col-md-12"><div id="ten"></div></div><div class="col-sm-6 col-md-12"><div id="nine"></div></div></div></div><div class="modal-footer"><div id="six"></div></div></form>')
+            },
+            success: function (data) {
+              $('#CompanyCostModal .modal-content').html(data.html_form)
+              //$('#CompanyCostModal').modal('show')
+              console.log('loadform')
+            }
+          })
+        }
+      
+        var saveForm = function () {
+          var form = $(this)
+          var formdata = new FormData(form[0])
+          $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: formdata,
+      
+            contentType: false,
+            processData: false,
+            dataType: 'json',
+      
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader('X-CSRFToken', '{{ csrf_token }}')
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+            success: function (data) {
+              console.log('saveform')
+              if (data.form_is_valid) {
+                $('#cost-table tbody').html(data.company_cost_list)
+                $('#CompanyCostModal').modal('hide')
+                // Update the totals
+                $('#current-month-total').text(data.current_month_total)
+                $('#total-amount').text(data.total_amount)
+                $('#filtered-amount').text(data.filtered_amount)
+                // Trigger category filter change to refresh the list and filtered amount
+                $('#category-filter').change()
+              } else {
+                $('#CompanyCostModal .modal-content').html(data.html_form)
+                $('#CompanyCostModal').modal('show')
+              }
+            }
+          })
+          return false
+        }
+      
+        // Event delegation for dynamically added elements
+        $('#cost-table').on('click', '.companyCostEditButton', loadForm)
+        $('#CompanyCostModal').on('submit', '.companyCostEditForm', saveForm)
+      
+        $('#cost-table').on('click', '.companyCostDeleteButton', loadForm)
+        $('#CompanyCostModal').on('submit', '.companyCostDeleteForm', saveForm)
+      
+        $('#addCostButton').on('click', loadForm)
+        $('#CompanyCostModal').on('submit', '.companyCostCreateForm', saveForm)
+      })
+      
+      $('#category-filter').on('change', function () {
+        var category = $(this).val()
+        $.ajax({
+          url: '{% url "company_cost_app:filter_by_category" %}',
+          data: {
+            category: category
+          },
+          success: function (data) {
+            $('#table_list').html(data.company_cost_list)
+            $('#filtered-amount').text(data.filtered_amount)
+          }
+        })
+      })
+    </script>
+
+    <script>
+      $(function () {
+        $('#filter-date-button').on('click', function () {
+          var startDate = $('#start-date').val()
+          var endDate = $('#end-date').val()
+      
+          $.ajax({
+            url: '{% url "company_cost_app:filter_by_date" %}',
+            data: {
+              start_date: startDate,
+              end_date: endDate
+            },
+            beforeSend: function () {
+              $('#filter-date-button').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+            success: function (data) {
+              $('#table_list').html(data.company_cost_list)
+              $('#filtered-amount').text(data.filtered_amount)
+              $('#filter-date-button').html('Filter')
+            }
+          })
+        })
+      })
+    </script>
+
+    <script>
+      $(function () {
+        // Existing code...
+      
+        $('#filter-date-button').on('click', function () {
+          var startDate = $('#start-date').val()
+          var endDate = $('#end-date').val()
+      
+          $.ajax({
+            url: '{% url "company_cost_app:filter_by_date" %}',
+            data: {
+              start_date: startDate,
+              end_date: endDate
+            },
+            beforeSend: function () {
+              $('#filter-date-button').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+            success: function (data) {
+              $('#table_list').html(data.company_cost_list)
+              $('#filtered-amount').text(data.filtered_amount)
+              $('#filter-date-button').html('Filter')
+            }
+          })
+        })
+      
+        $('#export-button').on('click', function () {
+          var startDate = $('#start-date').val()
+          var endDate = $('#end-date').val()
+          var url = '{% url "company_cost_app:export_company_cost" %}'
+          if (startDate && endDate) {
+            url += '?start_date=' + startDate + '&end_date=' + endDate
+          }
+          window.location.href = url
+        })
+      })
+    </script>
+  </div>
+{% endblock %}
