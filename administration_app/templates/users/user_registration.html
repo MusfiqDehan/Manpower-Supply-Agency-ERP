@@ -1,0 +1,82 @@
+<div id="form-errors" class="alert text-danger" style="display: none;"></div>
+
+<form method="POST" action="{% url 'administration_app:user_registration' %}" class="AddRegisterForm">
+  {% csrf_token %}
+
+  <div class="modal-header">
+    <h5 class="modal-title" id="userRegisterModal">Register New User Form</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+
+  <div class="modal-body">
+    <div class="row g-3 mb-6">
+      <!-- Name -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control" id="name" type="text" name="first_name" placeholder="Name" required />
+          <label class="form-label" for="name">Name</label>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control" id="email" type="email" name="email" placeholder="name@example.com" required />
+          <label for="device_model">Email</label>
+        </div>
+      </div>
+
+      {% comment %} <!-- Machine Password -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control form-icon-input" id="password" type="password" name="password1" placeholder="Password" required />
+          <label for="password">Password</label>
+        </div>
+      </div>
+
+      <!-- Machine Password -->
+      <div class="col-sm-6 col-md-12">
+        <div class="form-floating">
+          <input class="form-control form-icon-input" id="confirmPassword" type="password" name="password2" placeholder="Confirm Password" required />
+          <label for="password">Confirm Password</label>
+        </div>
+      </div>
+      <!-- Password Error Messages -->
+      <span id="password-error" style="color: red;"></span> {% endcomment %}
+
+      {% include 'users/user_password_fields.html' %}
+
+      <!-- Button -->
+      <div class="modal-footer">
+        <div class="form-submit">
+          <button type="button" class="btn btn-phoenix-primary px-5" data-bs-dismiss="modal">Close</button>
+          <button type="submit" id="loading" class="btn btn-primary px-5 px-sm-10" data-bs-save="modal">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  $(document).ready(function () {
+    // Disable the submit button initially
+    $('#loading').prop('disabled', true)
+  
+    // Function to check if passwords match
+    function checkPasswordMatch() {
+      var password = $('#password').val()
+      var confirmPassword = $('#confirmPassword').val()
+  
+      if (password === confirmPassword && password !== '' && confirmPassword !== '') {
+        $('#loading').prop('disabled', false)
+        $('#password-error').text('')
+      } else {
+        $('#loading').prop('disabled', true)
+        $('#password-error').text('Passwords do not match!')
+      }
+    }
+  
+    // Trigger checkPasswordMatch on keyup in either password field
+    $('#password, #confirmPassword').keyup(checkPasswordMatch)
+  })
+</script>

@@ -1,0 +1,182 @@
+{% extends 'base/base.html' %}
+
+{% block page_name %}
+  {{ page_name }}
+{% endblock %}
+
+{% block content %}
+  <!-- prettier ignore -->
+
+  <div class="content">
+    <!-- prettier ignore -->
+
+    <!-- Header Top -->
+    <div class="pb-3">
+      <h2 class="mb-2">Company Users Account || Management</h2>
+    </div>
+
+    <!-- Header Button -->
+    <div class="row g-3 justify-content-between mb-4">
+      <div class="col-auto">
+        <div class="d-flex flex-wrap gap-2">
+          <!-- Add User Button -->
+
+          <button class="btn btn-primary MachineAddButton" id="UserCrateAddID" data-url="{% url 'administration_app:user_registration' %}">
+            <i class="fa-solid fa-plus"></i>
+            New Register
+          </button>
+
+          {% comment %} <button class="btn btn-phoenix-secondary text-900"><span class="fa-solid fa-file-export fs--1 me-2"></span>Export</button> {% endcomment %}
+        </div>
+      </div>
+
+      <div class="col-auto">
+        <div class="d-flex">
+          <div class="search-box me-2 d-none d-xl-block">
+            <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
+              <input class="form-control search-input search" type="search" placeholder="Search by name" aria-label="Search" />
+              <span class="fas fa-search search-box-icon"></span>
+            </form>
+          </div>
+
+          <button class="btn px-3 btn-phoenix-secondary me-2 d-xl-none"><span class="fa-solid fa-search"></span></button>
+
+          {% comment %} <button class="btn px-3 btn-phoenix-primary" type="button" data-bs-toggle="modal" data-bs-target="#filterModal" data-boundary="window" aria-haspopup="true" aria-expanded="false" data-bs-reference="parent"><span class="fa-solid fa-filter" data-fa-transform="down-3"></span></button> {% endcomment %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Body -->
+    <div class="pb-4">
+      <div id="dealsTable" data-list="">
+        <!-- List of all Users strat -->
+        <div class="row gy-5">
+          <div class="col-sm-12 col-lg-12 col-xl-12 col-xxl-12">
+            <div class="card">
+              <div class="card-body">
+                <!-- Table body start -->
+                <div id="lealsTable" data-list="">
+                  <!-- Table -->
+                  <div class="table-responsive scrollbar mx-n1 px-1 border-top">
+                    <table class="table fs--1 mb-0 leads-table">
+                      <thead>
+                        <tr>
+                          <th class="sort white-space-nowrap align-middle text-uppercase ps-0 border-end" scope="col">User Name</th>
+                          <th class="sort align-middle ps-4 pe-5 text-uppercase border-end text-center" scope="col">Email</th>
+                          <th class="sort align-middle pe-0 ps-4 pe-5 text-uppercase border-end text-center" scope="col">Is Active</th>
+                          <th class="sort align-middle pe-0 ps-4 pe-5 text-uppercase border-end text-center" scope="col">User Status</th>
+                          <th class="sort align-middle pe-0 ps-4 pe-5 text-uppercase border-end text-center" scope="col">Join Date</th>
+                          <th class="sort align-middle pe-0 ps-4 pe-5 text-uppercase border-end text-center" scope="col">Password Change</th>
+                          <th class="sort align-middle pe-0 ps-4 pe-5 text-uppercase text-center" scope="col">Action</th>
+                        </tr>
+                      </thead>
+
+                      <!-- User list -->
+                      <tbody class="list" id="users-tables-body">
+                        {% include 'users/user_list.html' %}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <!-- Next Button -->
+                  <!-- -pegination -->
+                </div>
+                <!-- Table body End -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- List of all Users end -->
+      </div>
+    </div>
+
+    {% include 'base/footer.html' %}
+
+    <!-- Ajax modal for dynamic content -->
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content"></div>
+      </div>
+    </div>
+
+    <!-- Script -->
+    <script>
+      $(function () {
+        var loadForm = function () {
+          var userModal_element = document.getElementById('userModal')
+          var url
+          url = $(this).attr('data-url')
+      
+          $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $(userModal_element).modal('show')
+            },
+      
+            success: function (data) {
+              $('#userModal .modal-content').html(data.html_form)
+            }
+          })
+      
+          return false
+        }
+      
+        var saveForm = function () {
+          var userModal_element = document.getElementById('userModal')
+          var form = $(this)
+      
+          $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            type: form.attr('method'),
+            dataType: 'json',
+      
+            beforeSend: function () {
+              $('#loading').html('<div class="text-center"><div class="spinner-border spinner-border-sm" role="status"><span class="visually-hidden">Loading...</span></div></div>')
+            },
+      
+            success: function (data) {
+              if (data.is_form_valid) {
+                $('#users-tables-body').html(data.html_updated_user_list)
+                $(userModal_element).modal('hide')
+              } else {
+                $('#userModal .modal-content').html(data.html_form)
+                // just replace the previous button text
+                $('#loading').html('Submit')
+                // Display form errors
+                var errors = JSON.parse(data.form_errors)
+                var errorHtml = '<ul>'
+                for (var field in errors) {
+                  if (errors.hasOwnProperty(field)) {
+                    errors[field].forEach(function (error) {
+                      errorHtml += '<li>' + error.message + '</li>'
+                    })
+                  }
+                }
+                errorHtml += '</ul>'
+                $('#form-errors').html(errorHtml).show()
+              }
+            }
+          })
+          return false
+        }
+      
+        // Create/add Machine list and Save
+        $('#UserCrateAddID').on('click', loadForm)
+        $('#userModal').on('submit', '.AddRegisterForm', saveForm)
+      
+        // Edit Users Password
+        $('#users-tables-body').on('click', '.UserPasswordEditButton', loadForm)
+        $('#userModal').on('submit', '.UserPasswordEditionForm', saveForm)
+      
+        //user delete
+        $('#users-tables-body').on('click', '.userDeleteButton', loadForm)
+        $('#userModal').on('submit', '.userDeletionForm', saveForm)
+      })
+    </script>
+    <!-- prettier ignore -->
+  </div>
+{% endblock %}

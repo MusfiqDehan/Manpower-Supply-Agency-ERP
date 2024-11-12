@@ -1,0 +1,107 @@
+{% for data in all_users_list %}
+  <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+    <td class="align-middle white-space-nowrap pe-4 text-center border-end">
+      <a class="d-flex align-items-center" href=""><p class="fs-0 fw-bold px-2">{{ data.first_name }} {{ data.last_name }}</p></a>
+    </td>
+
+    <td class="email align-middle white-space-nowrap pe-5 fw-semi-bold border-end text-center">{{ data.email }}</td>
+
+    <!-- Add data attributes to badges -->
+    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000 border-end text-center">
+      {% if data.is_active %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-success change-status cursor-pointer" data-user-id="{{ data.id }}" data-status="deactivate"><span class="badge-label">Activated</span></span>
+      {% else %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-warning change-status cursor-pointer" data-user-id="{{ data.id }}" data-status="activate"><span class="badge-label">Deactivated</span></span>
+      {% endif %}
+    </td>
+
+    <td class="city align-middle white-space-nowrap text-1000 border-end text-center">
+      {% if data.is_superuser %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-success change-role cursor-pointer" data-user-id="{{ data.id }}" data-role="normal"><span class="badge-label">Super User</span></span>
+      {% else %}
+        <span class="badge badge-phoenix fs--2 badge-phoenix-warning change-role cursor-pointer" data-user-id="{{ data.id }}" data-role="super"><span class="badge-label">Normal User</span></span>
+      {% endif %}
+    </td>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="confirmationModalLabel">Confirm Action</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">Are you sure you want to switch this status?</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="confirmAction">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <td class="last-seen align-middle white-space-nowrap text-700 border-end text-center">{{ data.date_joined }}</td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4 border-end text-center">
+      <div style="display: flex; justify-content: center;">
+        <!-- Use flexbox to center -->
+        <button class="btn UserPasswordEditButton btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="{% url 'administration_app:user_change_password' data.id %}"><i class="fa-solid fa-key" style="color: #e71f08;"></i></button>
+      </div>
+    </td>
+
+    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+      <div class="font-sans-serif btn-reveal-trigger position-static">
+        <div style="display: flex; justify-content: center;" class="end-0">
+          <!-- Edit -->
+
+          {% comment %} <div>
+            <button class="btn btn-phoenix-secondary btn-icon me-1 fs--2 text-900 px-0" data-url="" disabled><span class="fas fa-edit"></span></button>
+          </div> {% endcomment %}
+          <!-- prettier ignore -->
+
+          <!-- deleted -->
+          <!-- prettier ignore -->
+
+          <div>
+            <button class="btn userDeleteButton btn-phoenix-secondary btn-icon fs--2 text-danger px-0" data-url="{% url 'administration_app:delete_user' data.id %}"><span class="fas fa-trash"></span></button>
+          </div>
+          <!-- prettier ignore -->
+        </div>
+      </div>
+    </td>
+  </tr>
+{% endfor %}
+
+<script>
+  $(document).ready(function () {
+    let userId, actionType, actionValue
+  
+    $('.change-status, .change-role').on('click', function () {
+      userId = $(this).data('user-id')
+      actionType = $(this).hasClass('change-status') ? 'status' : 'role'
+      actionValue = $(this).data(actionType)
+      $('#confirmationModal').modal('show')
+    })
+  
+    $('#confirmAction').on('click', function () {
+      $.ajax({
+        url: '{% url "administration_app:change_user_status" %}',
+        method: 'POST',
+        data: {
+          user_id: userId,
+          action_type: actionType,
+          action_value: actionValue,
+          csrfmiddlewaretoken: '{{ csrf_token }}'
+        },
+        success: function (response) {
+          if (response.success) {
+            location.reload()
+          } else {
+            alert('An error occurred.')
+          }
+        }
+      })
+      $('#confirmationModal').modal('hide')
+    })
+  })
+</script>
