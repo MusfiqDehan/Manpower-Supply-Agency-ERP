@@ -1,1 +1,1 @@
-web: supervisord -c /etc/supervisor/conf.d/supervisord.conf
+web: gunicorn manpower_supply_agency_erp.wsgi
