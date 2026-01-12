@@ -72,26 +72,14 @@
 
     <!-- Search script -->
     <script>
-      $(function () {
-        $('#search-form').on('submit', (e) => {
-          e.preventDefault()
-        })
-        var searchform = function () {
-          var form = $(this)
-          var search_value = $('#passport_search_input').val()
-          $.ajax({
-            url: form.attr('action'),
-            data: { search_value: search_value },
-            dataType: 'json',
-      
-            success: function (data) {
-              console.log('i am in success passport')
-              $('#deal-tables-body').html(data.search_list)
-            }
-          })
-        }
-        $('.search_passport_form').on('input', searchform)
-      })
+      // Using vanilla JavaScript with our app patterns
+      utils.ready(() => {
+        appPatterns.initializeSearch(
+          '#search-form',
+          '#passport_search_input',
+          '#deal-tables-body'
+        );
+      });
     </script>
     {% include 'base/footer.html' %}
   </div>
