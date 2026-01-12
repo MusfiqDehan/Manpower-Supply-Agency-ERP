@@ -1,146 +1,117 @@
 {% load static %}
 
-<nav class="navbar navbar-top navbar-expand top-nav-print-stop" id="navbarDefault">
-  <div class="collapse navbar-collapse justify-content-between">
-    <div class="navbar-logo">
-      <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent" type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse" aria-controls="navbarVerticalCollapse" aria-expanded="false" aria-label="Toggle Navigation"><span class="navbar-toggle-icon"><span class="toggle-line"></span></span></button>
+<nav class="navbar navbar-top navbar-expand top-nav-print-stop sticky top-0 z-50 backdrop-blur-md bg-opacity-90" id="navbarDefault" style="background: var(--bg-primary); border-bottom: 1px solid var(--border-color);">
+  <div class="collapse navbar-collapse justify-content-between px-3 md:px-6">
+    <div class="navbar-logo flex items-center gap-3">
+      <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent lg:hidden" 
+              type="button" 
+              data-bs-toggle="collapse" 
+              data-bs-target="#navbarVerticalCollapse" 
+              aria-controls="navbarVerticalCollapse" 
+              aria-expanded="false" 
+              aria-label="Toggle Navigation">
+        <span class="navbar-toggle-icon">
+          <span class="toggle-line"></span>
+        </span>
+      </button>
 
-      <a class="navbar-brand me-1 me-sm-3" href="/erp/home/">
-        <div class="d-flex align-items-center">
-          <img src="{% static 'favicons/android-chrome-512x512.png' %}" width="40" />
-          <p class="logo-text ms-2 d-none d-sm-block">MSAgency</p>
-        </div>
+      <a class="navbar-brand me-1 me-sm-3 flex items-center gap-2 no-underline" href="/erp/home/">
+        <img src="{% static 'favicons/android-chrome-512x512.png' %}" 
+             width="40" 
+             height="40"
+             alt="MSAgency Logo"
+             class="rounded-lg transition-transform hover:scale-110" />
+        <p class="logo-text hidden sm:block font-bold text-xl m-0" style="color: var(--text-primary);">MSAgency</p>
       </a>
     </div>
 
-    <!-- Search -->
-    {% comment %} <div class="search-box navbar-top-search-box d-none d-lg-block" data-list="" style="width: 25rem">
-      <form class="position-relative" data-bs-toggle="search" data-bs-display="static">
-        <input class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search" placeholder="Search..." aria-label="Search" />
-        <span class="fas fa-search search-box-icon"></span>
-      </form>
-      <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search">
-        <button class="btn btn-link btn-close-falcon p-0" aria-label="Close"></button>
-      </div>
-      <div class="dropdown-menu border border-300 font-base start-0 py-0 overflow-hidden w-100">
-        <div class="scrollbar-overlay" style="max-height: 30rem">
-          <div class="list pb-3">
-            <h6 class="dropdown-header text-1000 fs--2 py-2">24 <span class="text-500">results</span></h6>
-            <hr class="text-200 my-0" />
-            <h6 class="dropdown-header text-1000 fs--1 border-bottom border-200 py-2 lh-sm">Recently Searched</h6>
-            <div class="py-2">
-              <a class="dropdown-item" href="">
-                <div class="d-flex align-items-center">
-                  <div class="fw-normal text-1000 title">
-                    <span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span>
-                    Store Macbook
-                  </div>
-                </div>
-              </a>
-              <a class="dropdown-item" href="">
-                <div class="d-flex align-items-center">
-                  <div class="fw-normal text-1000 title">
-                    <span class="fa-solid fa-clock-rotate-left" data-fa-transform="shrink-2"></span>
-                    MacBook Air - 13″
-                  </div>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="text-center">
-            <p class="fallback fw-bold fs-1 d-none">No Result Found.</p>
-          </div>
-        </div>
-      </div>
-    </div> {% endcomment %}
-
-    <ul class="navbar-nav navbar-nav-icons flex-row">
+    <ul class="navbar-nav navbar-nav-icons flex-row items-center gap-2 md:gap-4">`
       <!-- notification button and modal -->
       {% include 'notification/notifications-modal.html' %}
       <!-- notification button and modal -->
 
       <li class="nav-item dropdown">
-        <a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
-          <div class="avatar avatar-l">
-            <img height="" width="" class="rounded-circle" src="https://cdn.musfiqdehan.com/images/avatar.png" alt="Manpower Supply Agency" />
+        <a class="nav-link lh-1 pe-0 flex items-center" 
+           id="navbarDropdownUser" 
+           href="#!" 
+           role="button" 
+           data-bs-toggle="dropdown" 
+           data-bs-auto-close="outside" 
+           aria-haspopup="true" 
+           aria-expanded="false">
+          <div class="avatar avatar-l transition-transform hover:scale-105">
+            <img height="40" 
+                 width="40" 
+                 class="rounded-circle border-2" 
+                 style="border-color: var(--accent-primary);"
+                 src="https://cdn.musfiqdehan.com/images/avatar.png" 
+                 alt="User Avatar" />
           </div>
         </a>
 
-        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border border-300" aria-labelledby="navbarDropdownUser">
-          <div class="card position-relative border-0">
+        <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow-xl border rounded-lg" 
+             style="border-color: var(--border-color); background: var(--bg-primary);"
+             aria-labelledby="navbarDropdownUser">
+          <div class="card position-relative border-0" style="background: var(--bg-primary);">
             <div class="card-body p-0">
               <div class="text-center pt-4 pb-3">
-                <div class="avatar avatar-xl">
-                  <img class="rounded-circle" src="https://cdn.musfiqdehan.com/images/avatar.png" alt="" />
+                <div class="avatar avatar-xl mx-auto">
+                  <img class="rounded-circle border-2" 
+                       style="border-color: var(--accent-primary);"
+                       src="https://cdn.musfiqdehan.com/images/avatar.png" 
+                       alt="User Profile" />
                 </div>
                 {% if user.is_superuser %}
-                  <h6 class="mt-2 text-black">{{ user.employee.firstName }} {{ user.employee.lastName }}(Super Admin)</h6>
-                  <p>{{ user.email }}</p>
+                  <h6 class="mt-2 font-semibold" style="color: var(--text-primary);">
+                    {{ user.employee.firstName }} {{ user.employee.lastName }}
+                    <span class="inline-block px-2 py-1 text-xs rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white ml-2">Super Admin</span>
+                  </h6>
+                  <p class="text-sm" style="color: var(--text-secondary);">{{ user.email }}</p>
                 {% else %}
-                  <h6 class="mt-2 text-black">{{ user.employee.firstName }} {{ user.employee.lastName }}</h6>
-                  <p>{{ user.email }}</p>
+                  <h6 class="mt-2 font-semibold" style="color: var(--text-primary);">{{ user.employee.firstName }} {{ user.employee.lastName }}</h6>
+                  <p class="text-sm" style="color: var(--text-secondary);">{{ user.email }}</p>
                 {% endif %}
               </div>
               <div class="mb-3 mx-3">
-                <input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status" />
+                <input class="modern-input text-sm" 
+                       id="statusUpdateInput" 
+                       type="text" 
+                       placeholder="Update your status" />
               </div>
             </div>
 
-            {% comment %} <div class="overflow-auto scrollbar" style="height: 6rem">
-              <ul class="nav d-flex flex-column mb-2 pb-1">
-                <li class="nav-item">
-                  <a class="nav-link px-3" href="#!">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user me-2 text-900">
-                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="12" cy="7" r="4"></circle>
-                    </svg><span>Profile</span>
-                  </a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link px-3" href="#!">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-settings me-2 text-900">
-                      <circle cx="12" cy="12" r="3"></circle>
-                      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>Settings &amp; Privacy
-                  </a>
-                </li>
-              </ul>
-            </div> {% endcomment %}
-
-            <div class="card-footer p-0 border-top">
-              {% comment %} <ul class="nav d-flex flex-column my-3">
-                <li class="nav-item">
-                  <a class="nav-link px-3" href="#!">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus me-2 text-900">
-                      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                      <circle cx="8.5" cy="7" r="4"></circle>
-                      <line x1="20" y1="8" x2="20" y2="14"></line>
-                      <line x1="23" y1="11" x2="17" y2="11"></line>
-                    </svg>Help Center
-                  </a>
-                </li>
-              </ul>
-              <hr /> {% endcomment %}
-
+            <div class="card-footer p-0 border-top" style="border-color: var(--border-color);">
               <!-- Login/logout section -->
-
-              <div class="px-3">
+              <div class="px-3 py-3">
                 {% if request.user.is_authenticated %}
                   <form method="post" action="{% url 'administration_app:user_logout' %}">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-danger w-100" data-feather="log-out">LogOut</button>
+                    <button type="submit" 
+                            class="modern-btn modern-btn-primary w-100 justify-center"
+                            style="background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);">
+                      <i class="fas fa-sign-out-alt"></i>
+                      <span>Logout</span>
+                    </button>
                   </form>
                 {% else %}
-                  <a href="{% url 'administration_app:user_login' %}" class="btn btn-phoenix-secondary d-flex flex-center w-100"><button type="submit" class="btn btn-success" data-feather="log-out">LogIn</button></a>
+                  <a href="{% url 'administration_app:user_login' %}" class="w-100">
+                    <button type="button" 
+                            class="modern-btn modern-btn-primary w-100 justify-center"
+                            style="background: linear-gradient(135deg, #198754 0%, #157347 100%);">
+                      <i class="fas fa-sign-in-alt"></i>
+                      <span>Login</span>
+                    </button>
+                  </a>
                 {% endif %}
               </div>
-
               <!-- End Logout section -->
 
-              <div class="my-2 text-center fw-bold fs--2 text-600">
-                <a class="text-600 me-1" href="#!">Privacy policy</a>
-                &bull;<a class="text-600 mx-1" href="#!">Terms</a> &bull;<a class="text-600 ms-1" href="#!">Cookies</a>
+              <div class="my-2 text-center text-xs" style="color: var(--text-tertiary);">
+                <a class="hover:underline transition-all" style="color: var(--text-tertiary);" href="#!">Privacy policy</a>
+                <span class="mx-1">&bull;</span>
+                <a class="hover:underline transition-all" style="color: var(--text-tertiary);" href="#!">Terms</a>
+                <span class="mx-1">&bull;</span>
+                <a class="hover:underline transition-all" style="color: var(--text-tertiary);" href="#!">Cookies</a>
               </div>
             </div>
           </div>

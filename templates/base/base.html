@@ -17,13 +17,17 @@
       {% endblock %}| Manpower Supply Agency
     </title>
 
-    <script src="https://cdn.musfiqdehan.com/templates/jquery/jquery.min.js"></script>
-
     <!-- =============================================== -->
     <!-- Favicons -->
     <!-- =============================================== -->
 
     <meta name="theme-color" content="#ffffff" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Theme Styles -->
+    <link rel="stylesheet" href="{% static 'css/modern-theme.css' %}" />
 
     <style>
       @media print {
@@ -354,6 +358,10 @@
 
     <!-- Graph file for each Dashboard -->
     <script src="https://cdn.musfiqdehan.com/templates/mypx/custom/assets/js/crm-dashboard.js"></script>
+
+    <!-- Custom JavaScript Utilities -->
+    <script src="{% static 'js/utils.js' %}"></script>
+    <script src="{% static 'js/theme-manager.js' %}"></script>
 
     {% block script %}
 
