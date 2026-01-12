@@ -5,7 +5,10 @@
 __pycache__
 db.sqlite3
 media
-static/
+staticfiles/
+
+# Custom static files should be tracked
+# Only ignore collected static files in staticfiles/
 
 # Backup files #
 *.bak
