@@ -1,28 +1,43 @@
 {% load static %}
 
 <!-- Topbar Start -->
-<div class="topbar container-fluid bg-primary px-5 d-none d-lg-block">
-  <div class="row gx-0 align-items-center d-flex justify-content-between">
+<div class="topbar container-fluid px-5 d-none d-lg-block" style="background: var(--bg-secondary); border-bottom: 1px solid var(--border-color);">
+  <div class="row gx-0 align-items-center d-flex justify-content-between py-2">
     <div class="col-lg-5 text-center text-lg-start mb-lg-0">
-      <div class="d-flex">
-        <a href="mailto:moslamainternational@gmail.com" class="text-white me-4"><i class="fas fa-envelope text-secondary me-2"></i>msagency@email.com</a>
-        <a href="tel:(+880) 191-554-5660" class="text-white me-0"><i class="fas fa-phone-alt text-secondary me-2"></i>+8801911234567</a>
+      <div class="d-flex gap-3">
+        <a href="mailto:moslamainternational@gmail.com" 
+           class="flex items-center gap-2 transition-all hover:scale-105" 
+           style="color: var(--text-primary); text-decoration: none;">
+          <i class="fas fa-envelope" style="color: var(--accent-primary);"></i>
+          <span>msagency@email.com</span>
+        </a>
+        <a href="tel:(+880) 191-554-5660" 
+           class="flex items-center gap-2 transition-all hover:scale-105" 
+           style="color: var(--text-primary); text-decoration: none;">
+          <i class="fas fa-phone-alt" style="color: var(--accent-primary);"></i>
+          <span>+8801911234567</span>
+        </a>
       </div>
     </div>
-    {% comment %} <div class="col-lg-3 row-cols-1 text-center mb-2 mb-lg-0">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
-        <a class="btn btn-sm btn-outline-light btn-square rounded-circle me-2" href=""><i class="fab fa-twitter fw-normal text-secondary"></i></a>
-        <a class="btn btn-sm btn-outline-light btn-square rounded-circle me-2" href=""><i class="fab fa-facebook-f fw-normal text-secondary"></i></a>
-        <a class="btn btn-sm btn-outline-light btn-square rounded-circle me-2" href=""><i class="fab fa-linkedin-in fw-normal text-secondary"></i></a>
-        <a class="btn btn-sm btn-outline-light btn-square rounded-circle me-2" href=""><i class="fab fa-instagram fw-normal text-secondary"></i></a>
-        <a class="btn btn-sm btn-outline-light btn-square rounded-circle" href=""><i class="fab fa-youtube fw-normal text-secondary"></i></a>
-      </div>
-    </div> {% endcomment %}
-    <div class="col-lg-4 text-white text-center text-lg-end">
-      <div class="d-inline-flex align-items-center" style="height: 45px;">
-        <a href="{% url 'website_v2:contact' %}" class="text-white me-2">Help</a><small>/</small>
-        <a href="{% url 'website_v2:contact' %}" class="text-white mx-2">Support</a><small>/</small>
-        <a href="{% url 'website_v2:contact' %}" class="text-white ms-2">Contact</a>
+    <div class="col-lg-4 text-center text-lg-end">
+      <div class="d-inline-flex align-items-center gap-2" style="height: 45px;">
+        <a href="{% url 'website_v2:contact' %}" 
+           class="transition-colors hover:text-opacity-80" 
+           style="color: var(--text-primary); text-decoration: none;">
+          Help
+        </a>
+        <span style="color: var(--text-tertiary);">/</span>
+        <a href="{% url 'website_v2:contact' %}" 
+           class="transition-colors hover:text-opacity-80" 
+           style="color: var(--text-primary); text-decoration: none;">
+          Support
+        </a>
+        <span style="color: var(--text-tertiary);">/</span>
+        <a href="{% url 'website_v2:contact' %}" 
+           class="transition-colors hover:text-opacity-80" 
+           style="color: var(--text-primary); text-decoration: none;">
+          Contact
+        </a>
       </div>
     </div>
   </div>
