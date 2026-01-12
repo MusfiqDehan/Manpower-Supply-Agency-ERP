@@ -12,7 +12,7 @@ load_dotenv()  # Loads environment variables from the .env file
 def main():
     """Run administrative tasks."""
     os.environ.setdefault(
-        "DJANGO_SETTINGS_MODULE", "manpower_supply_agency_erp.settings.production"
+        "DJANGO_SETTINGS_MODULE", "config.settings.production"
     )
     try:
         from django.core.management import execute_from_command_line

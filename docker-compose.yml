@@ -1,4 +1,15 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3.12-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD", "rabbitmq-diagnostics", "-q", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8080
@@ -8,19 +19,34 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
   celery-worker:
     build: .
-    command: celery -A manpower_supply_agency_erp worker --loglevel=info
+    command: celery -A config worker --loglevel=info
     volumes:
       - .:/app
     env_file:
       - .env
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
   celery-beat:
     build: .
-    command: celery -A manpower_supply_agency_erp beat --loglevel=info
+    command: celery -A config beat --loglevel=info
     volumes:
       - .:/app
     env_file:
       - .env
+    environment:
+      - CELERY_BROKER_URL=amqp://guest:guest@rabbitmq:5672//
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
